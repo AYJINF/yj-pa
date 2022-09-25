@@ -81,8 +81,11 @@ static int cmd_x(char *args){
   int x_N, x_EXPR;
   sscanf(args, "%d %x", &x_N, &x_EXPR);
   for(int i = 0; i < x_N; i++){
-    printf("%x:  %08x\n", x_EXPR, paddr_read(x_EXPR, 4));
-    x_EXPR += 4;
+    printf("%x:  ", x_EXPR);
+    for(int j = 0; j < 4; j++){
+      printf("%02x  ", paddr_read(x_EXPR, 1));
+      x_EXPR += 1;
+    }
   }
   return 0;
 }
