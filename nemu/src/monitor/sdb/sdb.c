@@ -86,6 +86,7 @@ static int cmd_x(char *args){
       printf("%02x  ", paddr_read(x_EXPR, 1));
       x_EXPR += 1;
     }
+    printf("\n");
   }
   return 0;
 }
