@@ -18,6 +18,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "sdb.h"
+#include <memory/paddr.h>
 
 static int is_batch_mode = false;
 
@@ -56,11 +57,11 @@ static int cmd_q(char *args) {
 static int cmd_help(char *args);
 
 static int cmd_si(char *args){
-  int N = 1;
+  int si_N = 1;
   if(args != NULL){
-    N = atoi(args);
+    si_N = atoi(args);
   }
-  cpu_exec(N);
+  cpu_exec(si_N);
   return 0;
 }
 
@@ -76,6 +77,17 @@ static int cmd_info(char *args){
 }
 
 
+static int cmd_x(char *args){
+  int x_N, x_EXPR;
+  sscanf(args, "%d %x", &x_N, &x_EXPR);
+  for(int i = 0; i < x_N; i++){
+    printf("%x:\t%x\n", x_EXPR, paddr_read(x_EXPR, 4));
+    x_EXPR += 4;
+  }
+  return 0;
+}
+
+
 static struct {
   const char *name;
   const char *description;
@@ -84,8 +96,10 @@ static struct {
   { "help", "Display information about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
-  { "si", "Step through N instructions and then pause execution. N defaults to 1 when not given", cmd_si },
-  { "info", "Print the state of the program", cmd_info },
+  { "si", "Step through N instructions and then pause execution. N defaults to 1 if not given", cmd_si },
+  { "info", "Print state of the program. 'r' for state of the register, 'w' for information of the watchpoint", cmd_info },
+  { "x", "'x N EXPR'. Evaluate EXPR, use the result as the starting memory address then output consecutive N 4-bytes in hexadecimal", cmd_x },
+  
 
   /* TODO: Add more commands */
 
