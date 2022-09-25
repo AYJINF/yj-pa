@@ -66,7 +66,9 @@ static int cmd_si(char *args){
 
 
 static int cmd_info(char *args){
+  printf("yj");
   if(strcmp(args, "r")){
+    printf("zyy");
     isa_reg_display();
   }
   if(strcmp(args, "w")){
