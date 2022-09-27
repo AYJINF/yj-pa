@@ -88,6 +88,13 @@ static int cmd_x(char *args){
 }
 
 
+static int cmd_p(char *args){
+  bool success = true;
+  expr(args, &success);
+  return 0;
+}
+
+
 static struct {
   const char *name;
   const char *description;
@@ -99,7 +106,7 @@ static struct {
   { "si", "Step through N instructions and then pause execution. N defaults to 1 if not given", cmd_si },
   { "info", "Print state of the program. 'r' for state of the register, 'w' for information of the watchpoint", cmd_info },
   { "x", "'x N EXPR'. Evaluate EXPR, use the result as the starting memory address then output consecutive N 4-bytes in hexadecimal", cmd_x },
-  
+  { "p", "'p EXPR'. Evaluate EXPR", cmd_p}
 
   /* TODO: Add more commands */
 
