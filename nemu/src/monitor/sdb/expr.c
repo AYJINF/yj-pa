@@ -22,7 +22,7 @@
 #include <string.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ, TK_DIGIT
+  TK_NOTYPE = 256, TK_EQ, TK_DIGIT, TK_HEX
 
   /* TODO: Add more token types */
 
@@ -46,6 +46,7 @@ static struct rule {
   {"\\(", '('},                 // left parenthesis
   {"\\)", ')'},                 // right parenthesis
   {"[0-9]+", TK_DIGIT},         // decimal integer
+  {"0x[0-9A-F]+\\b", TK_HEX},   // hexadecimal-number
 };
 
 #define NR_REGEX ARRLEN(rules)
@@ -216,8 +217,6 @@ word_t expr(char *e, bool *success) {
     return 0;
   }
   printf("%d\n", expr_eval(0, nr_token-1));
-  // /* TODO: Insert codes to evaluate the expression. */
-  // TODO();
 
   return 0;
 }
