@@ -215,12 +215,9 @@ word_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   }
-  make_token(e);
-  for(int i = 0; i < nr_token; i++){
-    printf("%d\n", tokens[i].type);
-  }
-  /* TODO: Insert codes to evaluate the expression. */
-  TODO();
+  printf("%d\n", expr_eval(0, nr_token));
+  // /* TODO: Insert codes to evaluate the expression. */
+  // TODO();
 
   return 0;
 }
