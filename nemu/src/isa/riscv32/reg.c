@@ -33,10 +33,7 @@ word_t isa_reg_str2val(const char *s, bool *success) {
   for(int i = 0; i < 32; i++){
     if(!strcmp(s, regs[i])){
       *success = true;
-      int t = 0;
-      printf("???%x", gpr(i));
-      // sscanf(gpr(i), "%x", &t);
-      return t;
+      return gpr(i);
     }
   }
   assert(0);
