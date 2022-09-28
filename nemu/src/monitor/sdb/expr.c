@@ -217,7 +217,7 @@ word_t expr_eval(int p, int q){
       return d;
     case TK_REG:
       bool success = true;
-      return isa_reg_str2val(tokens[p].str, &success);
+      return isa_reg_str2val(tokens[p].str+1, &success);
     default:
       assert(0);
     }
