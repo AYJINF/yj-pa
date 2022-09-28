@@ -203,7 +203,6 @@ int s_pri(int s){
 
 
 word_t expr_eval(int p, int q){
-  printf("p=%d, q=%d\n", p, q);
   if(p > q){
     printf("A bad expression!");
     assert(0);
@@ -238,11 +237,8 @@ word_t expr_eval(int p, int q){
         int s1 = s_pri(tokens[op].type);
         int s2 = s_pri(tokens[i].type);
         if(s1 <= s2)op = i;
-        if(tokens[i].type == TK_EQ)printf("here!, s1=%d, s2=%d\n", s1, s2);
       }
     }
-    printf("op=%d\n", op);
-    printf("op_type=%d\n", tokens[op].type);
     int val1 = expr_eval(p, op - 1);
     int val2 = expr_eval(op + 1, q);
 
