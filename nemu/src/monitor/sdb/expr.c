@@ -22,7 +22,7 @@
 #include <string.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ, TK_DIGIT, TK_HEX
+  TK_NOTYPE = 256, TK_EQ, TK_DIGIT, TK_HEX, TK_REG, TK_NE, TK_AND,
 
   /* TODO: Add more token types */
 
@@ -38,15 +38,18 @@ static struct rule {
    */
 
   {" +", TK_NOTYPE},            // spaces
-  {"\\+", '+'},                 // plus
   {"==", TK_EQ},                // equal
+  {"!=", TK_NE},                 // not equal
+  {"&&", TK_AND},               // and
+  {"\\+", '+'},                 // plus
   {"-", '-' },                  // minus
   {"\\*", '*'},                 // time
   {"\\/", '/'},                 // divide 
   {"\\(", '('},                 // left parenthesis
   {"\\)", ')'},                 // right parenthesis
   {"[0-9]+", TK_DIGIT},         // decimal integer
-  {"0x[0-9A-F]+\\b", TK_HEX},   // hexadecimal-number
+  {"0x[0-9A-Fa-f]+", TK_HEX},   // hexadecimal-number
+  {"\\$[$a-z0-9]+\\b", TK_REG},  //reg_name
 };
 
 #define NR_REGEX ARRLEN(rules)
@@ -168,9 +171,9 @@ static bool check_parentheses(int p, int q){
 
 
 int s_pri(char s){
-  if(s == '+' || s == '-')return 1;
-  if(s == '*' || s == '/')return 2;
-  else return 100;
+  if(s == '+' || s == '-')return 4;
+  if(s == '*' || s == '/')return 3;
+  else return 0;
 }
 
 
@@ -194,7 +197,7 @@ word_t expr_eval(int p, int q){
       if(flag_par == 0){
         int s1 = s_pri(tokens[op].type);
         int s2 = s_pri(tokens[i].type);
-        if(s1 >= s2)op = i;
+        if(s1 <= s2)op = i;
       }
     }
     int val1 = expr_eval(p, op - 1);
