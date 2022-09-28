@@ -272,6 +272,7 @@ word_t expr(char *e, bool *success) {
   (i == 0 || tokens[i-1].type == TK_NE || tokens[i-1].type == TK_EQ || tokens[i-1].type == TK_AND
   || tokens[i-1].type == '+' || tokens[i-1].type == '-' || tokens[i-1].type == '*' || tokens[i-1].type == '/')) 
   {
+    printf("here!\n");
     tokens[i].type = DEREF;
   }
   }
