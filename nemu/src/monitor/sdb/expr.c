@@ -23,7 +23,7 @@
 #include <memory/paddr.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ, TK_DIGIT, TK_HEX, TK_REG, TK_NE, TK_AND, DEREF, MIN_DIG,
+  TK_NOTYPE = 256, TK_EQ, TK_DIGIT, TK_HEX, TK_REG, TK_NE, TK_AND, TK_DEREF, TK_MIDI,
 
   /* TODO: Add more token types */
 
@@ -195,7 +195,7 @@ static bool check_parentheses(int p, int q){
 
 
 int s_pri(int s){
-  if(s == DEREF)return 2;
+  if(s == TK_DEREF || s == TK_MIDI)return 2;
   if(s == '*' || s == '/')return 3;
   if(s == '+' || s == '-')return 4;
   if(s == TK_NE || s == TK_EQ)return 7;
@@ -241,8 +241,11 @@ word_t expr_eval(int p, int q){
         if(s1 <= s2)op = i;
       }
     }
-    if(tokens[op].type == DEREF){
-      return paddr_read(expr_eval(op+1, q), 1);
+    if(tokens[op].type == TK_DEREF){
+      return paddr_read(expr_eval(op+1, q), 4);
+    }
+    if(tokens[op].type == TK_MIDI){
+      return -expr_eval(op+1, q);
     }
     int val1 = expr_eval(p, op - 1);
     int val2 = expr_eval(op + 1, q);
@@ -272,13 +275,13 @@ word_t expr(char *e, bool *success) {
   (i == 0 || tokens[i-1].type == TK_NE || tokens[i-1].type == TK_EQ || tokens[i-1].type == TK_AND
   || tokens[i-1].type == '+' || tokens[i-1].type == '-' || tokens[i-1].type == '*' || tokens[i-1].type == '/')) 
   {
-    tokens[i].type = DEREF;
+    tokens[i].type = TK_DEREF;
   }
   if (tokens[i].type == '-' && 
   (i == 0 || tokens[i-1].type == TK_NE || tokens[i-1].type == TK_EQ || tokens[i-1].type == TK_AND
   || tokens[i-1].type == '+' || tokens[i-1].type == '-' || tokens[i-1].type == '*' || tokens[i-1].type == '/')) 
   {
-    tokens[i].type = MIN_DIG;
+    tokens[i].type = TK_MIDI;
   }
   }
   return expr_eval(0, nr_token-1);
