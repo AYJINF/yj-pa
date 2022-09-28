@@ -242,7 +242,7 @@ word_t expr_eval(int p, int q){
       }
     }
     if(tokens[op].type == TK_DEREF){
-      printf("here  %s", tokens[op+1].str);
+      printf("here  %d", expr_eval(op+1, q));
       return paddr_read(expr_eval(op+1, q), 4);
     }
     if(tokens[op].type == TK_MIDI){
