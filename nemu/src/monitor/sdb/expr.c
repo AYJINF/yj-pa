@@ -210,7 +210,7 @@ word_t expr_eval(int p, int q){
     assert(0);
   }
   else if(p == q){
-    unsigned int tmp = 0;
+    word_t tmp = 0;
     bool success = true;
     switch (tokens[p].type)
     {
@@ -218,7 +218,6 @@ word_t expr_eval(int p, int q){
       return atoi(tokens[p].str);
     case TK_HEX:
       sscanf(tokens[p].str, "%x", &tmp);
-      printf("tmp=%u  str=%s\n", tmp, tokens[p].str);
       return tmp;
     case TK_REG:
       return isa_reg_str2val(tokens[p].str+1, &success);
