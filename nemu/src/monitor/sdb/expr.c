@@ -193,7 +193,7 @@ static bool check_parentheses(int p, int q){
 }
 
 
-int s_pri(char s){
+int s_pri(int s){
   if(s == '*' || s == '/')return 3;
   if(s == '+' || s == '-')return 4;
   if(s == TK_NE || s == TK_EQ)return 7;
