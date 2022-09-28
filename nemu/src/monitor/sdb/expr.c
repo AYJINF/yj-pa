@@ -238,6 +238,7 @@ word_t expr_eval(int p, int q){
         int s1 = s_pri(tokens[op].type);
         int s2 = s_pri(tokens[i].type);
         if(s1 <= s2)op = i;
+        if(tokens[i].type == TK_EQ)printf("here!");
       }
     }
     printf("op=%d\n", op);
