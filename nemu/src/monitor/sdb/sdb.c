@@ -91,7 +91,7 @@ static int cmd_x(char *args){
 static int cmd_p(char *args){
   bool success = true;
   if(success)printf("%d", expr(args, &success));
-  assert(0);
+  else assert(0);
   return 0;
 }
 
