@@ -238,6 +238,7 @@ word_t expr_eval(int p, int q){
         int s2 = s_pri(tokens[i].type);
         if(s1 <= s2)op = i;
       }
+      printf("op=%d", op);
     }
     int val1 = expr_eval(p, op - 1);
     int val2 = expr_eval(op + 1, q);
@@ -247,7 +248,7 @@ word_t expr_eval(int p, int q){
       case '-': return val1 - val2;
       case '*': return val1 * val2;
       case '/': return val1 / val2;
-      case TK_EQ: printf("==here: val1=%d, val2=%d", val1, val2);return val1 == val2;
+      case TK_EQ: return val1 == val2;
       case TK_NE: return val1 != val2;
       case TK_AND: return val1 && val2;
       default: assert(0);
