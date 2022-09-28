@@ -242,7 +242,6 @@ word_t expr_eval(int p, int q){
       }
     }
     if(tokens[op].type == DEREF){
-      printf("here!\n");
       return paddr_read(expr_eval(op+1, q), 1);
     }
     int val1 = expr_eval(p, op - 1);
