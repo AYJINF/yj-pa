@@ -196,6 +196,7 @@ int s_pri(char s){
   if(s == '*' || s == '/')return 3;
   if(s == '+' || s == '-')return 4;
   if(s == TK_NE || s == TK_EQ)return 7;
+  if(s == TK_AND)return 11;
   else return 0;
 }
 
@@ -206,7 +207,18 @@ word_t expr_eval(int p, int q){
     assert(0);
   }
   else if(p == q){
-    return atoi(tokens[p].str);
+    switch (tokens->type)
+    {
+    case TK_DIGIT:
+      return atoi(tokens[p].str);
+    case TK_HEX:
+      int d = 0;
+      sscanf(tokens[p].str, "%x", &d);
+      return d;
+    default:
+      assert(0);
+    }
+    return 0;
   }
   else if (check_parentheses(p, q) == true){
     return expr_eval(p + 1, q - 1);
@@ -231,6 +243,9 @@ word_t expr_eval(int p, int q){
       case '-': return val1 - val2;
       case '*': return val1 * val2;
       case '/': return val1 / val2;
+      case TK_EQ: return val1 == val2;
+      case TK_NE: return val1 != val2;
+      case TK_AND: return val1 && val2;
       default: assert(0);
     }
   }
@@ -242,7 +257,7 @@ word_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   }
-  printf("%d\n", expr_eval(0, nr_token-1));
+  return expr_eval(0, nr_token-1);
 
   return 0;
 }
