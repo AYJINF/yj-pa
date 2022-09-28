@@ -89,7 +89,10 @@ static bool make_token(char *e) {
   int i;
   regmatch_t pmatch;
 
-  printf("nr=%d", nr_token);
+  for(int i = 0; i < nr_token; i++){
+    tokens[i].type = 0;
+    strcpy(tokens[i].str, " ");
+  }
   nr_token = 0;
 
   while (e[position] != '\0') {
