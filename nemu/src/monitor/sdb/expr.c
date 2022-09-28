@@ -135,6 +135,11 @@ static bool make_token(char *e) {
               tokens[nr_token].type = ')';
               nr_token++;
               break;
+          case TK_HEX:
+              tokens[nr_token].type = TK_HEX;
+              strncpy(tokens[nr_token].str, substr_start, substr_len);
+              nr_token++;
+              break;
           case TK_DIGIT:
               tokens[nr_token].type = TK_DIGIT;
               strncpy(tokens[nr_token].str, substr_start, substr_len);
@@ -150,11 +155,6 @@ static bool make_token(char *e) {
               break;
           case TK_AND:
               tokens[nr_token].type = TK_AND;
-              nr_token++;
-              break;
-          case TK_HEX:
-              tokens[nr_token].type = TK_HEX;
-              strncpy(tokens[nr_token].str, substr_start, substr_len);
               nr_token++;
               break;
           case TK_REG:
