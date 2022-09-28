@@ -20,6 +20,7 @@
  */
 #include <regex.h>
 #include <string.h>
+#include <memory/paddr.h>
 
 enum {
   TK_NOTYPE = 256, TK_EQ, TK_DIGIT, TK_HEX, TK_REG, TK_NE, TK_AND, DEREF, 
@@ -194,11 +195,12 @@ static bool check_parentheses(int p, int q){
 
 
 int s_pri(int s){
+  if(s == DEREF)return 2;
   if(s == '*' || s == '/')return 3;
   if(s == '+' || s == '-')return 4;
   if(s == TK_NE || s == TK_EQ)return 7;
   if(s == TK_AND)return 11;
-  else return 0;
+  else return 1;
 }
 
 
@@ -238,6 +240,9 @@ word_t expr_eval(int p, int q){
         int s2 = s_pri(tokens[i].type);
         if(s1 <= s2)op = i;
       }
+    }
+    if(tokens[op].type == DEREF){
+      return paddr_read(expr_eval(op+1, q), 1);
     }
     int val1 = expr_eval(p, op - 1);
     int val2 = expr_eval(op + 1, q);
