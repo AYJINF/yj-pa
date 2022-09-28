@@ -240,6 +240,7 @@ word_t expr_eval(int p, int q){
         if(s1 <= s2)op = i;
       }
     }
+    printf("op=%d\n", op);
     int val1 = expr_eval(p, op - 1);
     int val2 = expr_eval(op + 1, q);
 
