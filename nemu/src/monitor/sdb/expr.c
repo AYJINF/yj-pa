@@ -89,10 +89,7 @@ static bool make_token(char *e) {
   int i;
   regmatch_t pmatch;
 
-  for(int i = 0; i < nr_token; i++){
-    tokens[i].type = 0;
-    memset(tokens[i].str,' ',1);
-  }
+  memset(tokens, 0, sizeof(tokens));
   nr_token = 0;
 
   while (e[position] != '\0') {
