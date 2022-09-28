@@ -22,7 +22,7 @@
 #include <string.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ, TK_DIGIT, TK_HEX, TK_REG, TK_NE, TK_AND,
+  TK_NOTYPE = 256, TK_EQ, TK_DIGIT, TK_HEX, TK_REG, TK_NE, TK_AND, DEREF, 
 
   /* TODO: Add more token types */
 
@@ -50,6 +50,7 @@ static struct rule {
   {"[0-9]+", TK_DIGIT},         // decimal integer
   {"0x[0-9A-Fa-f]+", TK_HEX},   // hexadecimal-number
   {"\\$[$a-z0-9]+", TK_REG},    //reg_name
+
 };
 
 #define NR_REGEX ARRLEN(rules)
@@ -246,7 +247,7 @@ word_t expr_eval(int p, int q){
       case '-': return val1 - val2;
       case '*': return val1 * val2;
       case '/': return val1 / val2;
-      case TK_EQ: return val1 == val2;
+      case TK_EQ: printf("==here: val1=%d, val2=%d", val1, val2);return val1 == val2;
       case TK_NE: return val1 != val2;
       case TK_AND: return val1 && val2;
       default: assert(0);
@@ -259,6 +260,15 @@ word_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
     return 0;
+  }
+  // to find out the dereference
+  for (int i = 0; i < nr_token; i ++) {
+  if (tokens[i].type == '*' && 
+  (i == 0 || tokens[i-1].type == TK_NE || tokens[i-1].type == TK_EQ || tokens[i-1].type == TK_AND
+  || tokens[i-1].type == '+' || tokens[i-1].type == '-' || tokens[i-1].type == '*' || tokens[i-1].type == '/')) 
+  {
+    tokens[i].type = DEREF;
+  }
   }
   return expr_eval(0, nr_token-1);
 
