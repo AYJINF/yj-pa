@@ -207,7 +207,7 @@ word_t expr_eval(int p, int q){
     assert(0);
   }
   else if(p == q){
-    switch (tokens->type)
+    switch (tokens[p].type)
     {
     case TK_DIGIT:
       return atoi(tokens[p].str);
