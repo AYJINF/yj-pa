@@ -91,7 +91,7 @@ static bool make_token(char *e) {
 
   for(int i = 0; i < nr_token; i++){
     tokens[i].type = 0;
-    strcpy(tokens[i].str, " ");
+    strcpy(tokens[i].str, "\0");
   }
   nr_token = 0;
 
