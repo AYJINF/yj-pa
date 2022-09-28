@@ -39,7 +39,7 @@ static struct rule {
 
   {" +", TK_NOTYPE},            // spaces
   {"==", TK_EQ},                // equal
-  {"!=", TK_NE},                 // not equal
+  {"!=", TK_NE},                // not equal
   {"&&", TK_AND},               // and
   {"\\+", '+'},                 // plus
   {"-", '-' },                  // minus
@@ -138,6 +138,28 @@ static bool make_token(char *e) {
               strncpy(tokens[nr_token].str, substr_start, substr_len);
               nr_token++;
               break;
+          case TK_EQ:
+              tokens[nr_token].type = TK_EQ;
+              nr_token++;
+              break;
+          case TK_NE:
+              tokens[nr_token].type = TK_NE;
+              nr_token++;
+              break;
+          case TK_AND:
+              tokens[nr_token].type = TK_AND;
+              nr_token++;
+              break;
+          case TK_HEX:
+              tokens[nr_token].type = TK_HEX;
+              strncpy(tokens[nr_token].str, substr_start, substr_len);
+              nr_token++;
+              break;
+          case TK_REG:
+              tokens[nr_token].type = TK_REG;
+              strncpy(tokens[nr_token].str, substr_start, substr_len);
+              nr_token++;
+              break;
           default: TODO();
         }
 
@@ -171,8 +193,9 @@ static bool check_parentheses(int p, int q){
 
 
 int s_pri(char s){
-  if(s == '+' || s == '-')return 4;
   if(s == '*' || s == '/')return 3;
+  if(s == '+' || s == '-')return 4;
+  if(s == TK_NE || s == TK_EQ)return 7;
   else return 0;
 }
 
