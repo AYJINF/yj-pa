@@ -48,8 +48,8 @@ static struct rule {
   {"\\/", '/'},                 // divide 
   {"\\(", '('},                 // left parenthesis
   {"\\)", ')'},                 // right parenthesis
-  {"[0-9]+", TK_DIGIT},         // decimal integer
   {"0x[0-9A-Fa-f]+", TK_HEX},   // hexadecimal-number
+  {"[0-9]+", TK_DIGIT},         // decimal integer
   {"\\$[$a-z0-9]+", TK_REG},    //reg_name
 
 };
