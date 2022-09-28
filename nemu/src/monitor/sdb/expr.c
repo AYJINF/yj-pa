@@ -218,6 +218,7 @@ word_t expr_eval(int p, int q){
       return atoi(tokens[p].str);
     case TK_HEX:
       sscanf(tokens[p].str, "%x", &tmp);
+      printf("tmp=%d  str=%s", tmp, tokens[p].str);
       return tmp;
     case TK_REG:
       return isa_reg_str2val(tokens[p].str+1, &success);
@@ -242,7 +243,6 @@ word_t expr_eval(int p, int q){
       }
     }
     if(tokens[op].type == TK_DEREF){
-      printf("here  %d", expr_eval(op+1, q));
       return paddr_read(expr_eval(op+1, q), 4);
     }
     if(tokens[op].type == TK_MIDI){
