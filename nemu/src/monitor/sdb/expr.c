@@ -239,9 +239,9 @@ word_t expr_eval(int p, int q){
         int s2 = s_pri(tokens[i].type);
         if(s1 <= s2)op = i;
       }
-      printf("op_type=%d\n", tokens[i].type);
     }
     printf("op=%d\n", op);
+    printf("op_type=%d\n", tokens[op].type);
     int val1 = expr_eval(p, op - 1);
     int val2 = expr_eval(op + 1, q);
 
