@@ -23,7 +23,7 @@
 #include <memory/paddr.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ, TK_DIGIT, TK_HEX, TK_REG, TK_NE, TK_AND, DEREF, 
+  TK_NOTYPE = 256, TK_EQ, TK_DIGIT, TK_HEX, TK_REG, TK_NE, TK_AND, DEREF, MIN_DIG,
 
   /* TODO: Add more token types */
 
@@ -273,6 +273,12 @@ word_t expr(char *e, bool *success) {
   || tokens[i-1].type == '+' || tokens[i-1].type == '-' || tokens[i-1].type == '*' || tokens[i-1].type == '/')) 
   {
     tokens[i].type = DEREF;
+  }
+  if (tokens[i].type == '-' && 
+  (i == 0 || tokens[i-1].type == TK_NE || tokens[i-1].type == TK_EQ || tokens[i-1].type == TK_AND
+  || tokens[i-1].type == '+' || tokens[i-1].type == '-' || tokens[i-1].type == '*' || tokens[i-1].type == '/')) 
+  {
+    tokens[i].type = MIN_DIG;
   }
   }
   return expr_eval(0, nr_token-1);
