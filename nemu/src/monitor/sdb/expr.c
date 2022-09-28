@@ -49,7 +49,7 @@ static struct rule {
   {"\\)", ')'},                 // right parenthesis
   {"[0-9]+", TK_DIGIT},         // decimal integer
   {"0x[0-9A-Fa-f]+", TK_HEX},   // hexadecimal-number
-  {"\\$[$a-z0-9]+\\b", TK_REG},  //reg_name
+  {"\\$[$a-z0-9]+", TK_REG},    //reg_name
 };
 
 #define NR_REGEX ARRLEN(rules)
@@ -215,6 +215,9 @@ word_t expr_eval(int p, int q){
       int d = 0;
       sscanf(tokens[p].str, "%x", &d);
       return d;
+    case TK_REG:
+      bool success = true;
+      return isa_reg_str2val(tokens[p].str, &success);
     default:
       assert(0);
     }
