@@ -105,7 +105,7 @@ static struct {
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
   { "si", "'si N'.Step through N instructions and then pause execution. N defaults to 1 if not given", cmd_si },
-  { "info", "Print state of the program\\'info r' for state of the register\\'info w' for information of the watchpoint", cmd_info },
+  { "info", "Print state of the program\n'info r' for state of the register\n'info w' for information of the watchpoint", cmd_info },
   { "x", "'x N EXPR'. Evaluate EXPR, use the result as the starting memory address then output consecutive N 4-bytes in hexadecimal", cmd_x },
   { "p", "'p EXPR'. Evaluate EXPR", cmd_p}
 
