@@ -89,6 +89,7 @@ static bool make_token(char *e) {
   int i;
   regmatch_t pmatch;
 
+  /* Init tokens. */
   memset(tokens, 0, sizeof(tokens));
   nr_token = 0;
 
