@@ -49,7 +49,7 @@ WP* new_wp(){
   free_ = free_->next;
   ans->next = head;
   head = ans;
-  if(ans->next == NULL)printf("yyy");
+  if(head->next == NULL)printf("yyy");
   return ans;
 };
 
