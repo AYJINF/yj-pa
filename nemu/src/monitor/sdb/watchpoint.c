@@ -21,6 +21,7 @@ typedef struct watchpoint {
   int NO;
   struct watchpoint *next;
   word_t data;
+  char var[1000] ;
 
 } WP;
 
@@ -41,7 +42,7 @@ void init_wp_pool() {
 void isa_wp_display(){
   WP *cur = wp_pool;
   while(cur != NULL){
-    printf("NO.%d,\t %d\n", cur->NO, cur->data);
+    printf("NO.%d,\t %s = %d\n", cur->NO, cur->var, cur->data);
     cur = cur->next;
   }
 }
