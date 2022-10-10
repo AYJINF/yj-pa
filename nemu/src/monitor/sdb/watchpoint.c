@@ -53,8 +53,7 @@ WP* new_wp(){
 void delete_wp(int NO){
   WP *pre = NULL;
   WP *cur = head;
-  printf("cur, %d\n", cur->NO);
-  while(cur != NULL){
+  while(!cur){
     printf("NO=%d, cur.NO=%d", NO, cur->NO);
     if(cur->NO == NO){
       pre->next = cur->next;
