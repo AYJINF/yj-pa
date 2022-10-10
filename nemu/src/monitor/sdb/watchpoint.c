@@ -51,13 +51,12 @@ WP* new_wp(){
 };
 
 void delete_wp(int NO){
-  WP *pre = NULL;
+  WP *pre = head;
   WP *cur = &(*head);
   while(cur != NULL){
     if(cur->NO == NO){
       if(pre != NULL)pre->next = cur->next;
       else pre = cur->next;
-      if(cur->next == NULL)printf("???\n");
       free_wp(cur);
       return;
     }
