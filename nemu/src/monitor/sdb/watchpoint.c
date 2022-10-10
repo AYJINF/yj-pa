@@ -41,7 +41,7 @@ void init_wp_pool() {
 void isa_wp_display(){
   WP *cur = wp_pool;
   while(cur != NULL){
-    printf("NO.%d,\t data=%d\n", cur->NO, cur->data);
+    printf("NO.%d,\t %d\n", cur->NO, cur->data);
     cur = cur->next;
   }
 }
