@@ -57,6 +57,7 @@ void delete_wp(int NO){
     if(cur->NO == NO){
       if(pre != NULL)pre->next = cur->next;
       else pre = cur->next;
+      if(cur->next == NULL)printf("???\n");
       free_wp(cur);
       return;
     }
