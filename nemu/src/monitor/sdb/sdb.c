@@ -70,12 +70,12 @@ static int cmd_info(char *args){
   if(!strcmp(args, "r")){
     isa_reg_display();
   }
-  if(!strcmp(args, "w")){
-    printf("zyy_try");
+  else if(!strcmp(args, "w")){
+    printf("zyy_try\n");
     isa_wp_display();
   }
   else{
-    printf("zyyfail");
+    printf("zyyfail\n");
   }
   return 0;
 }
