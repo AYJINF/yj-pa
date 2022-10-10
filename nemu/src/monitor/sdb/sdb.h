@@ -20,6 +20,12 @@
 
 word_t expr(char *e, bool *success);
 void isa_wp_display();
-struct watchpoint;
+typedef struct watchpoint {
+  int NO;
+  struct watchpoint *next;
+  word_t data;
+  char var[1000] ;
+
+} WP;
 
 #endif
