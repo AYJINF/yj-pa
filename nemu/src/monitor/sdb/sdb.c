@@ -97,6 +97,7 @@ static int cmd_p(char *args){
 static int cmd_w(char *args){
   /* Set up a watchpoint */
   WP *emp_wp = new_wp();
+  if(args == NULL)assert(0);
   strcpy(emp_wp->var, args);
   bool success = true;
   word_t tmp = expr(args, &success);
