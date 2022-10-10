@@ -71,7 +71,11 @@ static int cmd_info(char *args){
     isa_reg_display();
   }
   if(!strcmp(args, "w")){
+    printf("zyy_try");
     isa_wp_display();
+  }
+  else{
+    printf("zyyfail");
   }
   return 0;
 }
