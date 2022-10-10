@@ -76,6 +76,7 @@ void free_wp(WP *wp){
 void use_wp(WP *wp){
   wp->next = head;
   head = &(*wp);
+  printf("head.NO=%d\n ", head->NO);
 }
 
 void scan_all_wps(){
