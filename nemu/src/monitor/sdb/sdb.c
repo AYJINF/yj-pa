@@ -108,9 +108,10 @@ static int cmd_w(char *args){
 }
 
 static int cmd_d(char *args){
-  printf("cmd_d %d\n", atoi(args));
+  
   if(args != NULL){
     delete_wp(atoi(args));
+    printf("cmd_d %d\n", atoi(args));
   }
   else assert(0);
   return 0;
