@@ -53,7 +53,6 @@ WP* new_wp(){
 void delete_wp(int NO){
   WP *pre = NULL;
   WP *cur = head;
-  printf("Before while  NO=%d\n", NO);
   while(cur != NULL){
     printf("NO=%d, cur.NO=%d", NO, cur->NO);
     if(cur->NO == NO){
@@ -76,6 +75,7 @@ void free_wp(WP *wp){
 }
 
 void use_wp(WP *wp){
+  if(wp == NULL)printf("YYY");
   wp->next = head;
   head = wp;
 }
