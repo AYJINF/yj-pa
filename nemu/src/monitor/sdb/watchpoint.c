@@ -30,7 +30,6 @@ static WP *head = NULL, *free_ = NULL;
 void init_wp_pool() {
   int i;
   for (i = 0; i < NR_WP; i ++) {
-    printf("%d\n", i);
     wp_pool[i].NO = i;
     wp_pool[i].next = (i == NR_WP - 1 ? NULL : &wp_pool[i + 1]);
   }
@@ -40,7 +39,7 @@ void init_wp_pool() {
 }
 
 void isa_wp_display(){
-  WP *cur = head;
+  WP *cur = wp_pool;
   while(cur != NULL){
     printf("NO.%d, data=%d\n", cur->NO, cur->data);
     cur = cur->next;
