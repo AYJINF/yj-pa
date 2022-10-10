@@ -19,7 +19,7 @@
 #include <common.h>
 
 word_t expr(char *e, bool *success);
-void isa_wp_display();
+
 typedef struct watchpoint {
   int NO;
   struct watchpoint *next;
@@ -27,6 +27,11 @@ typedef struct watchpoint {
   char var[1000] ;
 
 } WP;
+void isa_wp_display();
 WP* new_wp();
+void use_wp(WP *wp);
+void free_wp(WP *wp);
+void delete_wp(int NO);
+void scan_all_wps();
 
 #endif

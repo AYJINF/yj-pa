@@ -72,7 +72,7 @@ static int cmd_info(char *args){
   else if(!strcmp(args, "w")){
     isa_wp_display();
   }
-  else printf("The second command doesn't exist!");
+  else printf("The second command doesn't exist!\n");
   return 0;
 }
 
@@ -95,9 +95,22 @@ static int cmd_p(char *args){
 }
 
 static int cmd_w(char *args){
+  /* Set up a watchpoint */
   WP *emp_wp = new_wp();
   strcpy(emp_wp->var, args);
-  
+  bool success = true;
+  word_t tmp = expr(args, &success);
+  if(!success) assert(0);
+  emp_wp->data = tmp;
+  use_wp(emp_wp);
+  return 0;
+}
+
+static int cmd_d(char *args){
+  if(args != NULL){
+    delete_wp(atoi(args));
+  }
+  else assert(0);
   return 0;
 }
 
@@ -114,6 +127,7 @@ static struct {
   { "x", "'x N EXPR'. Evaluate EXPR, use the result as the starting memory address then output consecutive N 4-bytes in hexadecimal", cmd_x },
   { "p", "'p EXPR'. Evaluate EXPR", cmd_p},
   { "w", "'w EXPR'. Set up a watchpoint for EXPR. When the value of it changes, stop the program", cmd_w},
+  { "d", "'d N'. Delete watchpoint NO.N", cmd_d},
 
   /* TODO: Add more commands */
 

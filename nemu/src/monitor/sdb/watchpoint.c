@@ -49,10 +49,46 @@ WP* new_wp(){
   return ans;
 };
 
+void delete_wp(int NO){
+  WP *pre = NULL;
+  WP *cur = head;
+  while(cur != NULL){
+    if(cur->NO == NO){
+      pre->next = cur->next;
+      free_wp(cur);
+      break;
+    }
+    pre = cur;
+    cur = cur->next;
+  }
+  assert(0);
+}
+
 /* Free a watchpoint in use */
 void free_wp(WP *wp){
   memset(wp->var, 0, sizeof(wp->var));
   wp->data = 0;
   wp->next = free_;
   free_ = wp;
-};
+}
+
+void use_wp(WP *wp){
+  wp->next = head;
+  head = wp;
+}
+
+void scan_all_wps(){
+  WP *cur = head;
+  while(cur != NULL){
+    bool success = true;
+    word_t tmp = expr(cur->var, &success);
+    if(!success) assert(0);
+    if(tmp != cur->data){
+      printf("The value of watchpoint NO.%d has changed from %d to %d.\n", cur->NO, cur->data, tmp);
+      nemu_state.state = NEMU_STOP;
+    }
+    cur->data = tmp;
+    cur = cur->next;
+  }
+}
+
