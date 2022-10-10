@@ -43,11 +43,12 @@ void isa_wp_display(){
 
 /* Return an empty watchpoint */
 WP* new_wp(){
-  struct watchpoint *ans = NULL;
+  WP *ans = NULL;
   if(free_ == NULL) assert(0);
   ans = free_;
   free_ = free_->next;
   ans->next = head;
+  if(head == NULL)printf("yyy");
   head = ans;
   return ans;
 };
