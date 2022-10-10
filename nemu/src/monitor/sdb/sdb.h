@@ -18,6 +18,8 @@
 
 #include <common.h>
 
-
+word_t expr(char *e, bool *success);
+void isa_wp_display();
+struct watchpoint;
 
 #endif

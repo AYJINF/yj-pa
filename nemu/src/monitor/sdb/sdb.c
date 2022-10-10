@@ -24,8 +24,7 @@ static int is_batch_mode = false;
 
 void init_regex();
 void init_wp_pool();
-word_t expr(char *e, bool *success);
-void isa_wp_display();
+
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
@@ -94,6 +93,10 @@ static int cmd_p(char *args){
   return 0;
 }
 
+static int cmd_w(char *args){
+  return 0;
+}
+
 static struct {
   const char *name;
   const char *description;
@@ -105,7 +108,8 @@ static struct {
   { "si", "'si N'.Step through N instructions and then pause execution. N defaults to 1 if not given", cmd_si },
   { "info", "Print state of the program\n \t'info r' for state of the register\n \t'info w' for information of the watchpoint", cmd_info },
   { "x", "'x N EXPR'. Evaluate EXPR, use the result as the starting memory address then output consecutive N 4-bytes in hexadecimal", cmd_x },
-  { "p", "'p EXPR'. Evaluate EXPR", cmd_p}
+  { "p", "'p EXPR'. Evaluate EXPR", cmd_p},
+  { "w", "'w EXPR'. Set up a watchpoint for EXPR. When the value of it changes, stop the program", cmd_w},
 
   /* TODO: Add more commands */
 

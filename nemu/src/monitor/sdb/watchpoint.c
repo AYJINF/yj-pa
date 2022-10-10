@@ -39,6 +39,7 @@ void init_wp_pool() {
   free_ = wp_pool;
 }
 
+/* Display states of the watchpoints */
 void isa_wp_display(){
   WP *cur = wp_pool;
   while(cur != NULL){
@@ -47,15 +48,19 @@ void isa_wp_display(){
   }
 }
 
-/* TODO: Implement the functionality of watchpoint */
+/* Return an empty watchpoint */
 WP* new_wp(){
-  struct watchpoint *ans;
+  struct watchpoint *ans = NULL;
   if(free_ == NULL) assert(0);
   ans = free_;
   free_ = free_->next;
   return ans;
-  
 };
 
-
-void free_wp(WP *wp);
+/* Free a watchpoint in use */
+void free_wp(WP *wp){
+  memset(wp->var, 0, sizeof(wp->var));
+  wp->data = 0;
+  wp->next = free_;
+  free_ = wp;
+};
