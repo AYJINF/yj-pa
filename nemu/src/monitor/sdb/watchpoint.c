@@ -52,7 +52,6 @@ WP* new_wp(){
 
 void delete_wp(int NO){
   WP *pre = NULL;
-  printf("NO=%d, head.NO=%d", NO, head->NO);
   WP *cur = head;
   while(cur != NULL){
     if(cur->NO == NO){
@@ -77,6 +76,7 @@ void free_wp(WP *wp){
 void use_wp(WP *wp){
   wp->next = head;
   head = wp;
+  printf("head.NO=%d\n", head->NO);
 }
 
 void scan_all_wps(){
