@@ -55,8 +55,8 @@ void delete_wp(int NO){
   WP *cur = head;
   while(cur != NULL){
     if(cur->NO == NO){
-      pre->next = cur->next;
-      printf("www  %d\n", cur->NO);
+      if(pre != NULL)pre->next = cur->next;
+      else pre = cur->next;
       free_wp(cur);
       return;
     }
