@@ -88,12 +88,15 @@ static int cmd_x(char *args){
 
 static int cmd_p(char *args){
   bool success = true;
-  if(success)printf("%d\n", expr(args, &success));
-  else assert(0);
+  word_t tmp = expr(args, &success);
+  if(!success) assert(0);
+  printf("%d\n", tmp);
   return 0;
 }
 
 static int cmd_w(char *args){
+  WP *emp_wp = new_wp();
+  strcpy(emp_wp->var, args);
   
   return 0;
 }

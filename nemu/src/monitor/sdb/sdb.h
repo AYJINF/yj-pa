@@ -27,5 +27,6 @@ typedef struct watchpoint {
   char var[1000] ;
 
 } WP;
+WP* new_wp();
 
 #endif
