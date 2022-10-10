@@ -71,10 +71,9 @@ static int cmd_info(char *args){
     isa_reg_display();
   }
   else if(!strcmp(args, "w")){
-    printf("zyy_try\n");
     isa_wp_display();
   }
-  //else assert(0);
+  else printf("The second command doesn't exist!");
   return 0;
 }
 

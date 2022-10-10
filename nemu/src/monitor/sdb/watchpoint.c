@@ -40,6 +40,7 @@ void init_wp_pool() {
 
 void isa_wp_display(){
   WP *cur = head;
+  printf("z\n");
   while(cur != NULL){
     printf("NO.%d, data=%d\n", cur->NO, cur->data);
     cur = cur->next;
