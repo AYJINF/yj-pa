@@ -33,7 +33,7 @@ void init_wp_pool() {
 
 /* Display states of the watchpoints in use */
 void isa_wp_display(){
-  WP *cur = head;
+  WP *cur = &(*head);
   if(cur == NULL)printf("No watchpoints\n");
   while(cur != NULL){
     printf("NO.%d,\t %s = %d\n", cur->NO, cur->var, cur->data);
@@ -75,12 +75,12 @@ void free_wp(WP *wp){
 }
 
 void use_wp(WP *wp){
-  wp->next = head;
+  wp->next = &(*head);
   head = wp;
 }
 
 void scan_all_wps(){
-  WP *cur = head;
+  WP *cur = &(*head);
   while(cur != NULL){
     bool success = true;
     word_t tmp = expr(cur->var, &success);
