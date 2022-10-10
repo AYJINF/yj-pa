@@ -47,6 +47,8 @@ WP* new_wp(){
   if(free_ == NULL) assert(0);
   ans = free_;
   free_ = free_->next;
+  ans->next = head;
+  head = ans;
   return ans;
 };
 
