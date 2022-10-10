@@ -24,6 +24,7 @@ static int is_batch_mode = false;
 
 void init_regex();
 void init_wp_pool();
+word_t expr(char *e, bool *success);
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
@@ -48,7 +49,6 @@ static int cmd_c(char *args) {
   return 0;
 }
 
-
 static int cmd_q(char *args) {
   nemu_state.state = NEMU_QUIT;
   return -1;
@@ -65,17 +65,15 @@ static int cmd_si(char *args){
   return 0;
 }
 
-
 static int cmd_info(char *args){
   if(!strcmp(args, "r")){
     isa_reg_display();
   }
   if(!strcmp(args, "w")){
-
+    
   }
   return 0;
 }
-
 
 static int cmd_x(char *args){
   int x_N, x_EXPR;
@@ -87,14 +85,12 @@ static int cmd_x(char *args){
   return 0;
 }
 
-
 static int cmd_p(char *args){
   bool success = true;
   if(success)printf("%d\n", expr(args, &success));
   else assert(0);
   return 0;
 }
-
 
 static struct {
   const char *name;
@@ -119,7 +115,6 @@ static int cmd_help(char *args) {
   /* extract the first argument */
   char *arg = strtok(NULL, " ");
   int i;
-
   if (arg == NULL) {
     /* no argument given */
     for (i = 0; i < NR_CMD; i ++) {
