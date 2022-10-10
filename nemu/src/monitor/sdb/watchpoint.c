@@ -31,7 +31,7 @@ void init_wp_pool() {
   free_ = wp_pool;
 }
 
-/* Display states of the watchpoints */
+/* Display states of the watchpoints in use */
 void isa_wp_display(){
   WP *cur = head;
   if(cur == NULL)printf("No watchpoints\n");
@@ -53,6 +53,7 @@ WP* new_wp(){
 void delete_wp(int NO){
   WP *pre = NULL;
   WP *cur = head;
+  printf("Before while  NO=%d, cur.NO=%d", NO, cur->NO);
   while(cur != NULL){
     printf("NO=%d, cur.NO=%d", NO, cur->NO);
     if(cur->NO == NO){
