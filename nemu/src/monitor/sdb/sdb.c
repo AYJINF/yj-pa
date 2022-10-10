@@ -103,7 +103,6 @@ static int cmd_w(char *args){
   word_t tmp = expr(args, &success);
   if(!success) assert(0);
   emp_wp->data = tmp;
-  use_wp(emp_wp);
   return 0;
 }
 

@@ -49,7 +49,6 @@ WP* new_wp(){
   free_ = free_->next;
   ans->next = head;
   head = ans;
-  if(head->next == NULL)printf("yyy");
   return ans;
 };
 
@@ -75,11 +74,6 @@ void free_wp(WP *wp){
   wp->data = 0;
   wp->next = free_;
   free_ = wp;
-}
-
-void use_wp(WP *wp){
-  wp->next = &(*head);
-  head = wp;
 }
 
 void scan_all_wps(){
