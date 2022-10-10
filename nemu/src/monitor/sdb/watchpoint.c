@@ -58,7 +58,10 @@ void delete_wp(int NO){
   while(cur != NULL){
     if(cur->NO == NO){
       if(pre != NULL)pre->next = cur->next;
-      else pre = cur->next;
+      else {
+        head = cur->next;
+        pre = cur->next;
+      }
       free_wp(cur);
       return;
     }
