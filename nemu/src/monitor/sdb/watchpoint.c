@@ -34,7 +34,7 @@ void init_wp_pool() {
 /* Display states of the watchpoints */
 void isa_wp_display(){
   WP *cur = head;
-  if(cur == NULL)printf("No watchpoints");
+  if(cur == NULL)printf("No watchpoints\n");
   while(cur != NULL){
     printf("NO.%d,\t %s = %d\n", cur->NO, cur->var, cur->data);
     cur = cur->next;
