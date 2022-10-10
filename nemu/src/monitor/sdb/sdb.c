@@ -74,9 +74,7 @@ static int cmd_info(char *args){
     printf("zyy_try\n");
     isa_wp_display();
   }
-  else{
-    printf("zyyfail\n");
-  }
+  //else assert(0);
   return 0;
 }
 
