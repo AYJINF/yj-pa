@@ -86,7 +86,7 @@ void scan_all_wps(){
     word_t tmp = expr(cur->var, &success);
     if(!success) assert(0);
     if(tmp != cur->data){
-      printf("The value of watchpoint NO.%d has changed.\nEXPR = %s\nOld value = %d\nNew value = %d.\n", cur->NO, cur->var, cur->data, tmp);
+      printf("The value of watchpoint NO.%d has changed.\nEXPR = %s\nOld value = %d\nNew value = %d\n", cur->NO, cur->var, cur->data, tmp);
       nemu_state.state = NEMU_STOP;
       cur->data = tmp;
     }
