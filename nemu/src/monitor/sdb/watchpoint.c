@@ -88,8 +88,8 @@ void scan_all_wps(){
     if(tmp != cur->data){
       printf("The value of watchpoint NO.%d has changed from %d to %d.\n", cur->NO, cur->data, tmp);
       nemu_state.state = NEMU_STOP;
+      cur->data = tmp;
     }
-    cur->data = tmp;
     cur = cur->next;
   }
 }
