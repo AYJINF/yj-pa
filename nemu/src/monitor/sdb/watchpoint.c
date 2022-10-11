@@ -80,6 +80,7 @@ void free_wp(WP *wp){
 }
 
 void scan_all_wps(){
+  printf("???\n");
   WP *cur = head;
   while(cur != NULL){
     bool success = true;
