@@ -81,7 +81,6 @@ void free_wp(WP *wp){
 
 void scan_all_wps(){
   WP *cur = head;
-  printf("yyy");
   while(cur != NULL){
     bool success = true;
     word_t tmp = expr(cur->var, &success);
