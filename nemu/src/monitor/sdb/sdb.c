@@ -164,7 +164,7 @@ void sdb_set_batch_mode() {
 void sdb_mainloop() {
 
   /* test for EXPRs (the amount of data is not general) */
-  FILE *fp = fopen("../tools/gen-expr/input", "r");
+  FILE *fp = fopen("../../../tools/gen-expr/input", "r");
   unsigned ans[6622];
   char test_expr[6622][1000];
   // while(!feof(fp))
@@ -179,7 +179,7 @@ void sdb_mainloop() {
     if(if_success == false) printf("line %d fail to be cal\n", i+1);
     if(tmp != ans[i]) printf("line%d is wrong. %u != %u", i+1, tmp, ans[i]);
   }
-  
+
   if (is_batch_mode) {
     cmd_c(NULL);
     return;
