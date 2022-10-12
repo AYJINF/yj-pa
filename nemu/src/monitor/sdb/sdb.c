@@ -166,9 +166,10 @@ void sdb_mainloop() {
 
   /* test for EXPRs (the amount of data is not general) */
   FILE *fp = fopen("../../../tools/gen-expr/input", "r");
-  printf("yyy\n");
   unsigned ans[6622];
   char test_expr[6622][1000];
+
+  printf("yyy\n");
   // while(!feof(fp))
   for(int i = 0; i < 6622; i++){
     printf("i=%d", i);
