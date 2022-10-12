@@ -90,7 +90,7 @@ static int cmd_p(char *args){
   bool success = true;
   word_t tmp = expr(args, &success);
   if(!success) assert(0);
-  printf("%d\n", tmp);
+  printf("%u\n", tmp);
   return 0;
 }
 

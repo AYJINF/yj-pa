@@ -31,6 +31,64 @@ static char *code_format =
 "  return 0; "
 "}";
 
+uint32_t choose(uint32_t n){
+  return rand() % n;
+}
+
+/* add to buf*/
+void gen(char s){
+  num += 1;
+  buf[num] = s;
+}
+
+/* add a random number */
+void gen_num(){
+  int flag = choose(2);
+  int len = choose(4) + 1; // flexible, to avoid overflow
+  // decimal integer
+  if(flag == 0){
+    for(int i = 0; i < len; i --){
+      gen('0' + choose(9));
+  }
+  // hexadecimal-number
+  else{
+    
+  }
+  }
+  
+}
+
+/* add an operation */
+void gen_rand_op(){
+  switch (choose(6))
+  {
+  case 0:
+    gen('=');gen('=');
+    break;
+  case 1:
+    gen('!');gen('=');
+    break;
+  case 2:
+    gen('&');gen('&');
+    break;
+  case 3:
+    gen('+');
+    break;
+  case 4:
+    gen('-');
+    break;
+  case 5:
+    gen('*');
+    break;
+  case 6:
+    gen('/');
+    break;
+  
+  default:
+    break;
+  }
+}
+
 static void gen_rand_expr() {
   buf[0] = '\0';
   // switch (choose(3)) {
@@ -61,7 +119,7 @@ int main(int argc, char *argv[]) {
     int ret = system("gcc /tmp/.code.c -o /tmp/.expr");
     if (ret != 0) continue;
 
-    fp = popen("/tmp/.expr", "r");
+    fp = popen("/tmp/.expr", "r");  
     assert(fp != NULL);
 
     int result;
