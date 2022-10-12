@@ -173,6 +173,7 @@ void sdb_mainloop() {
     int ttt = i;
     printf("ttt=%d", ttt);
     printf("yyy\n");
+    printf("i=%d", i);
     int w1 = fscanf(fp, "%u", &ans[i]);
     if(w1)printf("line%d, w1=%d", i+1, w1);
     char *w2 = fgets(test_expr[i], 1000, fp);
