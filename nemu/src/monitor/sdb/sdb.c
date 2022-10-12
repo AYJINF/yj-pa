@@ -171,8 +171,8 @@ void sdb_mainloop() {
   // while(!feof(fp))
   for(int i = 0; i < 6622; i++){
     int ttt = i;
-    printf("yyy\n");
     printf("ttt=%d", ttt);
+    printf("yyy\n");
     int w1 = fscanf(fp, "%u", &ans[i]);
     if(w1)printf("line%d, w1=%d", i+1, w1);
     char *w2 = fgets(test_expr[i], 1000, fp);
