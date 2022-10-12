@@ -21,6 +21,7 @@
 #include <string.h>
 
 // this should be enough
+static int num = 0;
 static char buf[65536] = {};
 static char code_buf[65536 + 128] = {}; // a little larger than `buf`
 static char *code_format =
@@ -37,30 +38,59 @@ uint32_t choose(uint32_t n){
 
 /* add to buf*/
 void gen(char s){
-  num += 1;
   buf[num] = s;
+  buf[++ num] = '\0';
 }
 
 /* add a random number */
 void gen_num(){
-  int flag = choose(2);
+  int if_hex = choose(2);
   int len = choose(4) + 1; // flexible, to avoid overflow
   // decimal integer
-  if(flag == 0){
-    for(int i = 0; i < len; i --){
-      gen('0' + choose(9));
+  if(if_hex == 0){
+    for(int i = 0; i < len; i++){
+      gen('0' + choose(10));
+    }
   }
   // hexadecimal-number
   else{
-    
+    gen('0');gen('x');
+    for(int j = 0; j < len; j++){
+      int if_le = choose(2);
+      if(if_le == 0) gen('0' + choose(10));
+      else{
+        switch (choose(6))
+        {
+        case 0:
+          gen('a');
+          break;
+        case 1:
+          gen('b');
+          break;
+        case 2:
+          gen('c');
+          break;
+        case 3:
+          gen('d');
+          break;
+        case 4:
+          gen('e');
+          break;
+        case 5:
+          gen('f');
+          break;
+        default:
+          break;
+        }
+      }
   }
-  }
-  
+    }
 }
+  
 
 /* add an operation */
 void gen_rand_op(){
-  switch (choose(6))
+  switch (choose(7))
   {
   case 0:
     gen('=');gen('=');
@@ -83,7 +113,6 @@ void gen_rand_op(){
   case 6:
     gen('/');
     break;
-  
   default:
     break;
   }
@@ -91,11 +120,12 @@ void gen_rand_op(){
 
 static void gen_rand_expr() {
   buf[0] = '\0';
-  // switch (choose(3)) {
-  //   case 0: gen_num(); break;
-  //   case 1: gen('('); gen_rand_expr(); gen(')'); break;
-  //   default: gen_rand_expr(); gen_rand_op(); gen_rand_expr(); break;
-  // }
+  switch (choose(5)) {
+    case 0: gen_num(); break;
+    case 1: gen('('); gen_rand_expr(); gen(')'); break;
+    case 2: gen(' '); gen_rand_expr(); break;
+    default: gen_rand_expr(); gen_rand_op(); gen_rand_expr(); break;
+  }
 }
 
 int main(int argc, char *argv[]) {
@@ -116,7 +146,7 @@ int main(int argc, char *argv[]) {
     fputs(code_buf, fp);
     fclose(fp);
 
-    int ret = system("gcc /tmp/.code.c -o /tmp/.expr");
+    int ret = system("gcc /tmp/.code.c -o /tmp/.expr -Werror"); // add "-Werror" to filter "/0" out
     if (ret != 0) continue;
 
     fp = popen("/tmp/.expr", "r");  
