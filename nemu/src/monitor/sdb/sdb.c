@@ -165,13 +165,14 @@ void sdb_mainloop() {
 
 
   /* test for EXPRs (the amount of data is not general) */
-  FILE *fp = fopen("../../../tools/gen-expr/input", "r");
+  FILE *fp = fopen("/../../../tools/gen-expr/input", "r");
   unsigned ans[6622] = {0};
   char test_expr[6622][1000] = {"0"};
   // while(!feof(fp))
   for(int i = 0; i < 6622; i++){
     printf("i=%d\n", i);
-    if(fscanf(fp, "%u", &ans[i]))printf("line%d has problem", i+1);
+    int w1 = fscanf(fp, "%u", &ans[i]);
+    if(w1)printf("line%d, w1=%d", i+1, w1);
     char *w2 = fgets(test_expr[i], 1000, fp);
     if(w2 == NULL)printf("line%d, w2==NULL", i+1);
     bool if_success = true;
