@@ -168,10 +168,9 @@ void sdb_mainloop() {
   FILE *fp = fopen("../../../tools/gen-expr/input", "r");
   unsigned ans[6622];
   char test_expr[6622][1000];
-
-  printf("yyy\n");
   // while(!feof(fp))
   for(int i = 0; i < 6622; i++){
+    printf("yyy\n");
     printf("i=%d", i);
     int w1 = fscanf(fp, "%u", &ans[i]);
     if(w1)printf("line%d, w1=%d", i+1, w1);
