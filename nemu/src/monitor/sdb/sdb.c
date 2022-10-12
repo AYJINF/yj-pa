@@ -165,22 +165,22 @@ void sdb_mainloop() {
 
 
   /* test for EXPRs (the amount of data is not general) */
-  FILE *fp = fopen("../../../tools/gen-expr/input", "r");
-  unsigned ans[6622];
-  char test_expr[6622][1000];
-  // while(!feof(fp))
-  for(int i = 0; i < 6622; i++){
-    printf("yyy\n");
-    printf("i=%d", i);
-    int w1 = fscanf(fp, "%u", &ans[i]);
-    if(w1)printf("line%d, w1=%d", i+1, w1);
-    char *w2 = fgets(test_expr[i], 1000, fp);
-    if(w2 == NULL)printf("line%d, w2==NULL", i+1);
-    bool if_success = true;
-    word_t tmp = expr(test_expr[i], &if_success);
-    if(if_success == false) printf("line %d fail to be cal\n", i+1);
-    if(tmp != ans[i]) printf("line%d is wrong. %u != %u", i+1, tmp, ans[i]);
-  }
+  // FILE *fp = fopen("../../../tools/gen-expr/input", "r");
+  // unsigned ans[6622];
+  // char test_expr[6622][1000];
+  // // while(!feof(fp))
+  // for(int i = 0; i < 6622; i++){
+  //   printf("yyy\n");
+  //   printf("i=%d", i);
+  //   int w1 = fscanf(fp, "%u", &ans[i]);
+  //   if(w1)printf("line%d, w1=%d", i+1, w1);
+  //   char *w2 = fgets(test_expr[i], 1000, fp);
+  //   if(w2 == NULL)printf("line%d, w2==NULL", i+1);
+  //   bool if_success = true;
+  //   word_t tmp = expr(test_expr[i], &if_success);
+  //   if(if_success == false) printf("line %d fail to be cal\n", i+1);
+  //   if(tmp != ans[i]) printf("line%d is wrong. %u != %u", i+1, tmp, ans[i]);
+  // }
 
   if (is_batch_mode) {
     cmd_c(NULL);
