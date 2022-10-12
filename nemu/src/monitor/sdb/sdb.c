@@ -163,6 +163,8 @@ void sdb_set_batch_mode() {
 
 void sdb_mainloop() {
 
+  printf("yyy\n");
+
   /* test for EXPRs (the amount of data is not general) */
   FILE *fp = fopen("../../../tools/gen-expr/input", "r");
   unsigned ans[6622];
