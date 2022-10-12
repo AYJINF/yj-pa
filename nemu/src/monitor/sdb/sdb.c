@@ -171,7 +171,6 @@ void sdb_mainloop() {
   // while(!feof(fp))
   for(int i = 0; i < 6622; i++){
     printf("i=%d\n", i);
-    printf("ans[0]=%u\n", ans[0]);
     int w1 = fscanf(fp, "%u", &ans[i]);
     if(w1)printf("line%d, w1=%d", i+1, w1);
     char *w2 = fgets(test_expr[i], 1000, fp);
