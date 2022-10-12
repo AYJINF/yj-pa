@@ -39,7 +39,8 @@ uint32_t choose(uint32_t n){
 /* add to buf*/
 void gen(char s){
   buf[num] = s;
-  buf[++ num] = '\0';
+  num += 1;
+  buf[num] = '\0';
 }
 
 /* add a random number */
@@ -119,8 +120,9 @@ void gen_rand_op(){
 }
 
 static void gen_rand_expr() {
-  buf[0] = '\0';
-  switch (choose(5)) {
+  int choice = choose(5);
+  if(num > 100) choice = 0;
+  switch (choice) {
     case 0: gen_num(); break;
     case 1: gen('('); gen_rand_expr(); gen(')'); break;
     case 2: gen(' '); gen_rand_expr(); break;
@@ -137,8 +139,9 @@ int main(int argc, char *argv[]) {
   }
   int i;
   for (i = 0; i < loop; i ++) {
+    num = 0;
+    memset(buf, 0, sizeof(buf));
     gen_rand_expr();
-
     sprintf(code_buf, code_format, buf);
 
     FILE *fp = fopen("/tmp/.code.c", "w");
