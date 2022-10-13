@@ -38,12 +38,9 @@ int main(int argc, char *argv[]) {
   FILE *fp = fopen("../tools/gen-expr/input", "r");
   unsigned a;
   char expr[1000];
-  // while(!feof(fp)){
-  //   fscanf(fp, "%d", &a[0]);
-  //   printf("a[0]=%d\n", a[0]);
-  //   fgets(expr[0], 1000, fp);
-  //   printf("expr[0]=%s\n", expr[0]);
-  // }
+  if(fp==NULL){
+    printf("fff\n");
+  }
   for(int i = 0; i < 6622; i++){
     int w1=fscanf(fp, "%u", &a);
     int w2=fscanf(fp, "%s", expr);
