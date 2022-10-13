@@ -55,12 +55,11 @@ int main(int argc, char *argv[]) {
     printf("%d %s\n",a,test_expr);
     bool check;
     word_t t = expr(test_expr,&check);
-    printf("t=%u", t);
     if(a!=t){
       printf("shit\n");
     }
 
   }
 
-  return is_exit_status_bad();
+  // return is_exit_status_bad();
 }
