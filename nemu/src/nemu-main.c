@@ -37,18 +37,22 @@ int main(int argc, char *argv[]) {
   
   FILE *fp = fopen("tools/gen-expr/input", "r");
   unsigned a;
-  char expr[1000];
+  char eexpr[1000];
   if(fp==NULL){
     printf("fff\n");
   }
   for(int i = 0; i < 6622; i++){
     int w1=fscanf(fp, "%u", &a);
-    int w2=fscanf(fp, "%s", expr);
+    int w2=fscanf(fp, "%s", eexpr);
     if(w1&&w2){
       w1=0;
     }
-    printf("a[%d]=%u\n", i, a);
-    printf("expr[%d]=%s\n", i, expr);
+    bool check;
+    if(a!=expr(eexpr,&check)){
+      printf("shit\n");
+    }
+    // printf("a[%d]=%u\n", i, a);
+    // printf("expr[%d]=%s\n", i, expr);
   }
 
   // return is_exit_status_bad();
