@@ -42,6 +42,7 @@ int main(int argc, char *argv[]) {
     printf("fff\n");
   }
   for(int i = 0; i < 6622; i++){
+    memset(eexpr,0,sizeof(eexpr));
     int w1=fscanf(fp, "%u", &a);
     char *w2=fgets(eexpr, 1000, fp);;
     if(w1&&w2){
