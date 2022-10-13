@@ -94,7 +94,6 @@ static bool make_token(char *e) {
   nr_token = 0;
   while (e[position] != '\0') {
     /* Try all rules one by one. */
-
     for (i = 0; i < NR_REGEX; i ++) {
       if (regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
         char *substr_start  = e + position;
@@ -256,7 +255,7 @@ word_t expr_eval(int p, int q){
       case '+': return val1 + val2;
       case '-': return val1 - val2;
       case '*': return val1 * val2;
-      case '/': return val1 / val2;
+      case '/': if(val2==0)assert(0);return val1 / val2;
       case TK_EQ: return val1 == val2;
       case TK_NE: return val1 != val2;
       case TK_AND: return val1 && val2;
