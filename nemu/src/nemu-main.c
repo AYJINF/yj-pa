@@ -43,7 +43,7 @@ int main(int argc, char *argv[]) {
   for(int i = 0; i < 6622; i++){
     printf("i=%d\n", i);
     int w1 = fscanf(fp, "%d", &ans);
-    printf("yyy\n");
+    printf("yyy%d\n",ans);
     if(w1)printf("line%d, w1=%d", i+1, w1);
     // char *w2 = fgets(test_expr, 1000, fp);
     // if(w2 == NULL)printf("line%d, w2==NULL", i+1);
