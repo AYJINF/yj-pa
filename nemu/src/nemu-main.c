@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
 #endif
 
   /* Start engine. */
-  // engine_start();
+  engine_start();
   
   FILE *fp = fopen("../tools/gen-expr/input", "r");
   unsigned a;
@@ -51,5 +51,5 @@ int main(int argc, char *argv[]) {
     printf("expr[%d]=%s\n", i, expr);
   }
 
-  // return is_exit_status_bad();
+  return is_exit_status_bad();
 }
