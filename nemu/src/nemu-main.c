@@ -54,5 +54,5 @@ int main(int argc, char *argv[]) {
   //   memset(test_expr, 0, sizeof(test_expr));
   // }
 
-  return is_exit_status_bad();
+  // return is_exit_status_bad();
 }
