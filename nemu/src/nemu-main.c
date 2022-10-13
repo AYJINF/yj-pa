@@ -43,7 +43,7 @@ int main(int argc, char *argv[]) {
   }
   for(int i = 0; i < 1; i++){
     int w1=fscanf(fp, "%u", &a);
-    int w2=fscanf(fp, "%s", eexpr);
+    char *w2=fgets(eexpr, 1000, fp);;
     if(w1&&w2){
       w1=0;
     }
