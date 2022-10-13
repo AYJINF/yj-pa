@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
     if(w1&&w2){
       w1=0;
     }
-    printf("%d %s\n",a,eexpr);
+    printf("%d %ld\n",a,strlen(eexpr));
     bool check;
     if(a!=expr(eexpr,&check)){
       printf("shit\n");
