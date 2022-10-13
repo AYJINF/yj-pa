@@ -58,8 +58,9 @@ int main(int argc, char *argv[]) {
     if(a!=t){
       printf("shit\n");
     }
+    nemu_state.state = NEMU_QUIT;
 
   }
 
-  // return is_exit_status_bad();
+  return is_exit_status_bad();
 }
