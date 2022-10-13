@@ -33,32 +33,32 @@ int main(int argc, char *argv[]) {
 #endif
 
   /* Start engine. */
-  engine_start();
+  // engine_start();
   
-  // FILE *fp = fopen("tools/gen-expr/input", "r");
-  // unsigned a;
-  // char test_expr[1000] = {"(0x712)"};
-  // if(fp==NULL){
-  //   printf("The fp is error\n");
-  // }
-  // for(int i = 0; i < 1; i++){
-  //   // memset(test_expr,0,sizeof(test_expr));
-  //   // int w1=fscanf(fp, "%u", &a);
-  //   // char *w2=fgets(test_expr, 1000, fp);
-  //   // if(w1&&w2){
-  //   //   w1=0;
-  //   // }
-  //   a = 1810;
-  //   printf("?\n");
-  //   printf("len_expr=%ld\n", strlen(test_expr));
-  //   test_expr[strlen(test_expr)]='\0';
-  //   printf("%d %s\n",a,test_expr);
-  //   bool check;
-  //   if(a!=expr(test_expr,&check)){
-  //     printf("shit\n");
-  //   }
+  FILE *fp = fopen("tools/gen-expr/input", "r");
+  unsigned a;
+  char test_expr[1000] = {"(0x712)"};
+  if(fp==NULL){
+    printf("The fp is error\n");
+  }
+  for(int i = 0; i < 1; i++){
+    // memset(test_expr,0,sizeof(test_expr));
+    // int w1=fscanf(fp, "%u", &a);
+    // char *w2=fgets(test_expr, 1000, fp);
+    // if(w1&&w2){
+    //   w1=0;
+    // }
+    a = 1810;
+    printf("?\n");
+    printf("len_expr=%ld\n", strlen(test_expr));
+    test_expr[strlen(test_expr)]='\0';
+    printf("%d %s\n",a,test_expr);
+    bool check;
+    if(a!=expr(test_expr,&check)){
+      printf("shit\n");
+    }
 
-  // }
+  }
 
   return is_exit_status_bad();
 }
