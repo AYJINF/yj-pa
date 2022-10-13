@@ -54,6 +54,7 @@ int main(int argc, char *argv[]) {
     test_expr[strlen(test_expr)]='\0';
     printf("%d %s\n",a,test_expr);
     bool check;
+    printf("result=%u\n", expr(test_expr,&check));
     if(a!=expr(test_expr,&check)){
       printf("shit\n");
     }
