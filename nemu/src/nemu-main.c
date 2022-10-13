@@ -14,6 +14,8 @@
 ***************************************************************************************/
 
 #include <common.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 void init_monitor(int, char *[]);
 void am_init_monitor();
@@ -33,7 +35,7 @@ int main(int argc, char *argv[]) {
   /* Start engine. */
   // engine_start();
    /* test for EXPRs (the amount of data is not general) */
-  FILE *fp = fopen("../tools/gen-expr/inputt", "w+");
+  FILE *fp = fopen("../tools/gen-expr/inputt", "r");
   if(fp==NULL)printf("shit\n");
   // while(!feof(fp))
   // int ans = 0;
