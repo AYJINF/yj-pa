@@ -48,7 +48,7 @@ int main(int argc, char *argv[]) {
     if(w1&&w2){
       w1=0;
     }
-    test_expr[strlen(test_expr)]='\0';
+    test_expr[strlen(test_expr)-1]='\0';
     printf("ans=%d expr=%s\n",a,test_expr);
     bool check;
     word_t t = expr(test_expr,&check);
