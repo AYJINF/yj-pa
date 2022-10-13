@@ -50,6 +50,7 @@ int main(int argc, char *argv[]) {
     // }
     a = 1810;
     printf("?\n");
+    printf("len_expr=%ld\n", strlen(test_expr));
     test_expr[strlen(test_expr)-1]='\0';
     printf("%d %s\n",a,test_expr);
     bool check;
