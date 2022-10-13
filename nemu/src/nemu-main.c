@@ -57,6 +57,7 @@ int main(int argc, char *argv[]) {
     printf("ans=%d expr=%s\n",a,test_expr);
     bool check;
     word_t t = expr(test_expr,&check);
+    printf("t=%u\n", t);
     if(a!=t){
       // flag[j] = i+1;
       // ans[j] = a;
