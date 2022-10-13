@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
   
   /* Test for EXPRs (Make engine_start() noted if use it) */
   FILE *fp = fopen("tools/gen-expr/input", "r");
-  unsigned a;
+  unsigned a = 65091;
   char test_expr[1000]="0xfe43";
   // int flag[6622] = {0}; // to see if there are wrong answers
   // unsigned ans[6622] = {0};
@@ -48,11 +48,11 @@ int main(int argc, char *argv[]) {
   // int j = 0;
   for(int i = 0; i < 1; i++){
     // memset(test_expr,0,sizeof(test_expr));
-    int w1=fscanf(fp, "%u", &a);
-    char *w2=fgets(test_expr, 1000, fp);
-    if(w1&&w2){
-      w1=0;
-    }
+    // int w1=fscanf(fp, "%u", &a);
+    // char *w2=fgets(test_expr, 1000, fp);
+    // if(w1&&w2){
+    //   w1=0;
+    // }
     test_expr[strlen(test_expr)-1]='\0';
     printf("ans=%d expr=%s\n",a,test_expr);
     bool check;
