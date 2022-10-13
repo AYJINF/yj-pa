@@ -46,14 +46,14 @@ int main(int argc, char *argv[]) {
     printf("The fp is error\n");
   }
   int j = 0;
-  for(int i = 0; i < 1; i++){
+  for(int i = 0; i < 6600; i++){
     memset(test_expr,0,sizeof(test_expr));
     int w1=fscanf(fp, "%u", &a);
     char *w2=fgets(test_expr, 1000, fp);
     if(w1&&w2){
       w1=0;
     }
-    test_expr[strlen(test_expr)]='\0';
+    test_expr[strlen(test_expr)-1]='\0';
     printf("ans=%d expr=%s\n",a,test_expr);
     bool check;
     word_t t = expr(test_expr,&check);
