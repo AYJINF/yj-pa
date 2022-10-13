@@ -41,13 +41,13 @@ int main(int argc, char *argv[]) {
   if(fp==NULL){
     printf("fff\n");
   }
-  for(int i = 0; i < 1; i++){
+  for(int i = 0; i < 6622; i++){
     int w1=fscanf(fp, "%u", &a);
     char *w2=fgets(eexpr, 1000, fp);;
     if(w1&&w2){
       w1=0;
     }
-    printf("%d %ld\n",a,strlen(eexpr));
+    // printf("%d %ld\n",a,strlen(eexpr));
     eexpr[strlen(eexpr)-1]='\0';
     bool check;
     if(a!=expr(eexpr,&check)){
