@@ -36,6 +36,7 @@ int main(int argc, char *argv[]) {
   FILE *fp = fopen("../tools/gen-expr/input", "r");
   // while(!feof(fp))
   int ans = 0;
+  if(fp==NULL)printf("shit\n");
   char test_expr[1000] = {"0"};
   for(int i = 0; i < 6622; i++){
     printf("i=%d\n", i);
