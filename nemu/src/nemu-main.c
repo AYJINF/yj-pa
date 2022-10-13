@@ -34,19 +34,19 @@ int main(int argc, char *argv[]) {
   // engine_start();
    /* test for EXPRs (the amount of data is not general) */
   FILE *fp = fopen("../../../tools/gen-expr/input", "r");
-  unsigned ans[6622] = {0};
-  char test_expr[6622][1000] = {"0"};
   // while(!feof(fp))
   for(int i = 0; i < 6622; i++){
     printf("i=%d\n", i);
-    int w1 = fscanf(fp, "%u", &(ans[i]));
+    int ans = 0;
+    char test_expr[1000] = {"0"};
+    int w1 = fscanf(fp, "%u", &ans);
     if(w1)printf("line%d, w1=%d", i+1, w1);
-    char *w2 = fgets(test_expr[i], 1000, fp);
+    char *w2 = fgets(test_expr, 1000, fp);
     if(w2 == NULL)printf("line%d, w2==NULL", i+1);
     bool if_success = true;
-    word_t tmp = expr(test_expr[i], &if_success);
+    word_t tmp = expr(test_expr, &if_success);
     if(if_success == false) printf("line %d fail to be cal\n", i+1);
-    if(tmp != ans[i]) printf("line%d is wrong. %u != %u", i+1, tmp, ans[i]);
+    if(tmp != ans) printf("line%d is wrong. %u != %u", i+1, tmp, ans);
   }
 
   return is_exit_status_bad();
