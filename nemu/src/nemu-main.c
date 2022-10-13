@@ -26,30 +26,30 @@ word_t expr(char *e, bool *success);
 
 int main(int argc, char *argv[]) {
   /* Initialize the monitor. */
-#ifdef CONFIG_TARGET_AM
-  am_init_monitor();
-#else
-  init_monitor(argc, argv);
-#endif
+// #ifdef CONFIG_TARGET_AM
+//   am_init_monitor();
+// #else
+//   init_monitor(argc, argv);
+// #endif
 
   /* Start engine. */
-  engine_start();
+  // engine_start();
   
-  FILE *fp = fopen("../tools/gen-expr/input", "r");
-  unsigned a;
-  char expr[1000];
+  FILE *fp = fopen("inputt", "w+");
+  // unsigned a;
+  // char expr[1000];
   if(fp==NULL){
     printf("fff\n");
   }
-  for(int i = 0; i < 6622; i++){
-    int w1=fscanf(fp, "%u", &a);
-    int w2=fscanf(fp, "%s", expr);
-    if(w1&&w2){
-      w1=0;
-    }
-    printf("a[%d]=%u\n", i, a);
-    printf("expr[%d]=%s\n", i, expr);
-  }
+  // for(int i = 0; i < 6622; i++){
+  //   int w1=fscanf(fp, "%u", &a);
+  //   int w2=fscanf(fp, "%s", expr);
+  //   if(w1&&w2){
+  //     w1=0;
+  //   }
+  //   printf("a[%d]=%u\n", i, a);
+  //   printf("expr[%d]=%s\n", i, expr);
+  // }
 
-  return is_exit_status_bad();
+  // return is_exit_status_bad();
 }
