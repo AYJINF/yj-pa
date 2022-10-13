@@ -39,20 +39,20 @@ int main(int argc, char *argv[]) {
   // while(!feof(fp))
   word_t ans = 0;
   if(fp==NULL)printf("shit\n");
-  char test_expr[1000] = {"0"};
+  // char test_expr[1000] = {"0"};
   for(int i = 0; i < 6622; i++){
     printf("i=%d\n", i);
     int w1 = fscanf(fp, "%d", &ans);
     printf("yyy\n");
     if(w1)printf("line%d, w1=%d", i+1, w1);
-    char *w2 = fgets(test_expr, 1000, fp);
-    if(w2 == NULL)printf("line%d, w2==NULL", i+1);
-    bool if_success = true;
-    word_t tmp = expr(test_expr, &if_success);
-    if(if_success == false) printf("line %d fail to be cal\n", i+1);
-    if(tmp != ans) printf("line%d is wrong. %d != %d", i+1, tmp, ans);
-    ans = 0;
-    memset(test_expr, 0, sizeof(test_expr));
+    // char *w2 = fgets(test_expr, 1000, fp);
+    // if(w2 == NULL)printf("line%d, w2==NULL", i+1);
+    // bool if_success = true;
+    // word_t tmp = expr(test_expr, &if_success);
+    // if(if_success == false) printf("line %d fail to be cal\n", i+1);
+    // if(tmp != ans) printf("line%d is wrong. %d != %d", i+1, tmp, ans);
+    // ans = 0;
+    // memset(test_expr, 0, sizeof(test_expr));
   }
 
   // return is_exit_status_bad();
