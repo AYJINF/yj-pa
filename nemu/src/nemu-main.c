@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
   /* Start engine. */
   // engine_start();
   
-  FILE *fp = fopen("inputt", "w+");
+  FILE *fp = fopen("tools/gen-expr/input", "r");
   // unsigned a;
   // char expr[1000];
   if(fp==NULL){
