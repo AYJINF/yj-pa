@@ -33,44 +33,43 @@ int main(int argc, char *argv[]) {
 #endif
 
   /* Start engine. */
-  engine_start();
+  // engine_start();
   
   /* Test for EXPRs (Make engine_start() noted if use it) */
-  // FILE *fp = fopen("tools/gen-expr/input", "r");
-  // unsigned a = 65091;
-  // char test_expr[1000]="0xfe43";
-  // int flag[6622] = {0}; // to see if there are wrong answers
-  // unsigned ans[6622] = {0};
-  // unsigned r[6622] = {0};
-  // if(fp==NULL){
-  //   printf("The fp is error\n");
-  // }
-  // int j = 0;
-  // for(int i = 0; i < 1; i++){
-    // memset(test_expr,0,sizeof(test_expr));
-    // int w1=fscanf(fp, "%u", &a);
-    // char *w2=fgets(test_expr, 1000, fp);
-    // if(w1&&w2){
-    //   w1=0;
-    // }
-  //   test_expr[strlen(test_expr)-1]='\0';
-  //   printf("ans=%d expr=%s\n",a,test_expr);
-  //   bool check;
-  //   word_t t = expr(test_expr,&check);
-  //   printf("t=%u\n", t);
-  //   if(a!=t){
-  //     // flag[j] = i+1;
-  //     // ans[j] = a;
-  //     // r[j] = t;
-  //     // j++;
-  //     printf("uyyyy\n");
-  //   }
-  // }
+  FILE *fp = fopen("tools/gen-expr/input", "r");
+  unsigned a = 0;
+  char test_expr[1000];
+  int flag[6622] = {0}; // to see if there are wrong answers
+  unsigned ans[6622] = {0};
+  unsigned r[6622] = {0};
+  if(fp==NULL){
+    printf("The fp is error\n");
+  }
+  int j = 0;
+  for(int i = 0; i < 1; i++){
+    memset(test_expr,0,sizeof(test_expr));
+    int w1=fscanf(fp, "%u", &a);
+    char *w2=fgets(test_expr, 1000, fp);
+    if(w1&&w2){
+      w1=0;
+    }
+    test_expr[strlen(test_expr)]='\0';
+    printf("ans=%d expr=%s\n",a,test_expr);
+    bool check;
+    word_t t = expr(test_expr,&check);
+    printf("t=%u\n", t);
+    if(a!=t){
+      flag[j] = i+1;
+      ans[j] = a;
+      r[j] = t;
+      j++;
+    }
+  }
   // printf("flag=%d", flag);
-  // for(int k = 0; flag[k] != 0; k++){
-  //   printf("line=%d, ans=%u, result=%u\n", flag[k], ans[k], r[k]);
-  // }
-  // nemu_state.state = NEMU_QUIT;
+  for(int k = 0; flag[k] != 0; k++){
+    printf("line=%d, ans=%u, result=%u\n", flag[k], ans[k], r[k]);
+  }
+  nemu_state.state = NEMU_QUIT;
 
   return is_exit_status_bad();
 }
