@@ -48,7 +48,7 @@ int main(int argc, char *argv[]) {
     if(w1&&w2){
       w1=0;
     }
-    // printf("%d %ld\n",a,strlen(eexpr));
+    printf("%d %s\n",a,eexpr);
     eexpr[strlen(eexpr)-1]='\0';
     bool check;
     if(a!=expr(eexpr,&check)){
