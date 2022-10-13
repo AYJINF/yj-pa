@@ -41,17 +41,17 @@ int main(int argc, char *argv[]) {
   if(fp==NULL){
     printf("fff\n");
   }
-  for(int i = 0; i < 6622; i++){
+  for(int i = 0; i < 1; i++){
     int w1=fscanf(fp, "%u", &a);
     int w2=fscanf(fp, "%s", eexpr);
     if(w1&&w2){
       w1=0;
     }
     printf("%ld\n",strlen(eexpr));
-    // bool check;
-    // if(a!=expr(eexpr,&check)){
-    //   printf("shit\n");
-    // }
+    bool check;
+    if(a!=expr(eexpr,&check)){
+      printf("shit\n");
+    }
 
   }
 
