@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
   
   FILE *fp = fopen("tools/gen-expr/input", "r");
   unsigned a;
-  char test_expr[1000] = {" 0x712"};
+  char test_expr[1000] = {"(0x712)"};
   if(fp==NULL){
     printf("The fp is error\n");
   }
