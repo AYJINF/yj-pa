@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
   /* Start engine. */
   // engine_start();
    /* test for EXPRs (the amount of data is not general) */
-  FILE *fp = fopen("../tools/gen-expr/gen-expr.c", "r");
+  FILE *fp = fopen("filelist.mk", "r");
   if(fp==NULL)printf("shit\n");
   // while(!feof(fp))
   // int ans = 0;
