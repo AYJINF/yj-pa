@@ -49,6 +49,7 @@ int main(int argc, char *argv[]) {
     //   w1=0;
     // }
     a = 1810;
+    printf("?\n");
     printf("%d %s\n",a,test_expr);
     test_expr[strlen(test_expr)-1]='\0';
     bool check;
