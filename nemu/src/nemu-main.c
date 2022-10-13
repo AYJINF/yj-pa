@@ -35,9 +35,11 @@ int main(int argc, char *argv[]) {
   /* Start engine. */
   // engine_start();
   
+  /* Test for EXPRs (Make engine_start() noted if use it) */
   FILE *fp = fopen("tools/gen-expr/input", "r");
   unsigned a;
   char test_expr[1000];
+  int flag = 0; // to see if there are wrong answers
   if(fp==NULL){
     printf("The fp is error\n");
   }
@@ -53,9 +55,10 @@ int main(int argc, char *argv[]) {
     bool check;
     word_t t = expr(test_expr,&check);
     if(a!=t){
-      printf("shit\n");
+      flag++;
     }
   }
+  printf("flag=%d", flag);
   nemu_state.state = NEMU_QUIT;
 
   return is_exit_status_bad();
