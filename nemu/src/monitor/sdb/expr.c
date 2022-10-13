@@ -206,7 +206,6 @@ int s_pri(int s){
 
 
 word_t expr_eval(int p, int q){
-  printf("p=%d, q=%d\n", p, q);
   if(p > q){
     printf("A bad expression!");
     assert(0);
