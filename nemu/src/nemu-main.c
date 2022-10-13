@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
   /* Start engine. */
   // engine_start();
    /* test for EXPRs (the amount of data is not general) */
-  FILE *fp=freopen("tools/gen-expr/input", "r",stdin);
+  FILE *fp=freopen("../tools/gen-expr/input", "r",stdin);
   if(fp==NULL){
     return 0;
   }
