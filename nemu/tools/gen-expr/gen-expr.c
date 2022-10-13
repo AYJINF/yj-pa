@@ -53,9 +53,9 @@ void gen_num(){
       gen('0' + choose(9) + 1);
       for(int i = 1; i < len; i++){
         gen('0' + choose(10));
+      }
     }
-    else gen('0' + choose(10));;
-    }
+    else gen('0' + choose(10));
   }
   // hexadecimal-number
   else{

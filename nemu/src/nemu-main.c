@@ -39,14 +39,14 @@ int main(int argc, char *argv[]) {
   FILE *fp = fopen("tools/gen-expr/input", "r");
   unsigned a = 0;
   char test_expr[1000];
-  int flag[6622] = {0}; // to see if there are wrong answers
-  unsigned ans[6622] = {0};
-  unsigned r[6622] = {0};
+  int flag[7612] = {0}; // to see if there are wrong answers
+  unsigned ans[7612] = {0};
+  unsigned r[7612] = {0};
   if(fp==NULL){
     printf("The fp is error\n");
   }
   int j = 0;
-  for(int i = 0; i < 6600; i++){
+  for(int i = 0; i < 7612; i++){
     memset(test_expr,0,sizeof(test_expr));
     int w1=fscanf(fp, "%u", &a);
     char *w2=fgets(test_expr, 1000, fp);
