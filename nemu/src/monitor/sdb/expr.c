@@ -92,7 +92,7 @@ static bool make_token(char *e) {
   /* Init tokens. */
   memset(tokens, 0, sizeof(tokens));
   nr_token = 0;
-
+  printf("ss\n");
   while (e[position] != '\0') {
     /* Try all rules one by one. */
     for (i = 0; i < NR_REGEX; i ++) {
@@ -271,7 +271,6 @@ word_t expr(char *e, bool *success) {
     *success = false;
     return 0;
   }
-  printf("ss\n");
   // to find out the dereference
   for (int i = 0; i < nr_token; i ++) {
   if (tokens[i].type == '*' && 
