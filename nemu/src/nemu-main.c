@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
     printf("The fp is error\n");
   }
   for(int i = 0; i < 1; i++){
-    memset(test_expr,0,sizeof(test_expr));
+    // memset(test_expr,0,sizeof(test_expr));
     // int w1=fscanf(fp, "%u", &a);
     // char *w2=fgets(test_expr, 1000, fp);
     // if(w1&&w2){
