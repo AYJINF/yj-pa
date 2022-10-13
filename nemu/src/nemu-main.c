@@ -34,25 +34,24 @@ int main(int argc, char *argv[]) {
 
   /* Start engine. */
   // engine_start();
-   /* test for EXPRs (the amount of data is not general) */
-  FILE *fp=freopen("../tools/gen-expr/input", "r",stdin);
-  if(fp==NULL){
-    return 0;
-  }
-  // while(!feof(fp))
-  word_t ans = 0;
-  char test_expr[1000] = {"0"};
+  
+  FILE *fp = fopen("../tools/gen-expr/input", "r");
+  unsigned a;
+  char expr[1000];
+  // while(!feof(fp)){
+  //   fscanf(fp, "%d", &a[0]);
+  //   printf("a[0]=%d\n", a[0]);
+  //   fgets(expr[0], 1000, fp);
+  //   printf("expr[0]=%s\n", expr[0]);
+  // }
   for(int i = 0; i < 6622; i++){
-    printf("i=%d\n", i);
-    int a=scanf("%d", &ans);
-    int b=scanf("%s", test_expr);
-    if(a&&b)a=1;
-    bool if_success = true;
-    word_t tmp = expr(test_expr, &if_success);
-    if(if_success == false) printf("line %d fail to be cal\n", i+1);
-    if(tmp != ans) printf("line%d is wrong. %d != %d", i+1, tmp, ans);
-    ans = 0;
-    memset(test_expr, 0, sizeof(test_expr));
+    int w1=fscanf(fp, "%u", &a);
+    int w2=fscanf(fp, "%s", expr);
+    if(w1&&w2){
+      w1=0;
+    }
+    printf("a[%d]=%u\n", i, a);
+    printf("expr[%d]=%s\n", i, expr);
   }
 
   // return is_exit_status_bad();
