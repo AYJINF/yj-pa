@@ -50,8 +50,8 @@ int main(int argc, char *argv[]) {
     // }
     a = 1810;
     printf("?\n");
-    printf("%d %s\n",a,test_expr);
     test_expr[strlen(test_expr)-1]='\0';
+    printf("%d %s\n",a,test_expr);
     bool check;
     if(a!=expr(test_expr,&check)){
       printf("shit\n");
