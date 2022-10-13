@@ -36,20 +36,20 @@ int main(int argc, char *argv[]) {
   // engine_start();
   
   FILE *fp = fopen("tools/gen-expr/input", "r");
-  // unsigned a;
-  // char expr[1000];
+  unsigned a;
+  char expr[1000];
   if(fp==NULL){
     printf("fff\n");
   }
-  // for(int i = 0; i < 6622; i++){
-  //   int w1=fscanf(fp, "%u", &a);
-  //   int w2=fscanf(fp, "%s", expr);
-  //   if(w1&&w2){
-  //     w1=0;
-  //   }
-  //   printf("a[%d]=%u\n", i, a);
-  //   printf("expr[%d]=%s\n", i, expr);
-  // }
+  for(int i = 0; i < 6622; i++){
+    int w1=fscanf(fp, "%u", &a);
+    int w2=fscanf(fp, "%s", expr);
+    if(w1&&w2){
+      w1=0;
+    }
+    printf("a[%d]=%u\n", i, a);
+    printf("expr[%d]=%s\n", i, expr);
+  }
 
   // return is_exit_status_bad();
 }
