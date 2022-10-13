@@ -48,6 +48,7 @@ int main(int argc, char *argv[]) {
       w1=0;
     }
     printf("%d %ld\n",a,strlen(eexpr));
+    eexpr[strlen(eexpr)-1]='\0';
     bool check;
     if(a!=expr(eexpr,&check)){
       printf("shit\n");
