@@ -49,8 +49,12 @@ void gen_num(){
   int len = choose(4) + 1; // flexible, to avoid overflow
   // decimal integer
   if(if_hex == 0){
-    for(int i = 0; i < len; i++){
-      gen('0' + choose(10));
+    if(len > 1){
+      gen('0' + choose(9) + 1);
+      for(int i = 1; i < len; i++){
+        gen('0' + choose(10));
+    }
+    else gen('0' + choose(10));;
     }
   }
   // hexadecimal-number
