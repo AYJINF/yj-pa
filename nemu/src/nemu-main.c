@@ -47,12 +47,12 @@ int main(int argc, char *argv[]) {
     if(w1&&w2){
       w1=0;
     }
+    printf("%ld\n",strlen(eexpr));
     // bool check;
     // if(a!=expr(eexpr,&check)){
     //   printf("shit\n");
     // }
-    // printf("a[%d]=%u\n", i, a);
-    // printf("expr[%d]=%s\n", i, expr);
+
   }
 
   // return is_exit_status_bad();
