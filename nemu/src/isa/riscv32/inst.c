@@ -97,6 +97,8 @@ static int decode_exec(Decode *s) {
 
   INSTPAT("??????? ????? ????? 100 ????? 11000 11", blt    , B, if((sword_t)src1 < (sword_t)src2) s->dnpc = s->pc + imm);
 
+  INSTPAT("0100000 ????? ????? 101 ????? 01100 11", sra    , R, R(dest) = ((sword_t)src1 >> (src2 & 0x1f))); 
+
   
 
   INSTPAT("0000000 00001 00000 000 00000 11100 11", ebreak , N, NEMUTRAP(s->pc, R(10))); // R(10) is $a0
