@@ -89,17 +89,19 @@ void *memcpy(void *out, const void *in, size_t n) {
   return out;
 }
 
+
 int memcmp(const void *s1, const void *s2, size_t n) {
-  assert((s1 != NULL) && (s2 != NULL));
-  const char *tmp1 = (char*)s1;
-  const char *tmp2 = (char*)s2;
-  while(n--){
-    if(*tmp1 != *tmp2)
-      return ((*tmp1 < *tmp2) ? -1 : 1);
-    tmp1++;
-    tmp2++;
-  }
-  return 0;
+  // assert((s1 != NULL) && (s2 != NULL));
+  // const char *tmp1 = (char*)s1;
+  // const char *tmp2 = (char*)s2;
+  // while(n--){
+  //   if(*tmp1 != *tmp2)
+  //     return ((*tmp1 < *tmp2) ? -1 : 1);
+  //   tmp1++;
+  //   tmp2++;
+  // }
+  // return 0;
+  panic("Not implemented");
 }
 
 #endif
