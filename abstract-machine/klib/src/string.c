@@ -65,29 +65,29 @@ void *memset(void *s, int c, size_t n) {
 }
 
 void *memmove(void *dst, const void *src, size_t n) { // ?
-  assert((dst != NULL) && (src != NULL));
-  char *dst_t = (char*)dst;
-  char *src_t = (char*)src;
-  if(dst_t <= src_t || dst_t > src_t + n)
-    while(n--)
-      *dst_t++ = *src_t++;
-  else{
-    dst_t += n-1;
-    src_t += n-1;
-    while(n--)
-      *dst_t-- = *src_t--;
-  }
-  return dst;
+  // assert((dst != NULL) && (src != NULL));
+  // char *dst_t = (char*)dst;
+  // char *src_t = (char*)src;
+  // if(dst_t <= src_t || dst_t > src_t + n)
+  //   while(n--)
+  //     *dst_t++ = *src_t++;
+  // else{
+  //   dst_t += n-1;
+  //   src_t += n-1;
+  //   while(n--)
+  //     *dst_t-- = *src_t--;
+  // }
+  // return dst;
+  panic("Not implemented");
 }
 
 void *memcpy(void *out, const void *in, size_t n) {
-  // assert((out != NULL) && (in != NULL));
-  // char *dst = (char*)out;
-  // char *src = (char*)in;
-  // while(n--)
-  //   *dst++ = *src++;
-  // return out;
-  panic("Not implemented");
+  assert((out != NULL) && (in != NULL));
+  char *dst = (char*)out;
+  char *src = (char*)in;
+  while(n--)
+    *dst++ = *src++;
+  return out;
 }
 
 
