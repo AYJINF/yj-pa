@@ -81,27 +81,27 @@ void *memmove(void *dst, const void *src, size_t n) { // ?
 }
 
 void *memcpy(void *out, const void *in, size_t n) {
-  assert((out != NULL) && (in != NULL));
-  char *dst = (char*)out;
-  char *src = (char*)in;
-  while(n--)
-    *dst++ = *src++;
-  return out;
+  // assert((out != NULL) && (in != NULL));
+  // char *dst = (char*)out;
+  // char *src = (char*)in;
+  // while(n--)
+  //   *dst++ = *src++;
+  // return out;
+  panic("Not implemented");
 }
 
 
 int memcmp(const void *s1, const void *s2, size_t n) {
-  // assert((s1 != NULL) && (s2 != NULL));
-  // const char *tmp1 = (char*)s1;
-  // const char *tmp2 = (char*)s2;
-  // while(n--){
-  //   if(*tmp1 != *tmp2)
-  //     return ((*tmp1 < *tmp2) ? -1 : 1);
-  //   tmp1++;
-  //   tmp2++;
-  // }
-  // return 0;
-  panic("Not implemented");
+  assert((s1 != NULL) && (s2 != NULL));
+  const char *tmp1 = (char*)s1;
+  const char *tmp2 = (char*)s2;
+  while(n--){
+    if(*tmp1 != *tmp2)
+      return ((*tmp1 < *tmp2) ? -1 : 1);
+    tmp1++;
+    tmp2++;
+  }
+  return 0;
 }
 
 #endif
