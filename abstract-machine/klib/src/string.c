@@ -46,23 +46,23 @@ int strcmp(const char *s1, const char *s2) {
 }
 
 int strncmp(const char *s1, const char *s2, size_t n) {
-  assert((s1 != NULL) && (s2 != NULL));
-  int ret = 0;
-  while(n-- && !(ret = *s1 - *s2) && (*s2 != '\0')){
-    s1++;
-    s2++;
-  }
-  return ret;
+  // assert((s1 != NULL) && (s2 != NULL));
+  // int ret = 0;
+  // while(n-- && !(ret = *s1 - *s2) && (*s2 != '\0')){
+  //   s1++;
+  //   s2++;
+  // }
+  // return ret;
+  panic("Not implemented");
 }
 
 void *memset(void *s, int c, size_t n) {
-  // assert(s != NULL);
-  // char *tmp = (char*)s;
-  // char t = c;
-  // while(n--)
-  //   *tmp ++ = t;
-  // return s;
-  panic("Not implemented");
+  assert(s != NULL);
+  char *tmp = (char*)s;
+  char t = c;
+  while(n--)
+    *tmp ++ = t;
+  return s;
 }
 
 void *memmove(void *dst, const void *src, size_t n) { // ?
