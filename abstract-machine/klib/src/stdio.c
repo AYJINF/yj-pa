@@ -50,8 +50,10 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         s_len = strlen(s);
         for(i = 0; i < field_width - s_len; i++)
           *dst++ = flag_0 ? '0' : ' ';
-        while(s_len--)
+        for(i = 0; i < s_len; i++)
           *dst++ = *s++;
+        // while(s_len--)
+        //   *dst++ = *s++;
         break;
       case 'd':
         num_t = va_arg(ap, int);
@@ -62,7 +64,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
           *dst++ = '-';
         }
         while(num_t){
-          num_tmp[count++] = '0' + (num_t%10);
+          num_tmp[count++] = '0' + (num_t % 10);
           num_t /= 10;
         }
         for(i = 0; i < field_width - count; i++)
