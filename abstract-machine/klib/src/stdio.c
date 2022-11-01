@@ -37,7 +37,8 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
     //   while((*fmt >= '0') && (*fmt <= '9'))
     //     fmt++;
     // }
-    // char *s; size_t s_len;
+    char *s;
+    size_t s_len;
     // char num_tmp[15];
     // int64_t num_t; // to be modified for more formats
     // int i = 0;
@@ -48,12 +49,12 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         *dst++ = '%';
         break;
       case 's':
-        // s = va_arg(ap, char*);
-        // s_len = strlen(s);
+        s = va_arg(ap, char*);
+        s_len = strlen(s);
         // for(i = 0; i < field_width - s_len; i++)
         //   *dst++ = flag_0 ? '0' : ' ';
-        // while(s_len--)
-        //   *dst++ = *s++;
+        while(s_len--)
+          *dst++ = *s++;
         break;
       case 'd':
         // num_t = va_arg(ap, int);
