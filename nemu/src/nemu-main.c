@@ -25,6 +25,7 @@ word_t expr(char *e, bool *success);
 
 
 int main(int argc, char *argv[]) {
+  printf("sss\n");
   /* Initialize the monitor. */
 #ifdef CONFIG_TARGET_AM
   am_init_monitor();
