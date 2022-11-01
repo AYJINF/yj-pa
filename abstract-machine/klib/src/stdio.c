@@ -34,8 +34,8 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
     }
     if((*fmt >= '0') && (*fmt <= '9')){
       field_width = atoi(fmt);
-      while((*fmt >= '0') && (*fmt <= '9'))
-        fmt++;
+      // while((*fmt >= '0') && (*fmt <= '9'))
+      //   fmt++;
     }
     char *s; size_t s_len;
     char num_tmp[15]; int64_t num_t; // to be modified for more formats
@@ -71,7 +71,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
           *dst++ = num_tmp[count];
         }
         break;
-        default:
+      default:
         break;
     }
     fmt++;
