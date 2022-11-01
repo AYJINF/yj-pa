@@ -26,7 +26,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
       *dst++ = *fmt++;
       continue;
     }
-    // fmt++;
+    fmt++;
     // int flag_0 = 0, field_width = -1;
     // if(*fmt == '0'){
     //   flag_0 = 1;
