@@ -22,10 +22,10 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
   assert((out != NULL) && (fmt != NULL));
   char *dst = out;
   while(*fmt != '\0'){
-    // if(*fmt != '%'){
-    //   *dst++ = *fmt++;
-    //   continue;
-    // }
+    if(*fmt != '%'){
+      *dst++ = *fmt++;
+      continue;
+    }
     // fmt++;
     // int flag_0 = 0, field_width = -1;
     // if(*fmt == '0'){
