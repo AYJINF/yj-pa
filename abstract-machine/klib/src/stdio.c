@@ -21,7 +21,7 @@ int printf(const char *fmt, ...) {
 int vsprintf(char *out, const char *fmt, va_list ap) {
   assert((out != NULL) && (fmt != NULL));
   char *dst = out;
-  while(*fmt != '\0'){
+  while(*fmt){
     if(*fmt != '%'){
       *dst++ = *fmt++;
       continue;
@@ -50,8 +50,8 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         s_len = strlen(s);
         for(i = 0; i < field_width - s_len; i++)
           *dst++ = flag_0 ? '0' : ' ';
-        // while(s_len--)
-        //   *dst++ = *s++;
+        while(s_len--)
+          *dst++ = *s++;
         break;
       case 'd':
         num_t = va_arg(ap, int);
