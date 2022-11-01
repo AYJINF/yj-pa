@@ -18,134 +18,66 @@ int printf(const char *fmt, ...) {
   return str_len;
 }
 
-// int vsprintf(char *out, const char *fmt, va_list ap) {
-//   assert((out != NULL) && (fmt != NULL));
-//   char *dst = out;
-//   while(*fmt != '\0'){
-//     if(*fmt != '%'){
-//       *dst++ = *fmt++;
-//       continue;
-//     }
-//     fmt++;
-//     int flag_0 = 0, field_width = -1;
-//     if(*fmt == '0'){
-//       flag_0 = 1;
-//       fmt++;
-//     }
-//     if((*fmt >= '0') && (*fmt <= '9')){
-//       field_width = atoi(fmt);
-//       while((*fmt >= '0') && (*fmt <= '9'))
-//         fmt++;
-//     }
-//     char *s; size_t s_len;
-//     char num_tmp[15]; int64_t num_t; // to be modified for more formats
-//     int i = 0; int count = 0;
-//     switch (*fmt)
-//     {
-//       case '%':
-//         *dst++ = '%';
-//         break;
-//       case 's':
-//         s = va_arg(ap, char*);
-//         s_len = strlen(s);
-//         for(i = 0; i < field_width - s_len; i++)
-//           *dst++ = flag_0 ? '0' : ' ';
-//         while(s_len--)
-//           *dst++ = *s++;
-//         break;
-//       case 'd':
-//         num_t = va_arg(ap, int);
-//         if(num_t == 0)
-//           num_tmp[count++] = '0';
-//         if(num_t < 0){
-//           num_t *= -1;
-//           *dst++ = '-';
-//         }
-//         while(num_t){
-//           num_tmp[count++] = '0' + (num_t % 10);
-//           num_t /= 10;
-//         }
-//         for(i = 0; i < field_width - count; i++)
-//           *dst++ = flag_0 ? '0' : ' ';
-//         while(count--){
-//           *dst++ = num_tmp[count];
-//         }
-//         break;
-//     }
-//     fmt++;
-//   }
-//   *dst = '\0';
-//   return dst - out;
-// }
 int vsprintf(char *out, const char *fmt, va_list ap) {
-  char *tmp = out;
+  assert((out != NULL) && (fmt != NULL));
+  char *dst = out;
   while(*fmt != '\0'){
     if(*fmt != '%'){
-        *tmp++ = *fmt++;
-        continue;
+      *dst++ = *fmt++;
+      continue;
     }
-    fmt ++;
-    char *s;
-    int len, i, pos, flag, zeroflag = false, field_width = -1;
-    int64_t num;
-    char snum[15];
+    fmt++;
+    int flag_0 = 0, field_width = -1;
     if(*fmt == '0'){
-      fmt ++;
-      zeroflag = true;
+      flag_0 = 1;
+      fmt++;
     }
-    if(*fmt >= '0' && *fmt <= '9'){
+    if((*fmt >= '0') && (*fmt <= '9')){
       field_width = atoi(fmt);
-      while(*fmt >= '0' && *fmt <= '9')
-        fmt ++;
+      while((*fmt >= '0') && (*fmt <= '9'))
+        fmt++;
     }
-      
+    char *s; size_t s_len;
+    char num_tmp[15]; int64_t num_t; // to be modified for more formats
+    int i = 0; int count = 0;
     switch (*fmt)
     {
+      case '%':
+        *dst++ = '%';
+        break;
       case 's':
-        s = va_arg(ap, char *);
-        len = strlen(s);
-        if(field_width != -1){
-          for(i = 0; i < field_width - len; i++)
-            *tmp++ = zeroflag?'0':' ';
-        }
-        for(i = 0; i < len; i++)
-          *tmp++ = *s++;
+        s = va_arg(ap, char*);
+        s_len = strlen(s);
+        for(i = 0; i < field_width - s_len; i++)
+          *dst++ = flag_0 ? '0' : ' ';
+        while(s_len--)
+          *dst++ = *s++;
         break;
       case 'd':
-        num = va_arg(ap, int);
-        pos = 0;
-        flag = 0;
-        if(num < 0){
-          flag = 1;
-          num *= -1;
+        num_t = va_arg(ap, int);
+        if(num_t == 0)
+          num_tmp[count++] = '0';
+        if(num_t < 0){
+          num_t *= -1;
+          *dst++ = '-';
         }
-        if(num == 0){
-          snum[++ pos] = '0';
+        while(num_t){
+          num_tmp[count++] = '0' + (num_t % 10);
+          num_t /= 10;
         }
-        while(num){
-          snum[++pos] = '0' + (num % 10);
-          num /= 10;
+        for(i = 0; i < field_width - count; i++)
+          *dst++ = flag_0 ? '0' : ' ';
+        while(count--){
+          *dst++ = num_tmp[count];
         }
-        if(flag)
-          *tmp++ = '-';
-        if(field_width != -1){
-          for(i = 0; i < field_width - pos; i++)
-            *tmp++ = zeroflag?'0':' ';
-        }
-        for(i = 0; i < pos; i++)
-          *tmp++ = snum[pos - i];
         break;
-      case '%':
-        *tmp++ = '%';
-        break;
-      default:
+        default:
         break;
     }
-
-    fmt ++;
+    fmt++;
   }
-  *tmp = '\0';
-  return tmp - out;
+  *dst = '\0';
+  return dst - out;
 }
 
 int sprintf(char *out, const char *fmt, ...) {
