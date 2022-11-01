@@ -51,7 +51,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
       case 's':
         s = va_arg(ap, char*);
         s_len = strlen(s);
-        for(i = 0; i < field_width - s_len; i++)
+        for(i = 0; i < (size_t)field_width - s_len; i++)
           *dst++ = flag_0 ? '0' : ' ';
         while(s_len--)
           *dst++ = *s++;
