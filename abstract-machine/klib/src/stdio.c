@@ -22,12 +22,12 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
   assert((out != NULL) && (fmt != NULL));
   char *dst = out;
   while(*fmt != '\0'){
-    if(*fmt != '%'){
-      *dst++ = *fmt++;
-      continue;
-    }
-    fmt++;
-    int flag_0 = 0, field_width = -1;
+    // if(*fmt != '%'){
+    //   *dst++ = *fmt++;
+    //   continue;
+    // }
+    // fmt++;
+    // int flag_0 = 0, field_width = -1;
     // if(*fmt == '0'){
     //   flag_0 = 1;
     //   fmt++;
@@ -37,45 +37,45 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
     //   while((*fmt >= '0') && (*fmt <= '9'))
     //     fmt++;
     // }
-    char *s; size_t s_len;
+    // char *s; size_t s_len;
     // char num_tmp[15];
     // int64_t num_t; // to be modified for more formats
-    int i = 0;
+    // int i = 0;
     // int count = 0;
-    switch (*fmt)
-    {
-      case '%':
-        *dst++ = '%';
-        break;
-      case 's':
-        s = va_arg(ap, char*);
-        s_len = strlen(s);
-        for(i = 0; i < field_width - s_len; i++)
-          *dst++ = flag_0 ? '0' : ' ';
-        while(s_len--)
-          *dst++ = *s++;
-        break;
-      // case 'd':
-      //   num_t = va_arg(ap, int);
-      //   if(num_t == 0)
-      //     num_tmp[count++] = '0';
-      //   if(num_t < 0){
-      //     num_t *= -1;
-      //     *dst++ = '-';
-      //   }
-      //   while(num_t){
-      //     num_tmp[count++] = '0' + (num_t % 10);
-      //     num_t /= 10;
-      //   }
-      //   for(i = 0; i < field_width - count; i++)
-      //     *dst++ = flag_0 ? '0' : ' ';
-      //   while(count--){
-      //     *dst++ = num_tmp[count];
-      //   }
-      //   break;
-      default:
-        break;
-    }
+    // switch (*fmt)
+    // {
+    //   case '%':
+    //     *dst++ = '%';
+    //     break;
+    //   case 's':
+    //     s = va_arg(ap, char*);
+    //     s_len = strlen(s);
+    //     for(i = 0; i < field_width - s_len; i++)
+    //       *dst++ = flag_0 ? '0' : ' ';
+    //     while(s_len--)
+    //       *dst++ = *s++;
+    //     break;
+    //   case 'd':
+    //     num_t = va_arg(ap, int);
+    //     if(num_t == 0)
+    //       num_tmp[count++] = '0';
+    //     if(num_t < 0){
+    //       num_t *= -1;
+    //       *dst++ = '-';
+    //     }
+    //     while(num_t){
+    //       num_tmp[count++] = '0' + (num_t % 10);
+    //       num_t /= 10;
+    //     }
+    //     for(i = 0; i < field_width - count; i++)
+    //       *dst++ = flag_0 ? '0' : ' ';
+    //     while(count--){
+    //       *dst++ = num_tmp[count];
+    //     }
+    //     break;
+    //   default:
+    //     break;
+    // }
     fmt++;
   }
   *dst = '\0';
