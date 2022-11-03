@@ -33,7 +33,7 @@ void __am_gpu_fbdraw(AM_GPU_FBDRAW_T *ctl) {
   uint32_t *pixels=ctl->pixels;
   for(int i = 0; i < w; i++)
     for(int j = 0; j < h; j++)
-      if(x+i <= HEIGHT && y+j <= WIDTH)
+      // if(x+i <= HEIGHT && y+j <= WIDTH)
         outl(FB_ADDR + ((x+y*WIDTH)+(i+j*WIDTH))*4, pixels[i + j*w]);
 }
 
