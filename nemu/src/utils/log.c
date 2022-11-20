@@ -18,7 +18,7 @@
 extern uint64_t g_nr_guest_inst;
 FILE *log_fp = NULL;
 
-void init_log(const char *log_file) {
+void init_log(const char *log_file) {  // 在设置的记录trace的log文件首行写入标识
   log_fp = stdout;
   if (log_file != NULL) {
     FILE *fp = fopen(log_file, "w");
