@@ -38,11 +38,11 @@ static bool g_print_step = false;
 void device_update();
 
 static void trace_and_difftest(Decode *_this, vaddr_t dnpc) {
-#ifdef CONFIG_IRINGBUF
-  pos%=16;
-  strcpy(iringbuf[pos], _this->logbuf);
-  pos++;
-#endif
+// #ifdef CONFIG_IRINGBUF
+//   pos%=16;
+//   strcpy(iringbuf[pos], _this->logbuf);
+//   pos++;
+// #endif
 #ifdef CONFIG_ITRACE_COND
   if (ITRACE_COND) { log_write("%s\n", _this->logbuf); }
 #endif
@@ -101,15 +101,15 @@ static void statistic() {
 }
 
 void assert_fail_msg() {
-  // #ifdef CONFIG_IRINGBUF
-  //   printf("\033[0;31mThere are error instructions!\033[0m\n");
-  //   for(int i = 0; i < 16; i++){
-  //     if(i == (pos-1)%16)
-  //       printf("\033[0;31m-->%s\033[0m\n", iringbuf[i]);
-  //     else
-  //       printf("\033[0;33m   %s\033[0m\n", iringbuf[i]);
-  //   }
-  // #endif
+  #ifdef CONFIG_IRINGBUF
+    printf("\033[0;31mThere are error instructions!\033[0m\n");
+    for(int i = 0; i < 16; i++){
+      if(i == (pos-1)%16)
+        printf("\033[0;31m-->%s\033[0m\n", iringbuf[i]);
+      else
+        printf("\033[0;33m   %s\033[0m\n", iringbuf[i]);
+    }
+  #endif
   isa_reg_display();
   statistic();
 }
