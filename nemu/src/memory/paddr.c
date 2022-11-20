@@ -68,7 +68,7 @@ word_t paddr_read(paddr_t addr, int len) {
 
 void paddr_write(paddr_t addr, int len, word_t data) {
   #ifdef CONFIG_MTRACE
-    printf("\033[;43mWrite Memory, addr = 0x%08x, data = 0x%08x, len = %d\n\033[0m", addr, data, len);
+    printf("Write Memory, addr = 0x%08x, data = 0x%08x, len = %d\n", addr, data, len);
   #endif
   if (likely(in_pmem(addr))) { pmem_write(addr, len, data); return; }
   IFDEF(CONFIG_DEVICE, mmio_write(addr, len, data); return);
