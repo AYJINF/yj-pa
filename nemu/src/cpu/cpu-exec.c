@@ -102,7 +102,7 @@ static void statistic() {
 
 void assert_fail_msg() {
   #ifdef CONFIG_IRINGBUF
-    printf("\033[0;31mThere are error instructions!\033[0m\n\n");
+    printf("\033[0;31mThere are error instructions!\033[0m\n");
     for(int i = 0; i < 16; i++){
       if(i == (pos-1)%16)
         printf("\033[0;31m-->%s\033[0m\n", iringbuf[i]);
