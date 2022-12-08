@@ -24,6 +24,11 @@ static inline int check_reg_idx(int idx) {
 }
 
 #define gpr(idx) cpu.gpr[check_reg_idx(idx)]
+#define csr_mepc cpu.mepc
+#define csr_msta cpu.mstatus
+#define csr_mcau cpu.mcause
+#define csr_mtve cpu.mtvec
+
 
 static inline const char* reg_name(int idx, int width) {
   extern const char* regs[];

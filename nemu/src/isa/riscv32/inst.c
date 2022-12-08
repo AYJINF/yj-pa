@@ -126,8 +126,24 @@ static int decode_exec(Decode *s) {
 
   INSTPAT("??????? ????? ????? 000 ????? 00000 11", lb     , I, R(dest) = SEXT(Mr(src1 + imm, 1), 8)); 
 
-  INSTPAT("??????? ????? ????? 110 ????? 00100 11", ori    , I, R(dest) = src1 | imm); 
-  
+  INSTPAT("??????? ????? ????? 110 ????? 00100 11", ori    , I, R(dest) = src1 | imm);
+   
+  // for pa3
+  INSTPAT("??????? ????? ????? 001 ????? 11100 11", csrrw  , I, if(imm==0x300){R(dest)=csr_msta; csr_msta=src1;}
+                                                           else if(imm==0x305){R(dest)=csr_mtve; csr_mtve=src1;}
+                                                           else if(imm==0x341){R(dest)=csr_mepc; csr_mepc=src1;}
+                                                           else if(imm==0x342){R(dest)=csr_mcau; csr_mcau=src1;}
+                                                                                                                ); 
+  INSTPAT("??????? ????? ????? 010 ????? 11100 11", csrrs  , I, if(imm==0x300){R(dest)=csr_msta; csr_msta=csr_msta|src1;}
+                                                           else if(imm==0x305){R(dest)=csr_mtve; csr_mtve=csr_msta|src1;}
+                                                           else if(imm==0x341){R(dest)=csr_mepc; csr_mepc=csr_msta|src1;}
+                                                           else if(imm==0x342){R(dest)=csr_mcau; csr_mcau=csr_msta|src1;}
+                                                                                                                ); 
+  INSTPAT("0011000 00010 00000 000 00000 11100 11", mret   , R, s->dnpc = csr_mepc);
+  INSTPAT("0000000 00000 00000 000 00000 11100 11", ecall  , I, s->dnpc = isa_raise_intr(1, s->pc));
+
+
+  // for the end!
   INSTPAT("0000000 00001 00000 000 00000 11100 11", ebreak , N, NEMUTRAP(s->pc, R(10))); // R(10) is $a0
   INSTPAT("??????? ????? ????? ??? ????? ????? ??", inv    , N, INV(s->pc));
 
