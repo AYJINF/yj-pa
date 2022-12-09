@@ -59,7 +59,7 @@ word_t map_read(paddr_t addr, int len, IOMap *map) {
   invoke_callback(map->callback, offset, len, false); // prepare data to read
   word_t ret = host_read(map->space + offset, len);
   #ifdef CONFIG_DTRACE
-    printf("\033[0;33mDevice Read  Map \"%s\", addr = 0x%08x, data = 0x%08x, len = %d\033[0m\n", map->name, addr, ret, len);
+    printf("\033[1;33mDevice Read  Map \"%s\", addr = 0x%08x, data = 0x%08x, len = %d\033[m\n", map->name, addr, ret, len);
   #endif
   return ret;
 }
@@ -67,7 +67,7 @@ word_t map_read(paddr_t addr, int len, IOMap *map) {
 void map_write(paddr_t addr, int len, word_t data, IOMap *map) {
   assert(len >= 1 && len <= 8);
   #ifdef CONFIG_DTRACE
-    printf("\033[0;33mDevice Write Map \"%s\", addr = 0x%08x, data = 0x%08x, len = %d\033[0m\n", map->name, addr, data, len);
+    printf("\033[1;33mDevice Write Map \"%s\", addr = 0x%08x, data = 0x%08x, len = %d\033[m\n", map->name, addr, data, len);
   #endif
   check_bound(map, addr);
   paddr_t offset = addr - map->low;
