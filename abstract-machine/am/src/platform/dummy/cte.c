@@ -1,7 +1,6 @@
 #include <am.h>
 
 bool cte_init(Context*(*handler)(Event, Context*)) {
-  printf("????????????\n");
   return false;
 }
 
