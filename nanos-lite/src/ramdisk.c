@@ -11,7 +11,7 @@ extern uint8_t ramdisk_end;
 
 /* read `len' bytes starting from `offset' of ramdisk into `buf' (从ramdisk中`offset`偏移处的`len`字节读入到`buf`中) */
 size_t ramdisk_read(void *buf, size_t offset, size_t len) {
-  printf("offset=%x, len=%x, RAMDISK_SIZE=%x\n", offset, len, RAMDISK_SIZE);
+  // printf("offset=%x, len=%x, RAMDISK_SIZE=%x\n", offset, len, RAMDISK_SIZE);
   assert(offset + len <= RAMDISK_SIZE);
   memcpy(buf, &ramdisk_start + offset, len);
   return len;
