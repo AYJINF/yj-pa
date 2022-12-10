@@ -16,6 +16,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   // FILE *elf = fopen(filename, "r");
   // fread(&elf_ehdr, sizeof(elf_ehdr), 1, elf);
   ramdisk_read(&elf_ehdr, 0, sizeof(elf_ehdr));
+  printf("???zyy\n");
 
   assert(*(uint32_t *)elf_ehdr.e_ident == 0x464c457f);
 
