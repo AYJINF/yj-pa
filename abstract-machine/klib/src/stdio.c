@@ -39,7 +39,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
     }
     char *s; size_t s_len;
     char num_tmp[15]; int64_t num_t; // to be modified for more formats
-    int i = 0, count = 0;
+    int i = 0, count = 0, t = 0;
     switch (*fmt)
     {
       case '%':
@@ -67,9 +67,42 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
         }
         for(i = 0; i < field_width - count; i++)
           *dst++ = flag_0 ? '0' : ' ';
-        while(count--){
+        while(count--)
           *dst++ = num_tmp[count];
+        break;
+      case 'x':
+        count = 0;
+        memset(num_tmp, 0, sizeof(num_tmp));
+        num_t = va_arg(ap, uint32_t);
+        *dst++ = '0'; *dst++ = 'x';
+        if(num_t == 0)
+          num_tmp[count++] = '0';
+        while(num_t){
+          t = num_t % 16;
+          num_tmp[count++] = t<10 ? t+'0': t+'a'-10;
+          num_t /= 16;
         }
+        for(i = 0; i < field_width - count; i++)
+          *dst++ = flag_0 ? '0' : ' ';
+        while (count--)
+          *dst++ = num_tmp[count];
+        break;
+      case 'p':
+        count = 0;
+        memset(num_tmp, 0, sizeof(num_tmp));
+        num_t = (unsigned int)va_arg(ap, void *);
+        *dst++ = '0'; *dst++ = 'x';
+        if(num_t == 0)
+          num_tmp[count++] = '0';
+        while(num_t){
+          t = num_t % 16;
+          num_tmp[count++] = t<10 ? t+'0': t+'a'-10;
+          num_t /= 16;
+        }
+        for(i = 0; i < field_width - count; i++)
+          *dst++ = flag_0 ? '0' : ' ';
+        while (count--)
+          *dst++ = num_tmp[count];
         break;
       default:
         break;
