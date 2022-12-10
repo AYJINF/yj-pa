@@ -39,6 +39,8 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     ramdisk_read(&elf_phdr, elf_ehdr.e_phoff + elf_ehdr.e_phentsize * i, sizeof(elf_phdr));
 
     
+    printf("beforezyy, len=%p\n", elf_phdr.p_filesz);
+
     if(elf_phdr.p_type == PT_LOAD){
       // fseek(elf, elf_phdr.p_offset, SEEK_SET);
       // fread((void *)elf_phdr.p_vaddr, sizeof(elf_phdr.p_filesz), 1, elf);
