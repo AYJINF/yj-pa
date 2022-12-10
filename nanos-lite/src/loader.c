@@ -43,7 +43,6 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       // fseek(elf, elf_phdr.p_offset, SEEK_SET);
       // fread((void *)elf_phdr.p_vaddr, sizeof(elf_phdr.p_filesz), 1, elf);
       ramdisk_read(&elf_phdr.p_vaddr, elf_phdr.p_offset, elf_phdr.p_filesz);
-    printf("???zyy\n");
       memset((void *)elf_phdr.p_vaddr + elf_phdr.p_filesz, 0, elf_phdr.p_memsz - elf_phdr.p_filesz);
     }
   }
