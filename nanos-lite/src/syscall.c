@@ -15,6 +15,7 @@ void do_syscall(Context *c) {
   uintptr_t a[4];
   a[0] = c->GPR1;
   #ifdef CONFIG_STRACE
+  printf("???????????????????????????\n");
   Log("Syscall: mcause = 0x%x, GPR1 = 0x%x, GPR2 = 0x%x, GPR3 = 0x%x, GPR4 = 0x%x\n", c->mcause, c->GPR1, c->GPR2, c->GPR3, c->GPR4)
   #endif
 
