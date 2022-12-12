@@ -42,7 +42,7 @@
 #endif
 
 intptr_t _syscall_(intptr_t type, intptr_t a0, intptr_t a1, intptr_t a2) {
-  register intptr_t _gpr1 asm (GPR1) = type; // 修改a7 a0 a1 a2 返回a0值？
+  register intptr_t _gpr1 asm (GPR1) = type; // 修改a7(系统调用号) a0 a1 a2 返回a0值
   register intptr_t _gpr2 asm (GPR2) = a0;
   register intptr_t _gpr3 asm (GPR3) = a1;
   register intptr_t _gpr4 asm (GPR4) = a2;
