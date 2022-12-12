@@ -96,7 +96,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
           num_tmp[count++] = '0';
         while(num_t){
           t = num_t % 16;
-          num_tmp[count++] = t<10 ? t+'0': t+'a'-10;
+          num_tmp[count++] = t < 10 ? t+'0': t+'a'-10;
           num_t /= 16;
         }
         for(i = 0; i < field_width - count; i++)
