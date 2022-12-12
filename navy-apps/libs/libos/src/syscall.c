@@ -5,7 +5,7 @@
 #include <time.h>
 #include "syscall.h"
 
-// helper macros
+// helper macros (好巧妙的宏封装捏，啥时候有空仔细学学)
 #define _concat(x, y) x ## y
 #define concat(x, y) _concat(x, y)
 #define _args(n, list) concat(_arg, n) list
@@ -29,7 +29,7 @@
 # define ARGS_ARRAY ("int $0x80", "eax", "ebx", "ecx", "edx", "eax")
 #elif defined(__ISA_MIPS32__)
 # define ARGS_ARRAY ("syscall", "v0", "a0", "a1", "a2", "v0")
-#elif defined(__ISA_RISCV32__) || defined(__ISA_RISCV64__)
+#elif defined(__ISA_RISCV32__) || defined(__ISA_RISCV64__) // 看这里！
 # define ARGS_ARRAY ("ecall", "a7", "a0", "a1", "a2", "a0")
 #elif defined(__ISA_AM_NATIVE__)
 # define ARGS_ARRAY ("call *0x100000", "rdi", "rsi", "rdx", "rcx", "rax")
@@ -42,7 +42,7 @@
 #endif
 
 intptr_t _syscall_(intptr_t type, intptr_t a0, intptr_t a1, intptr_t a2) {
-  register intptr_t _gpr1 asm (GPR1) = type;
+  register intptr_t _gpr1 asm (GPR1) = type; // 修改a7 a0 a1 a2 返回a0值？
   register intptr_t _gpr2 asm (GPR2) = a0;
   register intptr_t _gpr3 asm (GPR3) = a1;
   register intptr_t _gpr4 asm (GPR4) = a2;
