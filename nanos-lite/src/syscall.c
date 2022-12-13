@@ -23,6 +23,7 @@ void sys_write(Context *c){
       ch++;
     }
     c->GPRx = len;
+    printf("len = %d\n", len);
   }
 }
 
@@ -36,7 +37,7 @@ void do_syscall(Context *c) {
   switch (a[0]) {
     case 0: sys_exit(c); break;
     case 1: sys_yield(c); break;
-    case 4: sys_write(c); printf("There is a zyyyyyyyyyyyyyyyyy event!\n"); break;
+    case 4: sys_write(c); break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
 }
