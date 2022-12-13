@@ -13,10 +13,8 @@ int printf(const char *fmt, ...) {
   va_start(ap, fmt);
   int str_len = vsprintf(sprintf_buf, fmt, ap);
   va_end(ap);
-  for(int i = 0; i < str_len; i++){
-    printf(">>>>>>\n");
+  for(int i = 0; i < str_len; i++)
     putch(sprintf_buf[i]);
-  }
   return str_len;
 }
 
