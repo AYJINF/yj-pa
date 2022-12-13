@@ -4,6 +4,7 @@
 int main() {
   FILE *fp = fopen("/share/files/num", "r+");
   assert(fp);
+  printf("PASS!!!\n");
 
   fseek(fp, 0, SEEK_END);
   long size = ftell(fp);
@@ -31,7 +32,6 @@ int main() {
     fscanf(fp, "%d", &n);
     assert(n == i + 1 + 1000);
   }
-  printf("PASS!!!\n");
 
   fclose(fp);
 
