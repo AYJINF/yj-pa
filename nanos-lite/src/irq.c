@@ -5,7 +5,9 @@ void do_syscall(Context *c);
 static Context* do_event(Event e, Context* c) {
   switch (e.event) {
     case 1: printf("There is a YIELD event!\n"); break; // 自陷指令
-    case 2: do_syscall(c); break; // 系统调用指令
+    case 2: 
+    printf("There is a yyyyyyyyyyyyyyyyyy event!\n");
+    do_syscall(c); break; // 系统调用指令
     default: panic("Unhandled event ID = %d", e.event);
   }
 
