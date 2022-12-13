@@ -66,12 +66,18 @@ size_t fs_read(int fd, void *buf, size_t len){
   return -1; // 阿巴阿巴
 }
 
-// size_t fs_write(int fd, const void *buf, size_t len){
-//   Finfo f = file_table[fd];
-//   if(f.open_offset == f.size) return 0;
-//   size_t ret = 0;
-
-// }
+size_t fs_write(int fd, const void *buf, size_t len){
+  Finfo f = file_table[fd];
+  if(f.open_offset == f.size) return 0;
+  size_t ret = 0;
+  if(f.write){
+    if(len > f.size - f.open_offset) len = f.size - f.open_offset; // 阿巴阿巴
+    ret = f.write(buf, f.disk_offset + f.open_offset, len);
+    f.open_offset += ret;
+    return ret;
+  }
+  return -1;
+}
 
 int fs_close(int fd){
   return 0;
