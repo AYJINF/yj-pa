@@ -24,7 +24,7 @@ void sys_write(Context *c){
     }
     c->GPRx = len;
   }
-  // else(c->GPRx = -1);
+  else(c->GPRx = -1);
 }
 
 void do_syscall(Context *c) {
