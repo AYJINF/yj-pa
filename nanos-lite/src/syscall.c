@@ -19,6 +19,7 @@ void sys_write(Context *c){
   if(o_or_e == 1 || o_or_e == 2){
     for(int i = 0; i < len; i++){
       putch(*ch);
+      printf("i = %d\n", i);
       ch++;
     }
     c->GPRx = len;
