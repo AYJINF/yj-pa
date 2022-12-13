@@ -14,12 +14,12 @@ void sys_exit(Context *c){
 
 void sys_write(Context *c){
   c->GPRx = -1;
-  uintptr_t o_or_e = c->GPR2;
-  uintptr_t ch = c->GPR3;
-  int len = c->GPR4;
+  int o_or_e = (int)c->GPR2;
+  char *ch = (char *)c->GPR3;
+  int len = (int)c->GPR4;
   if(o_or_e == 1 || o_or_e == 2){
     for(int i = 0; i < len; i++){
-      // putch((char)(*ch));
+      putch(*ch);
       ch++;
     }
     c->GPRx = len;
