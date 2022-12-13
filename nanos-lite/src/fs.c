@@ -79,6 +79,30 @@ size_t fs_write(int fd, const void *buf, size_t len){
   return -1;
 }
 
+size_t fs_lseek(int fd, size_t offset, int whence){
+  Finfo f = file_table[fd];
+  switch (whence)
+  {
+  case SEEK_SET:
+    f.open_offset = offset;
+    break;
+  case SEEK_CUR:
+    f.open_offset += offset;
+    break;
+  case SEEK_END:
+    f.open_offset = f.size + offset;
+    break;
+  default:
+    f.open_offset = whence + offset;
+    break;
+  }
+  if(f.open_offset > f.size || f.open_offset < 0){
+    printf("It's out of the bound of the file!\n");
+    assert(0);
+  }
+  return f.open_offset; // 阿巴阿巴，好像找不到什么情况会返回-1，先留个tag
+}
+
 int fs_close(int fd){
   return 0;
 }
