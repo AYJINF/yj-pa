@@ -12,6 +12,19 @@ void sys_exit(Context *c){
   halt(c->GPRx);
 }
 
+void sys_write(Context *c){
+  c->GPRx = -1;
+  uintptr_t o_or_e = c->GPR2;
+  uintptr_t ch = c->GPR3;
+  int len = c->GPR4;
+  if(o_or_e == 1 || o_or_e == 2){
+    for(int i = 0; i < len; i++){
+      // putch((char)(*ch));
+      ch++;
+    }
+    c->GPRx = len;
+  }
+}
 
 void do_syscall(Context *c) {
   uintptr_t a[4];
@@ -23,6 +36,7 @@ void do_syscall(Context *c) {
   switch (a[0]) {
     case 0: sys_exit(c); break;
     case 1: sys_yield(c); break;
+    case 4: sys_write(c); break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
 }
