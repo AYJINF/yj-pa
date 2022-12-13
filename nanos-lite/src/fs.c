@@ -1,5 +1,8 @@
 #include <fs.h>
 
+size_t ramdisk_read(void *buf, size_t offset, size_t len);
+size_t ramdisk_write(const void *buf, size_t offset, size_t len);
+
 typedef size_t (*ReadFn) (void *buf, size_t offset, size_t len);
 typedef size_t (*WriteFn) (const void *buf, size_t offset, size_t len);
 
@@ -9,6 +12,7 @@ typedef struct {
   size_t disk_offset;
   ReadFn read;
   WriteFn write;
+  size_t open_offset;
 } Finfo;
 
 enum {FD_STDIN, FD_STDOUT, FD_STDERR, FD_FB};
@@ -33,4 +37,34 @@ static Finfo file_table[] __attribute__((used)) = {
 
 void init_fs() {
   // TODO: initialize the size of /dev/fb
+}
+
+int fs_open(const char *pathname, int flags, int mode){
+  int file_num = sizeof(file_table) / sizeof(Finfo);
+  for(int i = 0; i < file_num; i++){
+    if(strcmp(file_table[i].name, pathname) == 0){
+      file_table[i].open_offset = 0;
+      if(file_table[i].read == NULL) file_table[i].read = ramdisk_read;
+      if(file_table[i].write == NULL) file_table[i].write = ramdisk_write;
+      return i;
+    }
+  }
+  printf("The file '%s' is not found!\n", pathname);
+  assert(0);
+}
+
+size_t fs_read(int fd, void *buf, size_t len){
+  Finfo f = file_table[fd];
+  if(f.open_offset == f.size) return 0;
+  int ret = 0;
+  if(f.read){
+    if(len > f.size - f.open_offset && (void *)f.read == (void *)ramdisk_read) len = f.size - f.open_offset; // 阿巴阿巴
+    ret = f.read(buf, f.disk_offset + f.open_offset, len);
+    f.open_offset += ret;
+  }
+  return ret;
+}
+
+int fs_close(int fd){
+  return 0;
 }
