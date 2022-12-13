@@ -16,10 +16,10 @@ void sys_write(Context *c){
   int o_or_e = (int)c->GPR2;
   char *ch = (char *)c->GPR3;
   int len = (int)c->GPR4;
+  printf("len = %d\n", len);
   if(o_or_e == 1 || o_or_e == 2){
     for(int i = 0; i < len; i++){
       putch(*ch);
-      printf("i = %d\n", i);
       ch++;
     }
     c->GPRx = len;
