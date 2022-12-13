@@ -1,7 +1,7 @@
 #include <common.h>
 #include "syscall.h"
 
-#define CONFIG_STRACE 0;
+// #define CONFIG_STRACE 0;
 
 void sys_yield(Context *c){
   yield();
@@ -41,7 +41,7 @@ void do_syscall(Context *c) {
     case 0: sys_exit(c); break;
     case 1: sys_yield(c); break;
     case 4: sys_write(c); break;
-    // case 9: sys_brk(c); break;
+    case 9: sys_brk(c); break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
 }
