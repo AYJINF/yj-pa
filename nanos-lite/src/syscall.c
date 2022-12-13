@@ -13,11 +13,10 @@ void sys_exit(Context *c){
 }
 
 void sys_write(Context *c){
-  c->GPRx = -1;
   int o_or_e = (int)c->GPR2;
   char *ch = (char *)c->GPR3;
   int len = (int)c->GPR4;
-  printf("o_or_e = %d, len = %d\n", o_or_e, len);
+  // printf("o_or_e = %d, len = %d\n", o_or_e, len);
   if(o_or_e == 1 || o_or_e == 2){
     for(int i = 0; i < len; i++){
       putch(*ch);
@@ -25,6 +24,7 @@ void sys_write(Context *c){
     }
     c->GPRx = len;
   }
+  else(c->GPRx = -1);
 }
 
 void do_syscall(Context *c) {
