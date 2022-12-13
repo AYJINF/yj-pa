@@ -58,7 +58,7 @@ size_t fs_read(int fd, void *buf, size_t len){
   if(f.open_offset == f.size) return 0;
   size_t ret = 0;
   if(f.read){
-    if(len > f.size - f.open_offset&& (void *)f.read == (void *)ramdisk_read) len = f.size - f.open_offset; // 阿巴阿巴
+    if(len > f.size - f.open_offset) len = f.size - f.open_offset; // 阿巴阿巴
     ret = f.read(buf, f.disk_offset + f.open_offset, len);
     f.open_offset += ret;
     return ret;
@@ -71,7 +71,7 @@ size_t fs_write(int fd, const void *buf, size_t len){
   if(f.open_offset == f.size) return 0;
   size_t ret = 0;
   if(f.write){
-    if(len > f.size - f.open_offset && (void *)f.write == (void *)ramdisk_write) len = f.size - f.open_offset; // 阿巴阿巴
+    if(len > f.size - f.open_offset) len = f.size - f.open_offset; // 阿巴阿巴
     ret = f.write(buf, f.disk_offset + f.open_offset, len);
     f.open_offset += ret;
     return ret;
