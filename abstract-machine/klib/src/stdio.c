@@ -13,8 +13,10 @@ int printf(const char *fmt, ...) {
   va_start(ap, fmt);
   int str_len = vsprintf(sprintf_buf, fmt, ap);
   va_end(ap);
-  for(int i = 0; i < str_len; i++)
+  for(int i = 0; i < str_len; i++){
+    putch('y');
     putch(sprintf_buf[i]);
+  }
   return str_len;
 }
 
