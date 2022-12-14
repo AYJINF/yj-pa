@@ -53,7 +53,7 @@ void do_syscall(Context *c) {
   #ifdef CONFIG_STRACE
   Log("Syscall: mcause = 0x%x, GPR1 = 0x%x, GPR2 = 0x%x, GPR3 = 0x%x, GPR4 = 0x%x", c->mcause, c->GPR1, c->GPR2, c->GPR3, c->GPR4);
   #endif
-printf("jb\n");
+
   switch (a[0]) {
     case SYS_exit: sys_exit(c); break;
     case SYS_yield: sys_yield(c); break;
