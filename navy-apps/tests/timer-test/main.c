@@ -14,7 +14,7 @@ int main() {
     int t1 = tval.tv_sec * 10 + tval.tv_usec / 100000;
     // printf("t0 = %d, t1 = %d\n", t0 / 100000, t1 / 100000);
     if(t1-t0 == 5){
-        printf("t0 = %d, t1 = %d\n", t0 / 10, t1 / 10);
+        printf("t0 = %d, t1 = %d\n", t0, t1);
         t0 = t1;
     }
   }
