@@ -2,12 +2,15 @@
 #include "syscall.h"
 #include <fs.h>
 
-#define CONFIG_STRACE 0;
+// #define CONFIG_STRACE 0;
+
+#ifdef CONFIG_STRACE
 char *files[] = {"stdin", "stdout", "stderr", "/bin/file-test", "/bin/hello", "/bin/dummy", "/share/music/little-star.ogg", 
 "/share/music/rhythm/Do.ogg", "/share/music/rhythm/Si.ogg", "/share/music/rhythm/Re.ogg", "/share/music/rhythm/empty.ogg", 
 "/share/music/rhythm/Fa.ogg", "/share/music/rhythm/La.ogg", "/share/music/rhythm/Mi.ogg", "/share/music/rhythm/So.ogg", 
 "/share/fonts/Courier-13.bdf", "/share/fonts/Courier-8.bdf", "/share/fonts/Courier-9.bdf", "/share/fonts/Courier-12.bdf", 
 "/share/fonts/Courier-7.bdf", "/share/fonts/Courier-11.bdf", "/share/fonts/Courier-10.bdf", "/share/files/num", "/share/pictures/projectn.bmp"};
+#endif
 
 void sys_exit(Context *c){
   halt(c->GPRx);
@@ -45,6 +48,7 @@ void sys_brk(Context *c){
 void do_syscall(Context *c) {
   uintptr_t a[4];
   a[0] = c->GPR1;
+
   #ifdef CONFIG_STRACE
   switch (a[0])
   {
@@ -68,6 +72,7 @@ void do_syscall(Context *c) {
     break;
   }
   #endif
+
   switch (a[0]) {
     case SYS_exit: sys_exit(c); break;
     case SYS_yield: sys_yield(c); break;
