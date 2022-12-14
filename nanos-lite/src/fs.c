@@ -5,6 +5,7 @@ size_t ramdisk_write(const void *buf, size_t offset, size_t len);
 
 typedef size_t (*ReadFn) (void *buf, size_t offset, size_t len);
 typedef size_t (*WriteFn) (const void *buf, size_t offset, size_t len);
+size_t serial_write(const void *buf, size_t offset, size_t len);
 
 typedef struct {
   char *name;
@@ -27,20 +28,11 @@ size_t invalid_write(const void *buf, size_t offset, size_t len) {
   return 0;
 }
 
-size_t fs_serial_write(const void *buf, size_t offset, size_t len){
-  size_t ret = len;
-  char *c = (char *)buf;
-  while(*c != '\0' && len--){
-    putch(*c++);
-  }
-  return ret;
-}
-
 /* This is the information about all files in disk. 修改这里的时候记得修改STRACE*/
 static Finfo file_table[] __attribute__((used)) = {
   [FD_STDIN]  = {"stdin", 0, 0, invalid_read, invalid_write},
-  [FD_STDOUT] = {"stdout", 0, 0, invalid_read, fs_serial_write},
-  [FD_STDERR] = {"stderr", 0, 0, invalid_read, fs_serial_write},
+  [FD_STDOUT] = {"stdout", 0, 0, invalid_read, serial_write},
+  [FD_STDERR] = {"stderr", 0, 0, invalid_read, serial_write},
 #include "files.h"
 };
 
@@ -75,7 +67,7 @@ size_t fs_write(int fd, const void *buf, size_t len){
   Finfo *f = &file_table[fd];
   size_t ret = 0;
   if(f->write){
-    if(f->open_offset == f->size && (void *)f->write != (void *)fs_serial_write) return 0;
+    if(f->open_offset == f->size && (void *)f->write != (void *)serial_write) return 0;
     if(len > f->size - f->open_offset && f->write == ramdisk_write) len = f->size - f->open_offset;
     ret = f->write(buf, f->disk_offset + f->open_offset, len);
     f->open_offset += ret;
