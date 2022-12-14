@@ -11,10 +11,9 @@
 #endif
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
-  printf("jb\n");
   Elf_Ehdr elf_ehdr;
   int elf_file = fs_open(filename, 0, 0);
-  fs_read(elf_file, &elf_ehdr, sizeof(elf_ehdr));
+  fs_read(elf_file, &elf_ehdr, sizeof(elf_ehdr));printf("jb\n");
 
   assert(*(uint32_t *)elf_ehdr.e_ident == 0x464c457f);
 
