@@ -71,12 +71,12 @@ size_t fs_write(int fd, const void *buf, size_t len){
   if(f->open_offset == f->size) return 0;
   size_t ret = 0;
   if(f->write){
-    printf("zyy\n");
     if(len > f->size - f->open_offset) len = f->size - f->open_offset; // 阿巴阿巴
     ret = f->write(buf, f->disk_offset + f->open_offset, len);
     f->open_offset += ret;
     return ret;
   }
+  printf("zyy\n");
   return -1;
 }
 
