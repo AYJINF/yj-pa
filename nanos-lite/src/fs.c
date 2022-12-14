@@ -27,24 +27,13 @@ size_t invalid_write(const void *buf, size_t offset, size_t len) {
   return 0;
 }
 
-// size_t fs_serial_write(const void *buf, size_t offset, size_t len){
-//   size_t ret = len;
-//   char *c = (char *)buf;
-//   while(*c != '\0' && len--){
-//     putch(*c++);
-//   }
-//   return ret;
-// }
-
-size_t fs_serial_write(const void *buf, size_t offset, size_t len) {
-  int res = len;
-  char *now = (char *)buf;
-  while(*now != '\0' && res){
-    putch(*now);
-    now++;
-    res--;
+size_t fs_serial_write(const void *buf, size_t offset, size_t len){
+  size_t ret = len;
+  char *c = (char *)buf;
+  while(*c != '\0' && len--){
+    putch(*c++);
   }
-  return len;
+  return ret;
 }
 
 /* This is the information about all files in disk. */
