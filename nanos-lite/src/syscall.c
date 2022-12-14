@@ -22,8 +22,22 @@ void sys_read(Context *c){
 }
 
 void sys_write(Context *c){
-  c->GPRx = fs_write(c->GPR2, (void *)c->GPR3, c->GPR4);
+  int o_or_e = (int)c->GPR2;
+  char *ch = (char *)c->GPR3;
+  int len = c->GPR4;
+  if(o_or_e == 1 || o_or_e == 2){
+    for(int i = 0; i < len; i++){
+      putch(*ch);
+      ch++;
+    }
+    c->GPRx = len;
+  }
+  else(c->GPRx = -1);
 }
+
+// void sys_write(Context *c){
+//   c->GPRx = fs_write(c->GPR2, (void *)c->GPR3, c->GPR4);
+// }
 
 void sys_close(Context *c){
   c->GPRx = fs_close(c->GPR2);
@@ -43,7 +57,6 @@ void do_syscall(Context *c) {
   #ifdef CONFIG_STRACE
   Log("Syscall: mcause = 0x%x, GPR1 = 0x%x, GPR2 = 0x%x, GPR3 = 0x%x, GPR4 = 0x%x", c->mcause, c->GPR1, c->GPR2, c->GPR3, c->GPR4);
   #endif
-
   switch (a[0]) {
     case SYS_exit: sys_exit(c); break;
     case SYS_yield: sys_yield(c); break;
