@@ -45,6 +45,7 @@ int fs_open(const char *pathname, int flags, int mode){
     if(strcmp(file_table[i].name, pathname) == 0){
       file_table[i].open_offset = 0;
       if(file_table[i].read == NULL) file_table[i].read = ramdisk_read;
+      printf("zyy\n");
       if(file_table[i].write == NULL) file_table[i].write = ramdisk_write;
       return i;
     }
@@ -67,6 +68,7 @@ size_t fs_read(int fd, void *buf, size_t len){
 }
 
 size_t fs_write(int fd, const void *buf, size_t len){
+  printf("fd = %d\n", fd);
   Finfo *f = &file_table[fd];
   if(f->open_offset == f->size) return 0;
   size_t ret = 0;
