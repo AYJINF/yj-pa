@@ -72,6 +72,8 @@ size_t fs_read(int fd, void *buf, size_t len){
 }
 
 size_t fs_write(int fd, const void *buf, size_t len){
+
+  printf("jb\n");
   Finfo *f = &file_table[fd];
   if(f->open_offset == f->size) return 0;
   size_t ret = 0;
