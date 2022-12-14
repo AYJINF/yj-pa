@@ -22,17 +22,7 @@ void sys_read(Context *c){
 }
 
 void sys_write(Context *c){
-  int o_or_e = (int)c->GPR2;
-  char *ch = (char *)c->GPR3;
-  int len = c->GPR4;
-  if(o_or_e == 1 || o_or_e == 2){
-    for(int i = 0; i < len; i++){
-      putch(*ch);
-      ch++;
-    }
-    c->GPRx = len;
-  }
-  else(c->GPRx = -1);
+  c->GPRx = fs_write(c->GPR2, (void *)c->GPR3, c->GPR4);
 }
 
 void sys_close(Context *c){
