@@ -31,8 +31,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 
   assert(EXPECT_TYPE == elf_ehdr.e_machine);
 
-  printf("jb\n");
-  for(int i = 0; i < elf_ehdr.e_phnum; i++){
+  for(int i = 0; i < elf_ehdr.e_phnum; i++){printf("jb\n");
     Elf_Phdr elf_phdr;
     fs_lseek(elf_file, elf_ehdr.e_phoff + elf_ehdr.e_phentsize * i, SEEK_SET);
     fs_read(elf_file, &elf_phdr, sizeof(elf_phdr));
