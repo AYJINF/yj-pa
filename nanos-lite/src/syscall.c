@@ -36,7 +36,7 @@ void sys_read(Context *c){
 // }
 
 void sys_write(Context *c){
-  c->GPRx = fs_write(c->GPR2, (void *)c->GPR3, c->GPR4);
+  c->GPRx = fs_write(c->GPR2, (void *)c->GPR3, c->GPR4); // 阿巴阿巴
 }
 
 void sys_close(Context *c){
