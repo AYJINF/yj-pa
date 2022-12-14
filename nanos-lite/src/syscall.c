@@ -1,11 +1,12 @@
 #include <common.h>
 #include "syscall.h"
 #include <fs.h>
+#include <sys/time.h>
 
 // #define CONFIG_STRACE 0;
 
 #ifdef CONFIG_STRACE
-char *files[] = {"stdin", "stdout", "stderr", "/bin/file-test", "/bin/hello", "/bin/dummy", "/share/music/little-star.ogg", 
+char *files[] = {"stdin", "stdout", "stderr", "/bin/file-test", "/bin/hello", "/bin/dummy", "/bin/timer-test", "/share/music/little-star.ogg", 
 "/share/music/rhythm/Do.ogg", "/share/music/rhythm/Si.ogg", "/share/music/rhythm/Re.ogg", "/share/music/rhythm/empty.ogg", 
 "/share/music/rhythm/Fa.ogg", "/share/music/rhythm/La.ogg", "/share/music/rhythm/Mi.ogg", "/share/music/rhythm/So.ogg", 
 "/share/fonts/Courier-13.bdf", "/share/fonts/Courier-8.bdf", "/share/fonts/Courier-9.bdf", "/share/fonts/Courier-12.bdf", 
@@ -45,6 +46,14 @@ void sys_brk(Context *c){
   c->GPRx = 0;
 }
 
+void sys_gettimeofday(Context *c){
+  struct timeval *tval = (struct timeval *)c->GPR2;
+  uint64_t us = io_read(AM_TIMER_UPTIME).us;
+  tval->tv_sec = us / 1000000;
+  tval->tv_usec = us % 1000000;
+  c->GPRx = 0; // 阿巴阿巴不知道什么情况会是-1
+}
+
 void do_syscall(Context *c) {
   uintptr_t a[4];
   a[0] = c->GPR1;
@@ -67,6 +76,8 @@ void do_syscall(Context *c) {
   case SYS_lseek: Log("Syscall: lseek file %s, offset = %08x, whence = %08x.", (char *)files[c->GPR2], c->GPR3, c->GPR4);
     break;
   case SYS_brk: Log("Syscall: sbrk, program_break = %08x", c->GPR2);
+    break;
+  case SYS_gettimeofday: Log("Syscall: gettimeofday");
     break;
   default: Log("Syscall: GPR1 = %08x, GPR2 = %08x, GPR3 = %08x, GPR4 = %08x", c->GPR1, c->GPR2, c->GPR3, c->GPR4);
     break;
