@@ -2,7 +2,7 @@
 #include "syscall.h"
 #include <fs.h>
 
-#define CONFIG_STRACE 0;
+// #define CONFIG_STRACE 0;
 
 void sys_exit(Context *c){
   halt(c->GPRx);
@@ -14,7 +14,8 @@ void sys_yield(Context *c){
 }
 
 void sys_open(Context *c){
-  c->GPRx = fs_open((char *)c->GPR2, c->GPR3, c->GPR4);
+  printf("jb\n");
+  c->GPRx = fs_open((char *)c->GPR2, c->GPR3, c->GPR4);printf("jxb\n");
 }
 
 void sys_read(Context *c){
