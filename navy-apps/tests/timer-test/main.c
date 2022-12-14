@@ -12,8 +12,7 @@ int main() {
   {
     gettimeofday(&tval, NULL);
     int t1 = tval.tv_sec * 1000000 + tval.tv_usec;
-    printf("t0 = %d, t1 = %d\n", t0 / 100000, t1 / 100000);
-    if(t0-t1 == 500000){
+    if(t1-t0 == 500000){
         printf("t0 = %d, t1 = %d\n", t0 / 100000, t1 / 100000);
         t0 = t1;
     }
