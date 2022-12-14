@@ -44,10 +44,8 @@ int fs_open(const char *pathname, int flags, int mode){
   for(int i = 0; i < file_num; i++){
     if(strcmp(file_table[i].name, pathname) == 0){
       file_table[i].open_offset = 0;
-      // if(file_table[i].read == NULL) 
-      file_table[i].read = ramdisk_read;
-      // if(file_table[i].write == NULL) 
-      file_table[i].write = ramdisk_write;
+      if(file_table[i].read == NULL) file_table[i].read = ramdisk_read;
+      if(file_table[i].write == NULL) file_table[i].write = ramdisk_write;
       return i;
     }
   }
