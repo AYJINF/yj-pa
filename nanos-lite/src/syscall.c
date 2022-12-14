@@ -52,23 +52,23 @@ void do_syscall(Context *c) {
   #ifdef CONFIG_STRACE
   switch (a[0])
   {
-  case SYS_exit: Log("Syscall: exit. GPR2 = 0x%x, GPR3 = 0x%x, GPR4 = 0x%x", c->GPR2, c->GPR3, c->GPR4);
+  case SYS_exit: Log("Syscall: exit. GPR2 = %x, GPR3 = %x, GPR4 = %x", c->GPR2, c->GPR3, c->GPR4);
     break;
-  case SYS_yield: Log("Syscall: yield. GPR2 = 0x%x, GPR3 = 0x%x, GPR4 = 0x%x", c->GPR2, c->GPR3, c->GPR4);
+  case SYS_yield: Log("Syscall: yield. GPR2 = %x, GPR3 = %x, GPR4 = %x", c->GPR2, c->GPR3, c->GPR4);
     break;
   case SYS_open: Log("Syscall: open file %s.", (char *)c->GPR2);
     break;
-  case SYS_read: Log("Syscall: read file %s, buf = 0x%08x, len = 0x%08x", (char *)files[c->GPR2], c->GPR3, c->GPR4);
+  case SYS_read: Log("Syscall: read file %s, buf = %08x, len = %08x", (char *)files[c->GPR2], c->GPR3, c->GPR4);
     break;
-  case SYS_write: Log("Syscall: write file %s, buf = 0x%08x, len = 0x%08x", (char *)files[c->GPR2], c->GPR3, c->GPR4);
+  case SYS_write: Log("Syscall: write file %s, buf = %08x, len = %08x", (char *)files[c->GPR2], c->GPR3, c->GPR4);
     break;
   case SYS_close: Log("Syscall: close file %s.", (char *)files[c->GPR2]);
     break;
-  case SYS_lseek: Log("Syscall: lseek file %s, offset = 0x%08x, whence = 0x%08x.", (char *)files[c->GPR2], c->GPR3, c->GPR4);
+  case SYS_lseek: Log("Syscall: lseek file %s, offset = %08x, whence = %08x.", (char *)files[c->GPR2], c->GPR3, c->GPR4);
     break;
-  case SYS_brk: Log("Syscall: sbrk, program_break = 0x%08x", c->GPR2);
+  case SYS_brk: Log("Syscall: sbrk, program_break = %08x", c->GPR2);
     break;
-  default: Log("Syscall: GPR1 = 0x%08x, GPR2 = 0x%08x, GPR3 = 0x%08x, GPR4 = 0x%08x", c->GPR1, c->GPR2, c->GPR3, c->GPR4);
+  default: Log("Syscall: GPR1 = %08x, GPR2 = %08x, GPR3 = %08x, GPR4 = %08x", c->GPR1, c->GPR2, c->GPR3, c->GPR4);
     break;
   }
   #endif
