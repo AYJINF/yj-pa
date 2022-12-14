@@ -22,9 +22,7 @@ int main() {
   }
 
   for (i = 500; i < 1000; i ++) {
-    printf("i=%d\n", i);
     fscanf(fp, "%d", &n);
-    printf("n=%d\n", n);
     assert(n == i + 1);
   }
 
