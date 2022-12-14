@@ -36,7 +36,7 @@ size_t fs_serial_write(const void *buf, size_t offset, size_t len){
   return ret;
 }
 
-/* This is the information about all files in disk. */
+/* This is the information about all files in disk. 修改这里的时候记得修改STRACE*/
 static Finfo file_table[] __attribute__((used)) = {
   [FD_STDIN]  = {"stdin", 0, 0, invalid_read, invalid_write},
   [FD_STDOUT] = {"stdout", 0, 0, invalid_read, fs_serial_write},
@@ -111,8 +111,6 @@ size_t fs_lseek(int fd, size_t offset, int whence){
 int fs_close(int fd){
   return 0;
 }
-
-
 
 void init_fs() {
   // TODO: initialize the size of /dev/fb
