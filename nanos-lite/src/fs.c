@@ -27,17 +27,22 @@ size_t invalid_write(const void *buf, size_t offset, size_t len) {
   return 0;
 }
 
+size_t fs_serial_write(const void *buf, size_t offset, size_t len){
+  size_t ret = len;
+  char *c = (char *)buf;
+  while(*c != '\0' && len--){
+    putch(*c++);
+  }
+  return ret;
+}
+
 /* This is the information about all files in disk. */
 static Finfo file_table[] __attribute__((used)) = {
   [FD_STDIN]  = {"stdin", 0, 0, invalid_read, invalid_write},
-  [FD_STDOUT] = {"stdout", 0, 0, invalid_read, invalid_write},
-  [FD_STDERR] = {"stderr", 0, 0, invalid_read, invalid_write},
+  [FD_STDOUT] = {"stdout", 0, 0, invalid_read, fs_serial_write},
+  [FD_STDERR] = {"stderr", 0, 0, invalid_read, fs_serial_write},
 #include "files.h"
 };
-
-void init_fs() {
-  // TODO: initialize the size of /dev/fb
-}
 
 int fs_open(const char *pathname, int flags, int mode){
   int file_num = sizeof(file_table) / sizeof(Finfo);
@@ -54,7 +59,6 @@ int fs_open(const char *pathname, int flags, int mode){
 }
 
 size_t fs_read(int fd, void *buf, size_t len){
-  printf("zyy\n");
   Finfo *f = &file_table[fd];
   if(f->open_offset == f->size) return 0;
   size_t ret = 0;
@@ -106,4 +110,10 @@ size_t fs_lseek(int fd, size_t offset, int whence){
 
 int fs_close(int fd){
   return 0;
+}
+
+
+
+void init_fs() {
+  // TODO: initialize the size of /dev/fb
 }
