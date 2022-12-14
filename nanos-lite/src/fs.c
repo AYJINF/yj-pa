@@ -63,7 +63,7 @@ size_t fs_read(int fd, void *buf, size_t len){
   if(f->open_offset == f->size) return 0;
   size_t ret = 0;
   if(f->read){
-    if(len > f->size - f->open_offset && f->read == ramdisk_read) len = f->size - f->open_offset; // 阿巴阿巴
+    if(len > f->size - f->open_offset && f->read == ramdisk_read) len = f->size - f->open_offset;
     ret = f->read(buf, f->disk_offset + f->open_offset, len);
     f->open_offset += ret;
     return ret;
@@ -76,12 +76,12 @@ size_t fs_write(int fd, const void *buf, size_t len){
   size_t ret = 0;
   if(f->write){
     if(f->open_offset == f->size && (void *)f->write != (void *)fs_serial_write) return 0;
-    if(len > f->size - f->open_offset && f->write == ramdisk_write) len = f->size - f->open_offset; // 阿巴阿巴
+    if(len > f->size - f->open_offset && f->write == ramdisk_write) len = f->size - f->open_offset;
     ret = f->write(buf, f->disk_offset + f->open_offset, len);
     f->open_offset += ret;
     return ret;
   }
-  return -1;
+  return -1; // 阿巴阿巴
 }
 
 size_t fs_lseek(int fd, size_t offset, int whence){
