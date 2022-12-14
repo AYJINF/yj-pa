@@ -2,7 +2,7 @@
 #include "syscall.h"
 #include <fs.h>
 
-#define CONFIG_STRACE 0;
+// #define CONFIG_STRACE 0;
 
 #ifdef CONFIG_STRACE
 char *files[] = {"stdin", "stdout", "stderr", "/bin/file-test", "/bin/hello", "/bin/dummy", "/share/music/little-star.ogg", 
