@@ -60,7 +60,6 @@ size_t fs_read(int fd, void *buf, size_t len){
     if(len > f->size - f->open_offset && f->read == ramdisk_read) len = f->size - f->open_offset;
     ret = f->read(buf, f->disk_offset + f->open_offset, len);
     f->open_offset += ret;
-    printf("buf = %s\n", buf);
     return ret;
   }
   return -1; // 阿巴阿巴
