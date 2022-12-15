@@ -3,10 +3,11 @@
 #include <fs.h>
 #include <sys/time.h>
 
-// #define CONFIG_STRACE 0;
+// #define CONFIG_STRACE 0; // 打开之前先对照fs.c检查files对不对
 
 #ifdef CONFIG_STRACE
-char *files[] = {"stdin", "stdout", "stderr", "/bin/file-test", "/bin/hello", "/bin/dummy", "/bin/timer-test", "/share/music/little-star.ogg", 
+char *files[] = {"stdin", "stdout", "stderr", "/dev/events", 
+"/bin/file-test", "/bin/hello", "/bin/event-test", "/bin/dummy", "/bin/timer-test", "/share/music/little-star.ogg", 
 "/share/music/rhythm/Do.ogg", "/share/music/rhythm/Si.ogg", "/share/music/rhythm/Re.ogg", "/share/music/rhythm/empty.ogg", 
 "/share/music/rhythm/Fa.ogg", "/share/music/rhythm/La.ogg", "/share/music/rhythm/Mi.ogg", "/share/music/rhythm/So.ogg", 
 "/share/fonts/Courier-13.bdf", "/share/fonts/Courier-8.bdf", "/share/fonts/Courier-9.bdf", "/share/fonts/Courier-12.bdf", 

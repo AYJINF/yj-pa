@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <fcntl.h>
 
 #include <sys/time.h>
 
@@ -16,8 +17,12 @@ uint32_t NDL_GetTicks() {
   return tval.tv_sec * 1000 + tval.tv_usec / 1000;
 }
 
+// 读出一条事件信息, 将其写入`buf`中, 最长写入`len`字节,若读出了有效的事件, 函数返回1, 否则返回0
 int NDL_PollEvent(char *buf, int len) {
-  return 0;
+  int eve_f = open("dev/events", O_RDONLY);
+  size_t ret = read(eve_f, buf, len);
+  if(ret == 0) return 0;
+  return 1;
 }
 
 void NDL_OpenCanvas(int *w, int *h) {
