@@ -26,7 +26,6 @@ size_t serial_write(const void *buf, size_t offset, size_t len) {
 size_t events_read(void *buf, size_t offset, size_t len) {
   AM_INPUT_KEYBRD_T in_key = io_read(AM_INPUT_KEYBRD);
   size_t ret = 0;
-  putch('?');
   if(in_key.keycode == AM_KEY_NONE) return 0;
   if(in_key.keydown)
     ret = sprintf((char *)buf, "kd %s\n", keyname[in_key.keycode]);
