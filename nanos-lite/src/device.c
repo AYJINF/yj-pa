@@ -45,6 +45,11 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 }
 
 size_t fb_write(const void *buf, size_t offset, size_t len) {
+  int line_len = io_read(AM_GPU_CONFIG).width * sizeof(uint32_t);
+  int off_y = offset / line_len;
+  int off_x = (offset % line_len) / sizeof(uint32_t);
+  io_write(AM_GPU_FBDRAW, off_x, off_y, (uint32_t *)buf, len / 4, 1, false);
+  io_write(AM_GPU_FBDRAW, 0, 0, NULL, 0, 0, true); // 先绘图再向屏幕同步
   return 0;
 }
 

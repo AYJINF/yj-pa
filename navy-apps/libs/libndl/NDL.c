@@ -61,18 +61,16 @@ void NDL_OpenCanvas(int *w, int *h) {
 
 // 向画布`(x, y)`坐标处绘制`w*h`的矩形图像, 并将该绘制区域同步到屏幕上。图像像素按行优先方式存储在`pixels`中, 每个像素用32位整数以`00RRGGBB`的方式描述颜色
 void NDL_DrawRect(uint32_t *pixels, int x, int y, int w, int h) {
-  // int x_start = (frame_w - screen_w) / 2;
-  // int y_start = (frame_h - screen_h) / 2;
-  // int fb_f = open("/dev/fb", O_WRONLY);
-  // for (int i = 0; i < h; i++){
-  //   lseek(fb_f, (y+i) * frame_w +
-
-
-
-
-  //   lseek(fb_f, ((y_start + y + i) * frame_w + (x_start + x)) * sizeof(uint32_t), SEEK_SET);
-  //   int ret = write(fb_f, pixels + w * i, w * sizeof(uint32_t));
-  // }
+  // 默认画布在屏幕中央
+  int canvas_x = (frame_w - screen_w) / 2;
+  int canvas_y = (frame_h - screen_h) / 2;
+  int off_x = canvas_x + x;
+  int off_y = canvas_y + y;
+  int fb_f = open("/dev/fb", O_WRONLY);
+  for (int i = 0; i < h; i++){
+    lseek(fb_f, (off_x + (off_y+i) * frame_w) * sizeof(uint32_t), SEEK_SET);
+    write(fb_f, pixels + w*i, w*sizeof(uint32_t));
+  }
 }
 
 void NDL_OpenAudio(int freq, int channels, int samples) {

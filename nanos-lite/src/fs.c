@@ -7,8 +7,8 @@ typedef size_t (*ReadFn) (void *buf, size_t offset, size_t len);
 typedef size_t (*WriteFn) (const void *buf, size_t offset, size_t len);
 size_t serial_write(const void *buf, size_t offset, size_t len);
 size_t events_read(void *buf, size_t offset, size_t len);
-size_t fb_write(const void *buf, size_t offset, size_t len);
 size_t dispinfo_read(void *buf, size_t offset, size_t len);
+size_t fb_write(const void *buf, size_t offset, size_t len);
 
 typedef struct {
   char *name;
@@ -42,6 +42,11 @@ static Finfo file_table[] __attribute__((used)) = {
 #include "files.h"
 };
 
+void init_fs() {
+  // TODO: initialize the size of /dev/fb
+  file_table[FD_FB].size = io_read(AM_GPU_CONFIG).width * io_read(AM_GPU_CONFIG).height * sizeof(uint32_t);
+}
+
 int fs_open(const char *pathname, int flags, int mode){
   int file_num = sizeof(file_table) / sizeof(Finfo);
   for(int i = 0; i < file_num; i++){
@@ -55,6 +60,7 @@ int fs_open(const char *pathname, int flags, int mode){
   printf("The file '%s' is not found!\n", pathname);
   assert(0);
 }
+
 
 size_t fs_read(int fd, void *buf, size_t len){
   Finfo *f = &file_table[fd];
@@ -108,8 +114,4 @@ size_t fs_lseek(int fd, size_t offset, int whence){
 
 int fs_close(int fd){
   return 0;
-}
-
-void init_fs() {
-  // TODO: initialize the size of /dev/fb
 }
