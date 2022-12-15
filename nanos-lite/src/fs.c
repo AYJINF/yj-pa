@@ -58,8 +58,6 @@ size_t fs_read(int fd, void *buf, size_t len){
   size_t ret = 0;
   if(f->read){
     if(len > f->size - f->open_offset && (void *)f->read == (void *)ramdisk_read) len = f->size - f->open_offset;
-    if((void *)f->read == (void *)ramdisk_read) printf("ramdisk\n");
-    if((void *)f->read == (void *)events_read) printf("event\n");
     ret = f->read(buf, f->disk_offset + f->open_offset, len);
     f->open_offset += ret;
     return ret;
