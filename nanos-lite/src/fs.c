@@ -55,6 +55,7 @@ int fs_open(const char *pathname, int flags, int mode){
 size_t fs_read(int fd, void *buf, size_t len){
   Finfo *f = &file_table[fd];
   if(f->open_offset == f->size) return 0;
+  printf("zyyyyyyyyyyyyyyy\n");
   size_t ret = 0;
   if(f->read){
     if(len > f->size - f->open_offset && f->read == ramdisk_read) len = f->size - f->open_offset;
