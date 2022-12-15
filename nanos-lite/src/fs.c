@@ -54,10 +54,7 @@ int fs_open(const char *pathname, int flags, int mode){
 
 size_t fs_read(int fd, void *buf, size_t len){
   Finfo *f = &file_table[fd];
-  if(f->open_offset == f->size) {
-  printf("fd=%d\n", fd);
-    return 0;
-  }
+  if(f->open_offset == f->size && (void *)f->read == (void *)ramdisk_read) return 0; // 或许可删去
   size_t ret = 0;
   if(f->read){
     if(len > f->size - f->open_offset && (void *)f->read == (void *)ramdisk_read) len = f->size - f->open_offset;
