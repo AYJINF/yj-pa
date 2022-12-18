@@ -15,7 +15,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   int elf_file = fs_open(filename, 0, 0);
   fs_read(elf_file, &elf_ehdr, sizeof(elf_ehdr));
 
-  assert(*(uint32_t *)elf_ehdr.e_ident == 0x464c457f);
+  // assert(*(uint32_t *)elf_ehdr.e_ident == 0x464c457f);
 
   #if defined(__ISA_AM_NATIVE__)
   # define EXPECT_TYPE EM_X86_64
