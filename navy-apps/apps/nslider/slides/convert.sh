@@ -1,4 +1,4 @@
-#!/bin/bash
+# !/bin/bash
 
 convert slides.pdf \
   -sharpen "0x1.0" \
