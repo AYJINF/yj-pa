@@ -48,7 +48,7 @@ typedef struct {
 } SDL_UserEvent;
 
 typedef union {
-  uint8_t type;
+  uint8_t type; // SDL_EventType类型
   SDL_KeyboardEvent key;
   SDL_UserEvent user;
 } SDL_Event;
