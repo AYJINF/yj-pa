@@ -21,9 +21,11 @@ int SDL_PollEvent(SDL_Event *ev) {
   if(ndl_event[1] == 'u') ev->type = SDL_KEYUP;
   else ev->type = SDL_KEYDOWN;
   char k_name[16];
-  int pos = -1;
-  while(ndl_event[3 + pos++] !='\n')
+  int pos = 0;
+  while(ndl_event[3 + pos] !='\n'){
     k_name[pos] = ndl_event[3 + pos]; // 阿巴阿巴
+    pos++;
+  }
   k_name[pos] = '\0';
   for(int i = 0; i < sizeof(keyname) / sizeof(char *); i++){
     if (strcmp(k_name, keyname[i]) == 0){
@@ -42,12 +44,10 @@ int SDL_WaitEvent(SDL_Event *event) {
   char k_name[16];
   int pos = 0;
   while(ndl_event[3 + pos] !='\n'){
-    k_name[pos] = ndl_event[3 + pos]; // 阿巴阿巴
-    pos++;
+    k_name[pos] = ndl_event[3 + pos++]; // 阿巴阿巴
   }
   k_name[pos] = '\0';
   for(int i = 0; i < sizeof(keyname) / sizeof(char *); i++){
-    printf("k_name = %s, keyname[i] = %s\n", k_name, keyname[i]);
     if (strcmp(k_name, keyname[i]) == 0){
       printf("zyy\n");
       event->key.keysym.sym = i;
