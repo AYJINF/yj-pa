@@ -43,7 +43,8 @@ int SDL_WaitEvent(SDL_Event *event) {
   int pos = 0;
   while(ndl_event[3 + pos] !='\n'){
     printf("yyy = %c\n", ndl_event[3+pos]);
-    k_name[pos] = ndl_event[3 + pos++]; // 阿巴阿巴
+    k_name[pos] = ndl_event[3 + pos]; // 阿巴阿巴
+    pos++;
   }
   k_name[--pos] = '\0';
   for(int i = 0; i < sizeof(keyname) / sizeof(char *); i++){
