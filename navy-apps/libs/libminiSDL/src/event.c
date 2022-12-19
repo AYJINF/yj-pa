@@ -41,8 +41,8 @@ int SDL_WaitEvent(SDL_Event *event) {
   else event->type = SDL_KEYDOWN;
   char k_name[16];
   int pos = -1;
-  while(ndl_event[3 + pos++] !='\n')
-    k_name[pos] = ndl_event[3 + pos]; // 阿巴阿巴
+  while(ndl_event[3 + pos] !='\n')
+    k_name[pos] = ndl_event[3 + pos++]; // 阿巴阿巴
   k_name[pos] = '\0';
   for(int i = 0; i < sizeof(keyname) / sizeof(char *); i++){
     printf("k_name = %s, keyname[i] = %s\n", k_name, keyname[i]);
