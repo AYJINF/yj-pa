@@ -40,7 +40,7 @@ int SDL_WaitEvent(SDL_Event *event) {
   if(ndl_event[1] == 'u') event->type = SDL_KEYUP;
   else event->type = SDL_KEYDOWN;
   char k_name[16];
-  int pos = -1;
+  int pos = 0;
   while(ndl_event[3 + pos] !='\n'){
     k_name[pos] = ndl_event[3 + pos++]; // 阿巴阿巴
   }
