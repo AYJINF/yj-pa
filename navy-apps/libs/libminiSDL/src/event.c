@@ -47,6 +47,7 @@ int SDL_WaitEvent(SDL_Event *event) {
   for(int i = 0; i < sizeof(keyname) / sizeof(char *); i++){
     printf("k_name = %s, keyname[i] = %s\n", k_name, keyname[i]);
     if (strcmp(k_name, keyname[i]) == 0){
+      printf("zyy\n");
       event->key.keysym.sym = i;
       return 1;
     }
