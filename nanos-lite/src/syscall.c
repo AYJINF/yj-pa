@@ -2,6 +2,7 @@
 #include "syscall.h"
 #include <fs.h>
 #include <sys/time.h>
+#include <proc.h>
 
 // #define CONFIG_STRACE 0; // 打开之前先对照fs.c检查files对不对
 
@@ -13,6 +14,8 @@ char *files[] = {"stdin", "stdout", "stderr", "/dev/events", "/dev/fb", "/proc/d
 "/share/fonts/Courier-13.bdf", "/share/fonts/Courier-8.bdf", "/share/fonts/Courier-9.bdf", "/share/fonts/Courier-12.bdf", 
 "/share/fonts/Courier-7.bdf", "/share/fonts/Courier-11.bdf", "/share/fonts/Courier-10.bdf", "/share/files/num", "/share/pictures/projectn.bmp"};
 #endif
+
+extern void naive_uload(PCB *pcb, const char *filename);
 
 void sys_exit(Context *c){
   halt(c->GPRx);
@@ -44,6 +47,11 @@ void sys_lseek(Context *c){
 }
 
 void sys_brk(Context *c){
+  c->GPRx = 0;
+}
+
+void sys_execve(Context *c){
+  naive_uload(NULL, (char *)c->GPR2);
   c->GPRx = 0;
 }
 
@@ -94,6 +102,7 @@ void do_syscall(Context *c) {
     case SYS_close: sys_close(c); break;
     case SYS_lseek: sys_lseek(c); break;
     case SYS_brk: sys_brk(c); break;
+    case SYS_execve: sys_execve(c); break;
     case SYS_gettimeofday: sys_gettimeofday(c); break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
