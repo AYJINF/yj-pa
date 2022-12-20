@@ -18,7 +18,8 @@ char *files[] = {"stdin", "stdout", "stderr", "/dev/events", "/dev/fb", "/proc/d
 extern void naive_uload(PCB *pcb, const char *filename);
 
 void sys_exit(Context *c){
-  halt(c->GPRx);
+  naive_uload(NULL, "/bin/nterm");
+  c->GPRx = 0;
 }
 
 void sys_yield(Context *c){
