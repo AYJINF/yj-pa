@@ -78,7 +78,7 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
     if(x ==0 && y == 0 && w == 0 && h == 0){
       w = s->w;
       h = s->h;
-    }printf("sss%d %d\n",w,h);
+    }
     uint32_t *pixels = malloc(sizeof(uint32_t) * w * h);
     uint8_t *s_pixels = (uint8_t *)s->pixels;    
     for(int i = 0; i < h; i++)
