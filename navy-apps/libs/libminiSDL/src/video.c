@@ -67,6 +67,7 @@ void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
     if(x ==0 && y == 0 && w == 0 && h == 0) // 阿巴阿巴
       NDL_DrawRect((uint32_t *)s->pixels, 0, 0, s->w, s->h);
     else {
+    printf("zyyyyyyyyyy\n");
       uint32_t *pixels = malloc(sizeof(uint32_t) * w * h);
       for(int i = 0; i < h ; i++)
         memcpy(&pixels[i * w], &s->pixels[(i+y)*s->w + x], sizeof(uint32_t) * w); 
@@ -121,7 +122,6 @@ SDL_Surface* SDL_CreateRGBSurface(uint32_t flags, int width, int height, int dep
     memset(s->format->palette->colors, 0, sizeof(SDL_Color) * 256);
     s->format->palette->ncolors = 256;
   } else {
-    printf("zyyyyyyyyyy\n");
     s->format->palette = NULL;
     s->format->Rmask = Rmask; s->format->Rshift = maskToShift(Rmask); s->format->Rloss = 0;
     s->format->Gmask = Gmask; s->format->Gshift = maskToShift(Gmask); s->format->Gloss = 0;
