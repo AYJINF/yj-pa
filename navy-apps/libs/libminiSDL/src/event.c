@@ -5,12 +5,12 @@
 
 #define keyname(k) #k,
 
-static uint8_t keystate[sizeof(keyname) / sizeof(char *)];
-
 static const char *keyname[] = {
   "NONE",
   _KEYS(keyname)
 };
+
+static uint8_t keystate[sizeof(keyname) / sizeof(char *)];
 
 int SDL_PushEvent(SDL_Event *ev) {
   return 0;
