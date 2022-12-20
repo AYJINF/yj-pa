@@ -31,7 +31,7 @@ void SDL_BlitSurface(SDL_Surface *src, SDL_Rect *srcrect, SDL_Surface *dst, SDL_
       }
     }
   }
-  else{
+  else{printf("sss\n");
     uint8_t* dst_pixels = (uint8_t*)dst->pixels;
     uint8_t* src_pixels = (uint8_t*)src->pixels;
     for(int i = 0; i < h; i++){
