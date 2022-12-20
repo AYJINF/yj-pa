@@ -10,7 +10,6 @@ void SDL_Quit() {
 }
 
 char *SDL_GetError() {
-  assert(0);
   return "Navy does not support SDL_GetError()";
 }
 
@@ -20,7 +19,6 @@ int SDL_SetError(const char* fmt, ...) {
 }
 
 int SDL_ShowCursor(int toggle) {
-  assert(0);
   return 0;
 }
 
