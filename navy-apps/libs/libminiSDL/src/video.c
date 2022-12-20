@@ -64,10 +64,10 @@ void SDL_FillRect(SDL_Surface *dst, SDL_Rect *dstrect, uint32_t color) {
 void SDL_UpdateRect(SDL_Surface *s, int x, int y, int w, int h) {
     assert(s);
     if(s->format->BitsPerPixel == 32){
+    printf("zyyyyyyyyyy\n");
     if(x ==0 && y == 0 && w == 0 && h == 0) // 阿巴阿巴
       NDL_DrawRect((uint32_t *)s->pixels, 0, 0, s->w, s->h);
     else {
-    printf("zyyyyyyyyyy\n");
       uint32_t *pixels = malloc(sizeof(uint32_t) * w * h);
       for(int i = 0; i < h ; i++)
         memcpy(&pixels[i * w], &s->pixels[(i+y)*s->w + x], sizeof(uint32_t) * w); 
