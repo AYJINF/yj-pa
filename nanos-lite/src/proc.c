@@ -28,8 +28,8 @@ void init_proc() {
   // context_kload(&pcb[1], hello_fun, (void *)"cd");
   // printf("zyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy\n");
   context_uload(&pcb[0], "/bin/hello");
-  printf("zyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy\n");
   context_uload(&pcb[1], "/bin/pal");
+  printf("zyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy\n");
 
   switch_boot_pcb();
 
