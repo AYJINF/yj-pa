@@ -15,7 +15,7 @@ static const char *keyname[256] __attribute__((used)) = {
 };
 
 size_t serial_write(const void *buf, size_t offset, size_t len) {
-  // yield();
+  yield();
   size_t ret = len;
   char *c = (char *)buf;
   while(*c != '\0' && len--){
@@ -25,7 +25,7 @@ size_t serial_write(const void *buf, size_t offset, size_t len) {
 }
 
 size_t events_read(void *buf, size_t offset, size_t len) {
-  // yield();
+  yield();
   AM_INPUT_KEYBRD_T in_key = io_read(AM_INPUT_KEYBRD);
   size_t ret = 0;
   if(in_key.keycode == AM_KEY_NONE) return 0;
@@ -47,7 +47,7 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 }
 
 size_t fb_write(const void *buf, size_t offset, size_t len) {
-  // yield();
+  yield();
   int line_len = io_read(AM_GPU_CONFIG).width * sizeof(uint32_t);
   int off_y = offset / line_len;
   int off_x = (offset % line_len) / sizeof(uint32_t);
