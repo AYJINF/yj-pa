@@ -72,8 +72,8 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   char *envp_c[envp_num];
   for(int i = 0; i < argv_num; i++){
     string_area -= ROUNDUP(strlen(argv[i]) + 1, 4); // +1 for the '\0'
-    printf("ydddddddddddddddddddddddddd\n");
     strcpy(string_area, argv[i]);
+    printf("ydddddddddddddddddddddddddd\n");
     argv_c[i] = string_area;
   }
   for(int i = 0; i < envp_num; i++){
