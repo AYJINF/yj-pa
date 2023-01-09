@@ -14,9 +14,9 @@ size_t strlen(const char *s) {
 
 char *strcpy(char *dst, const char *src) {
   assert((dst != NULL) && (src != NULL));
-    printf("ydddddddddddddddddddddddddd\n");
   char *ret = dst;
   while((*dst++ = *src++) != '\0');
+  printf("ydddddddddddddddddddddddddd\n");
   return ret;
 }
 
