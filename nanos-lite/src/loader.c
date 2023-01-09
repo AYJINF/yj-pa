@@ -81,8 +81,8 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     envp_c[i] = string_area;
     assert(t == envp[i]); // test
   }
-  printf("zyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy\n");
   uintptr_t *string_a = (uintptr_t *)string_area;
+  printf("zyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy\n");
   string_a--; *string_a = (uintptr_t)NULL;
 
   for(int i = envp_num - 1; i >= 0; i--){
