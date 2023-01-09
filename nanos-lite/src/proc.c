@@ -30,6 +30,7 @@ void init_proc() {
   // printf("zyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy\n");
   // context_uload(&pcb[0], "/bin/hello");
   char *argv[] = {"--skip"};
+  printf("zyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy\n");
   context_uload(&pcb[1], "/bin/pal", argv, NULL);
 
   switch_boot_pcb();
