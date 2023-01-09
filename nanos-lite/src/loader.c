@@ -97,6 +97,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 
   string_a--;
   *string_a = (uintptr_t)argv_num; 
+  printf("zyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy\n");
 
   Area kstack;
   kstack.start = (void *)pcb;
