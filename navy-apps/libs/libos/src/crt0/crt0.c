@@ -5,8 +5,13 @@
 int main(int argc, char *argv[], char *envp[]);
 extern char **environ;
 void call_main(uintptr_t *args) {
-  char *empty[] =  {NULL };
-  environ = empty;
-  exit(main(0, empty, empty));
+  int argc = (int)*args++;
+  char *args_c = (char *)args;
+  char **argv = (char **)args_c;
+  while(*args_c) args_c++;
+  args_c++;
+  char **envp = (char **)args_c;
+  environ = envp;
+  exit(main(argc, argv, envp));
   assert(0);
 }

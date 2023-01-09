@@ -60,12 +60,47 @@ void context_kload(PCB *pcb, void (*entry)(void *), void *arg){
   pcb->cp = kcontext(kstack, entry, arg);
 }
 
-void context_uload(PCB *pcb, const char *filename){
-// void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]){
+// void context_uload(PCB *pcb, const char *filename){
+void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]){
+  char *string_area = (char *)heap.end;
+  int argv_num = 0, envp_num = 0;
+  while(argv[argv_num]) argv_num++;
+  while(envp[envp_num]) envp_num++;
+  char *argv_c[argv_num];
+  char *envp_c[envp_num];
+  for(int i = 0; i < argv_num; i++){
+    string_area -= ROUNDUP(strlen(argv[i]) + 1, 4); // +1 for the '\0'
+    strcpy(string_area, argv[i]);
+    argv_c[i] = string_area;
+  }
+  for(int i = 0; i < envp_num; i++){
+    string_area -= ROUNDUP(strlen(envp[i]) + 1, 4); // +1 for the '\0'
+    char *t = string_area; // test
+    strcpy(string_area, envp[i]);
+    envp_c[i] = string_area;
+    assert(t == envp[i]); // test
+  }
+  uintptr_t *string_a = (uintptr_t *)string_area;
+  string_a--; *string_a = (uintptr_t)NULL;
+
+  for(int i = envp_num - 1; i >= 0; i--){
+    string_a--;
+    *string_a = (uintptr_t)envp_c[i];
+  }  
+  string_a--; *string_a = (uintptr_t)NULL;
+
+  for(int i = argv_num - 1; i >= 0; i--){
+    string_a--;
+    *string_a = (uintptr_t)argv_c[i];
+  }
+  
+  string_a--;
+  *string_a = (uintptr_t)argv_num; 
+
   Area kstack;
   kstack.start = (void *)pcb;
   kstack.end = kstack.start + STACK_SIZE;
   pcb->cp = ucontext(NULL, kstack, (void *)loader(pcb, filename));
-  pcb->cp->GPRx = (uintptr_t)heap.end;
+  pcb->cp->GPRx = (uintptr_t)string_a;
 }
 
