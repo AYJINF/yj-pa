@@ -66,7 +66,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   int argv_num = 0, envp_num = 0;
   if(argv) while(argv[argv_num]) argv_num++;
   if(envp) while(envp[envp_num]) envp_num++;
-  printf("argv_num=%d, envp_num=%d\n", argv_num, envp_num);
+  // printf("argv_num=%d, envp_num=%d\n", argv_num, envp_num);
   char *argv_c[argv_num];
   char *envp_c[envp_num];
   for(int i = 0; i < argv_num; i++){

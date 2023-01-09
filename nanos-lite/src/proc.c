@@ -31,6 +31,7 @@ void init_proc() {
   // context_uload(&pcb[0], "/bin/hello");
   // char *argv[] = {NULL};
   context_uload(&pcb[1], "/bin/exec-test", NULL, NULL);
+  printf("zyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy\n");
 
   switch_boot_pcb();
 
