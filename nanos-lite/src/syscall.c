@@ -16,6 +16,7 @@ char *files[] = {"stdin", "stdout", "stderr", "/dev/events", "/dev/fb", "/proc/d
 #endif
 
 extern void naive_uload(PCB *pcb, const char *filename);
+int execve(const char *filename, char *const argv[], char *const envp[]);
 
 void sys_exit(Context *c){
   naive_uload(NULL, "/bin/nterm");
@@ -52,8 +53,7 @@ void sys_brk(Context *c){
 }
 
 void sys_execve(Context *c){
-  naive_uload(NULL, (char *)c->GPR2);
-  c->GPRx = 0;
+  c->GPRx = execve((char *)c->GPR2, (char **)c->GPR3, (char **)c->GPR4);
 }
 
 void sys_gettimeofday(Context *c){
@@ -67,6 +67,9 @@ void sys_gettimeofday(Context *c){
 void do_syscall(Context *c) {
   uintptr_t a[4];
   a[0] = c->GPR1;
+  a[1] = c->GPR2;
+  a[2] = c->GPR3;
+  a[3] = c->GPR4;
 
   #ifdef CONFIG_STRACE
   switch (a[0])
