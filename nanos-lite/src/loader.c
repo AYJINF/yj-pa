@@ -60,7 +60,7 @@ void context_kload(PCB *pcb, void (*entry)(void *), void *arg){
   pcb->cp = kcontext(kstack, entry, arg);
 }
 
-void context_uload(PCB *pcb, const char *filename){
+void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]){
   Area kstack;
   kstack.start = (void *)pcb;
   kstack.end = kstack.start + STACK_SIZE;
