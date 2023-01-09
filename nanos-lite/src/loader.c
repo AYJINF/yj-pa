@@ -62,7 +62,6 @@ void context_kload(PCB *pcb, void (*entry)(void *), void *arg){
 
 // void context_uload(PCB *pcb, const char *filename){
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]){
-    printf("yyyyyyyyyyyyyy\n");
   char *string_area = (char *)heap.end;
   int argv_num = 0, envp_num = 0;
   while(argv[argv_num]) argv_num++;
@@ -73,6 +72,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     string_area -= ROUNDUP(strlen(argv[i]) + 1, 4); // +1 for the '\0'
     strcpy(string_area, argv[i]);
     argv_c[i] = string_area;
+    printf("yyyyyyyyyyyyyy\n");
   }
   for(int i = 0; i < envp_num; i++){
     string_area -= ROUNDUP(strlen(envp[i]) + 1, 4); // +1 for the '\0'
