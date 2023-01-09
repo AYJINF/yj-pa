@@ -81,6 +81,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     envp_c[i] = string_area;
     assert(t == envp[i]); // test
   }
+  printf("zyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy\n");
   uintptr_t *string_a = (uintptr_t *)string_area;
   string_a--; *string_a = (uintptr_t)NULL;
 
@@ -97,7 +98,6 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 
   string_a--;
   *string_a = (uintptr_t)argv_num; 
-  printf("zyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy\n");
 
   Area kstack;
   kstack.start = (void *)pcb;
