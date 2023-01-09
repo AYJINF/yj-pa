@@ -68,11 +68,11 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   while(envp[envp_num]) envp_num++;
   char *argv_c[argv_num];
   char *envp_c[envp_num];
+    printf("yyyyyyyyyyyyyy\n");
   for(int i = 0; i < argv_num; i++){
     string_area -= ROUNDUP(strlen(argv[i]) + 1, 4); // +1 for the '\0'
     strcpy(string_area, argv[i]);
     argv_c[i] = string_area;
-    printf("yyyyyyyyyyyyyy\n");
   }
   for(int i = 0; i < envp_num; i++){
     string_area -= ROUNDUP(strlen(envp[i]) + 1, 4); // +1 for the '\0'
