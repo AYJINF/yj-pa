@@ -16,7 +16,6 @@ char *strcpy(char *dst, const char *src) {
   assert((dst != NULL) && (src != NULL));
   char *ret = dst;
   while((*dst++ = *src++) != '\0');
-  printf("ydddddddddddddddddddddddddd\n");
   return ret;
 }
 

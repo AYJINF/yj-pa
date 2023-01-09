@@ -62,8 +62,8 @@ void context_kload(PCB *pcb, void (*entry)(void *), void *arg){
 
 // void context_uload(PCB *pcb, const char *filename){
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]){
-  // char *string_area = (char *)heap.end;
-  char *string_area = (char *)new_page(8);
+  char *string_area = (char *)heap.end;
+  // char *string_area = (char *)new_page(8);
   int argv_num = 0, envp_num = 0;
   if(argv) while(argv[argv_num]) argv_num++;
   if(envp) while(envp[envp_num]) envp_num++;
@@ -73,7 +73,6 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   for(int i = 0; i < argv_num; i++){
     string_area -= ROUNDUP(strlen(argv[i]) + 1, 4); // +1 for the '\0'
     strcpy(string_area, argv[i]);
-    printf("ydddddddddddddddddddddddddd\n");
     argv_c[i] = string_area;
   }
   for(int i = 0; i < envp_num; i++){
