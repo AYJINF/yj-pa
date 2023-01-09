@@ -79,6 +79,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     strcpy(string_area, envp[i]);
     envp_c[i] = string_area;
     assert(t == envp[i]); // test
+    printf("yyyyyyyyyyyyyy\n");
   }
   uintptr_t *string_a = (uintptr_t *)string_area;
   string_a--; *string_a = (uintptr_t)NULL;
@@ -93,7 +94,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     string_a--;
     *string_a = (uintptr_t)argv_c[i];
   }
-  
+
   string_a--;
   *string_a = (uintptr_t)argv_num; 
 
