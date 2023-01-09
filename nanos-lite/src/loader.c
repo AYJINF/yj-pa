@@ -62,6 +62,7 @@ void context_kload(PCB *pcb, void (*entry)(void *), void *arg){
 
 // void context_uload(PCB *pcb, const char *filename){
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]){
+    printf("yyyyyyyyyyyyyy\n");
   char *string_area = (char *)heap.end;
   int argv_num = 0, envp_num = 0;
   while(argv[argv_num]) argv_num++;
@@ -79,7 +80,6 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     strcpy(string_area, envp[i]);
     envp_c[i] = string_area;
     assert(t == envp[i]); // test
-    printf("yyyyyyyyyyyyyy\n");
   }
   uintptr_t *string_a = (uintptr_t *)string_area;
   string_a--; *string_a = (uintptr_t)NULL;
