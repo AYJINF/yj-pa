@@ -60,7 +60,7 @@ void sys_execve(Context *c){
   // int envp_num = 0;
   // if(envp) while(envp[envp_num]) envp_num++;
   // printf("num=%d\n", envp_num);
-  printf("execve file = %s\n", (char *)c->GPR2);
+  // printf("execve file = %s\n", (char *)c->GPR2);
   c->GPRx = execve((char *)c->GPR2, (char **)c->GPR3, (char **)c->GPR4);
 }
 
