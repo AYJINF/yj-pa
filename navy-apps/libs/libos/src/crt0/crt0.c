@@ -20,7 +20,7 @@ void call_main(uintptr_t *args) {
   // printf("argc=%d\n", argc);
   if(*envp) {
     printf("uuuuuuuuuuuuuu\n");
-    // printf("abb=%s", (char *)*args_c);
+    printf("abb=%ls", (uintptr_t *)*args_c);
   }
   environ = envp;
   exit(main(argc, argv, envp));
