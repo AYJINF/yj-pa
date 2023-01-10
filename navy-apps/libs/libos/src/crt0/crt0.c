@@ -9,6 +9,7 @@ void call_main(uintptr_t *args) {
   int argc = (int)*args++;
   char *args_c = (char *)args;
   char **argv = (char **)args_c;
+  printf("args_c=%ls\n", (uintptr_t *)*args);
   while(*args_c) {
     printf("aaaaaaaaaaaaa\n");
     args_c++;
