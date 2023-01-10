@@ -67,7 +67,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   int argv_num = 0, envp_num = 0;
   if(argv) while(argv[argv_num]) argv_num++;
   if(envp) while(envp[envp_num]) envp_num++;
-  // printf("argv_num=%d, envp_num=%d\n", argv_num, envp_num);
+  // printf("argv_num=%d, envp_num=%d\n", argv_num, envp_nu m);
   // if(argv_num == 2)  printf("argv[0]=%s, argv[1]=%s\n", argv[0], argv[1]);
   char *argv_c[argv_num];
   char *envp_c[envp_num];
@@ -81,7 +81,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     char *t = string_area; // test
     strcpy(string_area, envp[i]);
     envp_c[i] = string_area;
-    assert(t == envp[i]); // test
+    assert(t == envp_c[i]); // test
   }
   uintptr_t *string_a = (uintptr_t *)string_area;
   string_a--; *string_a = (uintptr_t)NULL;
