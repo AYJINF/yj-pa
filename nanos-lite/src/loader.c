@@ -85,11 +85,11 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     assert(t == envp_c[i]); // test
   }
 
-  int t = 0;
-  if(envp_num){
-    while(envp_c[t]) t++;
-    printf("envp_c_num=%d, envp_c[1]=%s\n", t, envp_c[1]);
-  }
+  // int t = 0;
+  // if(envp_num){
+  //   while(envp_c[t]) t++;
+  //   printf("envp_c_num=%d, envp_c[1]=%s\n", t, envp_c[1]);
+  // }
 
   uintptr_t *string_a = (uintptr_t *)string_area;
   string_a--; *string_a = (uintptr_t)NULL;
