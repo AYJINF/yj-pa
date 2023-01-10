@@ -46,6 +46,7 @@ Context* schedule(Context *prev) {
 current->cp = prev;
 
 // always select pcb[0] as the new process
+printf("ddddddddddddddddddddd\n");
 current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
 
 // then return the new context
@@ -54,7 +55,7 @@ return current->cp;
 
 int execve(const char *filename, char *const argv[], char *const envp[]){
   context_uload(&pcb[1], filename, argv, envp);
-  // switch_boot_pcb();
-  // yield();
+  switch_boot_pcb();
+  yield();
   return 0;
 };
