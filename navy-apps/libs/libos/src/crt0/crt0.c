@@ -13,14 +13,16 @@ void call_main(uintptr_t *args) {
   while(*args_c) {
     printf("aaaaaaaaaaaaa\n");
     args_c++;
+    args++;
   }
   args_c++;
+  args++;
   if(*args_c) printf("qqqqqqqqqqqqqq\n");
   char **envp = (char **)args_c;
   // printf("argc=%d\n", argc);
   if(*envp) {
     printf("uuuuuuuuuuuuuu\n");
-    printf("abb=%ls", (uintptr_t *)*args_c);
+    printf("abb=%ls\n", (uintptr_t *)*args);
   }
   environ = envp;
   exit(main(argc, argv, envp));
