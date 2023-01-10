@@ -1,10 +1,8 @@
 #include <NDL.h>
 #include <assert.h>
-#include <stdio.h>
+// #include <stdio.h>
 
 int SDL_Init(uint32_t flags) {
-   printf("pal2\n");
-  
   return NDL_Init(flags);
 }
 
