@@ -75,8 +75,8 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     strcpy(string_area, argv[i]);
     argv_c[i] = string_area;
   }
-  printf("qqqqqqqqqqq\n");
   if(envp) for(int i = 0; i < envp_num; i++){
+  printf("qqqqqqqqqqq\n");
     string_area -= ROUNDUP(strlen(envp[i]) + 1, 4); // +1 for the '\0'
     char *t = string_area; // test
     strcpy(string_area, envp[i]);
