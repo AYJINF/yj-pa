@@ -9,7 +9,10 @@ void call_main(uintptr_t *args) {
   int argc = (int)*args++;
   char *args_c = (char *)args;
   char **argv = (char **)args_c;
-  while(*args_c) args_c++;
+  while(*args_c) {
+    printf("aaaaaaaaaaaaa\n");
+    args_c++;
+  }
   args_c++;
   if(*args_c) printf("qqqqqqqqqqqqqq\n");
   char **envp = (char **)args_c;
