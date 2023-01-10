@@ -95,6 +95,7 @@ int _gettimeofday(struct timeval *tv, struct timezone *tz) {
 int _execve(const char *fname, char * const argv[], char *const envp[]) {  
   int envp_num = 0;
   if(envp) while(envp[envp_num]) envp_num++;
+  printf("envp[0]=%s\n", envp[0]);
   printf("num=%d\n", envp_num);
   return _syscall_(SYS_execve, (intptr_t)fname, (intptr_t)argv, (intptr_t)envp);
 }
