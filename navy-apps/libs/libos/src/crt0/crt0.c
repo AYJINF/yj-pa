@@ -13,8 +13,7 @@ void call_main(uintptr_t *args) {
   args_c++;
   char **envp = (char **)args_c;
   // printf("argc=%d\n", argc);
-  if(envp) printf("yyyyyyyyyyyyyyyyyyyyyyyy\n");
-  // if(envp) printf("envp[0]=%c", envp[0][0]);
+  if(envp) printf("envp[0]=%c", *envp[0]);
   environ = envp;
   exit(main(argc, argv, envp));
   assert(0);
