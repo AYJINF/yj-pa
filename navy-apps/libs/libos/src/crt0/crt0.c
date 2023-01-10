@@ -23,6 +23,8 @@ void call_main(uintptr_t *args) {
   if(*envp) {
     printf("uuuuuuuuuuuuuu\n");
     printf("abb=%ls\n", (uintptr_t *)*args);
+    args++;
+    printf("next=%ls\n", (uintptr_t *)*args);
   }
   environ = envp;
   exit(main(argc, argv, envp));
