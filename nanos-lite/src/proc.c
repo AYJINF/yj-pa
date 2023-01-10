@@ -56,9 +56,9 @@ return current->cp;
 }
 
 int execve(const char *filename, char *const argv[], char *const envp[]){
+  printf("wwwww\n");
   context_uload(&pcb[1], filename, argv, envp);
   switch_boot_pcb();
-  printf("wwwww\n");
   yield();
   return 0;
 };
