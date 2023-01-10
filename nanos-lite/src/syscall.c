@@ -56,10 +56,10 @@ void sys_brk(Context *c){
 void sys_execve(Context *c){
   // naive_uload(NULL, (char *)c->GPR2);
   // c->GPRx = 0;
-  char **envp = (char **)c->GPR4;
-  int envp_num = 0;
-  if(envp) while(envp[envp_num]) envp_num++;
-  printf("num=%d\n", envp_num);
+  // char **envp = (char **)c->GPR4;
+  // int envp_num = 0;
+  // if(envp) while(envp[envp_num]) envp_num++;
+  // printf("num=%d\n", envp_num);
   c->GPRx = execve((char *)c->GPR2, (char **)c->GPR3, (char **)c->GPR4);
 }
 
