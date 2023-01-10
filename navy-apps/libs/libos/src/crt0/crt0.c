@@ -1,11 +1,12 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <assert.h>
-// #include <stdio.h>
+#include <stdio.h>
 
 int main(int argc, char *argv[], char *envp[]);
 extern char **environ;
 void call_main(uintptr_t *args) {
+  printf("call_main\n");
   int argc = (int)*args++;
   char *args_c = (char *)args;
   char **argv = (char **)args_c;
