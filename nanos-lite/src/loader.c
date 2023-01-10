@@ -81,7 +81,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     char *t = string_area; // test
     strcpy(string_area, envp[i]);
     envp_c[i] = string_area;
-    printf("envp[%d]=%s\n", i, envp[i]);
+    // printf("envp[%d]=%s\n", i, envp[i]);
     assert(t == envp_c[i]); // test
   }
   uintptr_t *string_a = (uintptr_t *)string_area;
@@ -100,7 +100,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 
   string_a--;
   *string_a = (uintptr_t)argv_num; 
-
+  printf("???????????????\n");
   Area kstack;
   kstack.start = (void *)pcb;
   kstack.end = kstack.start + STACK_SIZE;
