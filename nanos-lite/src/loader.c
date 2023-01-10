@@ -90,7 +90,6 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   //   while(envp_c[t]) t++;
   //   printf("envp_c_num=%d, envp_c[1]=%s\n", t, envp_c[1]);
   // }
-  printf("lllllllllllllllllllll\n");
 
   uintptr_t *string_a = (uintptr_t *)string_area;
   string_a--; *string_a = (uintptr_t)NULL;
