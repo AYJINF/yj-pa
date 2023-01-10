@@ -67,16 +67,16 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   int argv_num = 0, envp_num = 0;
   if(argv) while(argv[argv_num]) argv_num++;
   if(envp) while(envp[envp_num]) envp_num++;
-  printf("argv=%d, envp=%d\n");
+  printf("argv=%d, envp=%d\n", argv_num, envp_num);
   // printf("argv_num=%d, envp_num=%d\n", argv_num, envp_num);
   char *argv_c[argv_num];
   char *envp_c[envp_num];
-  if(argv) for(int i = 0; i < argv_num; i++){
+  for(int i = 0; i < argv_num; i++){
     string_area -= ROUNDUP(strlen(argv[i]) + 1, 4); // +1 for the '\0'
     strcpy(string_area, argv[i]);
     argv_c[i] = string_area;
   }
-  if(envp) for(int i = 0; i < envp_num; i++){
+  for(int i = 0; i < envp_num; i++){
     string_area -= ROUNDUP(strlen(envp[i]) + 1, 4); // +1 for the '\0'
     char *t = string_area; // test
     strcpy(string_area, envp[i]);
