@@ -12,7 +12,7 @@ void call_main(uintptr_t *args) {
   while(*args_c) args_c++;
   args_c++;
   char **envp = (char **)args_c;
-  // if(envp) printf("envp[0]=%s", envp[0]);
+  if(envp) printf("envp[0]=%s", envp[0]);
   environ = envp;
   exit(main(argc, argv, envp));
   assert(0);
