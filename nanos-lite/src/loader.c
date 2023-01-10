@@ -70,12 +70,12 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   // printf("argv_num=%d, envp_num=%d\n", argv_num, envp_nu m);
   // if(argv_num == 2)  printf("argv[0]=%s, argv[1]=%s\n", argv[0], argv[1]);
   char *argv_c[argv_num];
-  char *envp_c[envp_num];
   for(int i = 0; i < argv_num; i++){
     string_area -= ROUNDUP(strlen(argv[i]) + 1, 4); // +1 for the '\0'
     strcpy(string_area, argv[i]);
     argv_c[i] = string_area;
   }
+  char *envp_c[envp_num];
   for(int i = 0; i < envp_num; i++){
     string_area -= ROUNDUP(strlen(envp[i]) + 1, 4); // +1 for the '\0'
     char *t = string_area; // test
@@ -100,9 +100,9 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
 
   string_a--;
   *string_a = (uintptr_t)argv_num; 
-  printf("???????????????\n");
+  printf("???????????????\n");    
   Area kstack;
-  kstack.start = (void *)pcb;
+  kstack.start = &pcb->cp;
   kstack.end = kstack.start + STACK_SIZE;
   pcb->cp = ucontext(NULL, kstack, (void *)loader(pcb, filename));
   pcb->cp->GPRx = (uintptr_t)string_a;
