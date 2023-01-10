@@ -56,7 +56,6 @@ void sys_brk(Context *c){
 void sys_execve(Context *c){
   // naive_uload(NULL, (char *)c->GPR2);
   // c->GPRx = 0;
-  printf("wywywy\n");
   c->GPRx = execve((char *)c->GPR2, (char **)c->GPR3, (char **)c->GPR4);
 }
 
