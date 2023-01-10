@@ -97,7 +97,6 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     string_a--;
     *string_a = (uintptr_t)argv_c[i];
   }
-  printf("dddddddddddddd\n");
 
   string_a--;
   *string_a = (uintptr_t)argv_num;
@@ -105,6 +104,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   kstack.start = &pcb->cp;
   kstack.end = kstack.start + STACK_SIZE;
   pcb->cp = ucontext(NULL, kstack, (void *)loader(pcb, filename));
+  printf("dddddddddddddd\n");
   pcb->cp->GPRx = (uintptr_t)string_a;
 }
 
