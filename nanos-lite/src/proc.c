@@ -56,7 +56,7 @@ return current->cp;
 }
 
 int execve(const char *filename, char *const argv[], char *const envp[]){
-  printf("tttt\n");
+  if(envp) printf("ttt\n");
   printf("envp[0]=%s", envp[0]);
   context_uload(&pcb[1], filename, argv, envp);
   switch_boot_pcb();
