@@ -15,7 +15,7 @@ void call_main(uintptr_t *args) {
   // printf("argc=%d\n", argc);
   if(*envp) {
     printf("uuuuuuuuuuuuuu\n");
-    printf("abb=%s", *envp);
+    printf("abb=%s", (char *)*envp);
   }
   environ = envp;
   exit(main(argc, argv, envp));
