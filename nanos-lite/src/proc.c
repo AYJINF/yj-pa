@@ -59,7 +59,7 @@ int execve(const char *filename, char *const argv[], char *const envp[]){
   printf("filename=%s\n", filename);
   context_uload(&pcb[1], filename, argv, envp);
   switch_boot_pcb();
-  yield();
   printf("eeeeeeeeeee\n");
+  yield();
   return 0;
 };
