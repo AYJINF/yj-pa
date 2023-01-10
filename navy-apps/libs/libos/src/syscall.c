@@ -4,7 +4,7 @@
 #include <assert.h>
 #include <time.h>
 #include "syscall.h"
-// #include <stdio.h>
+#include <stdio.h>
 
 // helper macros (好巧妙的宏封装捏，啥时候有空仔细学学)
 #define _concat(x, y) x ## y
@@ -48,10 +48,6 @@ intptr_t _syscall_(intptr_t type, intptr_t a0, intptr_t a1, intptr_t a2) {
   register intptr_t _gpr3 asm (GPR3) = a1;
   register intptr_t _gpr4 asm (GPR4) = a2;
   register intptr_t ret asm (GPRx);
-  // char **envp = (char **)a2;
-  // int envp_num = 0;
-  // if(envp) while(envp[envp_num]) envp_num++;
-  // printf("num=%d\n", envp_num);
   asm volatile (SYSCALL : "=r" (ret) : "r"(_gpr1), "r"(_gpr2), "r"(_gpr3), "r"(_gpr4));
   return ret;
 }
@@ -96,7 +92,10 @@ int _gettimeofday(struct timeval *tv, struct timezone *tz) {
   return _syscall_(SYS_gettimeofday, (intptr_t)tv, (intptr_t)tz, 0);
 }
 
-int _execve(const char *fname, char * const argv[], char *const envp[]) {
+int _execve(const char *fname, char * const argv[], char *const envp[]) {  
+  int envp_num = 0;
+  if(envp) while(envp[envp_num]) envp_num++;
+  printf("num=%d\n", envp_num);
   return _syscall_(SYS_execve, (intptr_t)fname, (intptr_t)argv, (intptr_t)envp);
 }
 
