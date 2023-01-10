@@ -29,8 +29,8 @@ void init_proc() {
   // context_kload(&pcb[1], hello_fun, (void *)"cd");
   // printf("zyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy\n");
   // context_uload(&pcb[0], "/bin/hello");
-  char *argv[] = {"/bin/exec-test", NULL};
-  context_uload(&pcb[1], "/bin/exec-test", argv, NULL);
+  // char *argv[] = {"/bin/exec-test", NULL};
+  context_uload(&pcb[1], "/bin/exec-test", NULL, NULL);
 
   switch_boot_pcb();
 
@@ -56,8 +56,6 @@ return current->cp;
 }
 
 int execve(const char *filename, char *const argv[], char *const envp[]){
-  if(envp) printf("ttt\n");
-  printf("envp[0]=%s", envp[0]);
   context_uload(&pcb[1], filename, argv, envp);
   switch_boot_pcb();
   yield();
