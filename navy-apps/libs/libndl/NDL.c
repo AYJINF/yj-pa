@@ -93,7 +93,7 @@ int NDL_Init(uint32_t flags) {
   if (getenv("NWM_APP")) {
     evtdev = 3;
   }
-  printf("ppppp\n");
+  printf("pppppppppppppppppppppppppppppppppppppp\n");
   return 0;
 }
 
