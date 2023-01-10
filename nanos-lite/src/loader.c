@@ -75,7 +75,6 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     strcpy(string_area, argv[i]);
     argv_c[i] = string_area;
   }
-  printf("wwwww\n");
   for(int i = 0; i < envp_num; i++){
     string_area -= ROUNDUP(strlen(envp[i]) + 1, 4); // +1 for the '\0'
     char *t = string_area; // test
@@ -85,6 +84,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   }
   uintptr_t *string_a = (uintptr_t *)string_area;
   string_a--; *string_a = (uintptr_t)NULL;
+  printf("wwwww\n");
 
   for(int i = envp_num - 1; i >= 0; i--){
     string_a--;
