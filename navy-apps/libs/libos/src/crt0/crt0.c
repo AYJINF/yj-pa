@@ -9,13 +9,16 @@ void call_main(uintptr_t *args) {
   int argc = (int)*args++;
   char *args_c = (char *)args;
   char **argv = (char **)args_c;
-  while(*args_c) args_c++;
+  while(*args_c) {
+    printf("qqqqqqqqqqqqqqqqqq\n");
+    args_c++;
+  }
   args_c++;
   char **envp = (char **)args_c;
   // printf("argc=%d\n", argc);
   if(*envp) {
     printf("uuuuuuuuuuuuuu\n");
-    printf("abb=%ls", (uintptr_t *)*envp);
+    // printf("abb=%s", (char *)*args_c);
   }
   environ = envp;
   exit(main(argc, argv, envp));
