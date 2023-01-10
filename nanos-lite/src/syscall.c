@@ -56,11 +56,7 @@ void sys_brk(Context *c){
 void sys_execve(Context *c){
   // naive_uload(NULL, (char *)c->GPR2);
   // c->GPRx = 0;
-  char *filename = (char *)c->GPR2;
-  char **argv = (char **)c->GPR3;
-  char **envp = (char **)c->GPR4;
-  c->GPRx = execve(filename, argv, envp); 
-  // c->GPRx = execve((char *)c->GPR2, (char **)c->GPR3, (char **)c->GPR4);
+  c->GPRx = execve((char *)c->GPR2, (char **)c->GPR3, (char **)c->GPR4);
 }
 
 void sys_gettimeofday(Context *c){
