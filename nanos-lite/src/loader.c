@@ -55,7 +55,7 @@ void naive_uload(PCB *pcb, const char *filename) {
 
 void context_kload(PCB *pcb, void (*entry)(void *), void *arg){
   Area kstack;
-  kstack.start = (void *)pcb;
+  kstack.start = &pcb->cp;
   kstack.end = kstack.start + STACK_SIZE;
   pcb->cp = kcontext(kstack, entry, arg);
 }
