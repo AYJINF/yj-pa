@@ -46,9 +46,9 @@ Context* schedule(Context *prev) {
 current->cp = prev;
 
 // always select pcb[0] as the new process
-current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
-bool flag = (current == &pcb[0]);
-if(flag) printf("dddddddddddddd\n");
+current = (current == &pcb[1] ? &pcb[0] : &pcb[1]);
+// bool flag = (current == &pcb[0]);
+// if(flag) printf("dddddddddddddd\n");
 
 // then return the new context
 return current->cp;
