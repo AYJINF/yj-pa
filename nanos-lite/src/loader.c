@@ -77,12 +77,12 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   }
   for(int i = 0; i < envp_num; i++){
     string_area -= ROUNDUP(strlen(envp[i]) + 1, 4); // +1 for the '\0'
+  printf("wwwww\n");
     char *t = string_area; // test
     strcpy(string_area, envp[i]);
     envp_c[i] = string_area;
     assert(t == envp[i]); // test
   }
-  printf("wwwww\n");
   uintptr_t *string_a = (uintptr_t *)string_area;
   string_a--; *string_a = (uintptr_t)NULL;
 
