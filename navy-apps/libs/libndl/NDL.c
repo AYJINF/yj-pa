@@ -90,8 +90,8 @@ int NDL_QueryAudio() {
 }
 
 int NDL_Init(uint32_t flags) {
+  if (getenv("NWM_APP")) printf("3333333333\n");
   if (getenv("NWM_APP")) {
-  printf("gggggggggggggggg\n");
     evtdev = 3;
   }
   return 0;
