@@ -4,6 +4,7 @@
 #include <assert.h>
 #include <time.h>
 #include "syscall.h"
+#include <stdio.h>
 
 // helper macros (好巧妙的宏封装捏，啥时候有空仔细学学)
 #define _concat(x, y) x ## y
