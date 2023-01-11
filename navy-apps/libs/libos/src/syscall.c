@@ -4,6 +4,7 @@
 #include <assert.h>
 #include <time.h>
 #include "syscall.h"
+#include <errno.h>
 // #include <stdio.h>
 
 // helper macros (好巧妙的宏封装捏，啥时候有空仔细学学)
@@ -97,7 +98,12 @@ int _execve(const char *fname, char * const argv[], char *const envp[]) {
   // if(envp) while(envp[envp_num]) envp_num++;
   // printf("envp[0]=%d\n", *envp[0]);
   // printf("num=%d\n", envp_num);
-  return _syscall_(SYS_execve, (intptr_t)fname, (intptr_t)argv, (intptr_t)envp);
+  int ret = _syscall_(SYS_execve, (intptr_t)fname, (intptr_t)argv, (intptr_t)envp);
+  if(ret == -ENOENT){
+    errno = ENOENT;
+    return -1;
+  }
+  return ret;
 }
 
 // Syscalls below are not used in Nanos-lite.

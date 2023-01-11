@@ -40,11 +40,11 @@ static void sh_handle_cmd(const char *cmd) {
     arg = strtok(NULL, " ");
   }
   argv[argv_num] = NULL;
-  if(*argv) {
-    printf("oooooooooooooooo\n");
-    printf("argv[0]=%s\n", argv[0]);
-  }
-  printf("filename=%s\n", filename);
+  // if(*argv) {
+  //   printf("oooooooooooooooo\n");
+  //   printf("argv[0]=%s\n", argv[0]);
+  // }
+  // printf("filename=%s\n", filename);
 
   execvp(filename, argv);
 }
