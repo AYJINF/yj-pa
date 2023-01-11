@@ -18,9 +18,9 @@ void call_main(uintptr_t *args) {
   }
   args_c++;
   args++;
-  if(*args_c) printf("qqqqqqqqqqqqqq\n");
+  // if(*args_c) printf("qqqqqqqqqqqqqq\n");
   char **envp = (char **)args_c;
-  // printf("argc=%d\n", argc);
+  printf("argc=%d\n", argc);
   if(*envp) {
     printf("uuuuuuuuuuuuuu\n");
     printf("abb=%ls\n", (uintptr_t *)*args);
