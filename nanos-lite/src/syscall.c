@@ -20,8 +20,8 @@ extern void naive_uload(PCB *pcb, const char *filename);
 int execve(const char *filename, char *const argv[], char *const envp[]);
 
 void sys_exit(Context *c){
-  // naive_uload(NULL, "/bin/nterm");
-  halt(0);
+  naive_uload(NULL, "/bin/nterm");
+  // halt(0);
   c->GPRx = 0;
 }
 

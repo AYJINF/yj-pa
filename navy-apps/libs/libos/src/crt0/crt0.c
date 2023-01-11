@@ -7,17 +7,6 @@ int main(int argc, char *argv[], char *envp[]);
 extern char **environ;
 
 void call_main(uintptr_t *args) {
-
-  // int argc = (int)*args;
-  // args++;
-  // char **argv = (char **)args;
-  // for(; *args; args++);
-  // args++;
-  // char **envp = (char **)args;
-  // environ = envp;
-  // exit(main(argc, argv, envp));
-  // assert(0);
-
   int argc = (int)*args++;
   char **argv = (char **)args;
   printf("args=%ls\n", (uintptr_t *)*args);
