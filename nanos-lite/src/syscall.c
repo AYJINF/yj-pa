@@ -62,7 +62,8 @@ void sys_execve(Context *c){
   // if(envp) while(envp[envp_num]) envp_num++;
   // printf("num=%d\n", envp_num);
   // printf("execve file = %s\n", (char *)c->GPR2);
-  c->GPRx = execve((char *)c->GPR2, (char **)c->GPR3, (char **)c->GPR4);
+  if(fs_open((char *)c->GPR2, 0, 0) == -1) c->GPRx = -2;
+  else c->GPRx = execve((char *)c->GPR2, (char **)c->GPR3, (char **)c->GPR4);
 }
 
 void sys_gettimeofday(Context *c){

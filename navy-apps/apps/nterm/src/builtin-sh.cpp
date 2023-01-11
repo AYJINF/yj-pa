@@ -52,7 +52,7 @@ void builtin_sh_run() {
   sh_banner();
   sh_prompt();
 
-  setenv("PATH", "/bin", 0); // 增加环境变量
+  setenv("PATH", "/bin:/usr/bin", 0); // 增加环境变量
 
   while (1) {
     SDL_Event ev;

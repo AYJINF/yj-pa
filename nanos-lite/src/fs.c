@@ -58,6 +58,7 @@ int fs_open(const char *pathname, int flags, int mode){
     }
   }
   printf("The file '%s' is not found!\n", pathname);
+  return -1;
   assert(0);
 }
 
