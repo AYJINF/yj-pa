@@ -23,10 +23,29 @@ static void sh_prompt() {
 }
 
 static void sh_handle_cmd(const char *cmd) {
-  char t_cmd[80];
+  char t_cmd[256];
   strcpy(t_cmd, cmd);
   t_cmd[strlen(t_cmd) - 1] = '\0';
-  execvp(t_cmd, NULL);
+
+  char *filename = strtok(t_cmd, " ");
+
+  int argv_num = 0;
+  char *argv[32];
+  char *arg = strtok(NULL, " ");
+  while (arg)
+  {
+    argv[argv_num] = arg;
+    argv_num++;
+    assert(argv_num < 32);
+    arg = strtok(NULL, " ");
+  }
+  argv[argv_num] = NULL;
+  if(*argv) {
+    printf("oooooooooooooooo\n");
+    printf("argv[0]=%s\n", argv[0]);
+  }
+
+  execvp(filename, argv);
 }
 
 void builtin_sh_run() {
