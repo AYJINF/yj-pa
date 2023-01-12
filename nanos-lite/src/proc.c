@@ -30,7 +30,7 @@ void init_proc() {
   // printf("zyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy\n");
   // context_uload(&pcb[0], "/bin/hello");
   char *argv[] = {NULL};
-  context_uload(&pcb[1], "/bin/exec-test", argv, NULL);
+  context_uload(&pcb[1], "/bin/nterm", argv, NULL);
 
   // char *argv[] = {"--skip", NULL};
   // context_uload(&pcb[1], "/bin/pal", argv, NULL);

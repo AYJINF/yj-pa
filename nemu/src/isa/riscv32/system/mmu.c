@@ -73,19 +73,19 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
   uintptr_t pte = paddr_read(pte_addr, 4);
   assert((pte & PTE_V) != 0);
 
-  // switch (type)
-  // {
-  // case 0: // 读取
-  //   paddr_write(pte_addr, 4, pte | PTE_A); // Access
-  //   break;
-  // case 1: // 写入
-  //   paddr_write(pte_addr, 4, pte | PTE_A); // Access
-  //   paddr_write(pte_addr, 4, pte | PTE_D); // Dirty 阿巴阿巴不确定
-  //   break;
-  // default:
-  //   printf("内存访问type=%d\n", type);
-  //   break;
-  // }
+  switch (type)
+  {
+  case 0: // 读取
+    paddr_write(pte_addr, 4, pte | PTE_A); // Access
+    break;
+  case 1: // 写入
+    paddr_write(pte_addr, 4, pte | PTE_A); // Access
+    paddr_write(pte_addr, 4, pte | PTE_D); // Dirty (阿巴阿巴不确定)
+    break;
+  default:
+    printf("内存访问type=%d\n", type);
+    break;
+  }
 
   paddr_t pg_paddr = (((pte & ~MY_PDE_ATT) >> 10) << 12) | (vaddr & ~MY_PAGE_NUMBER);
   return pg_paddr | MEM_RET_OK;
