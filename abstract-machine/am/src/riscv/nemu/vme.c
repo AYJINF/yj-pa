@@ -66,7 +66,40 @@ void __am_switch(Context *c) {
   }
 }
 
+/*
+              Riscv32 Sv32 Page-Table Entry(PTE)
+---------------------------------------------------------------
+|31      20|19      10|9     8| 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
+|  PPN[1]  |  PPN[0]  |  RSW  | D | A | G | U | X | W | R | V |
+|    12    |    10    |   2   | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
+---------------------------------------------------------------
+
+              Sv32 virtual address(va)
+  ---------------------------------------------
+  |31           22|21      12|11              0|
+  |     VPN[1]    |  VPN[0]  |   page offset   |
+  |      10       |    10    |        12       |
+  ---------------------------------------------
+
+              Sv32 physical address(pa)
+------------------------------------------------
+|33            22 |21      12|11              0|
+|      PPN[1]     |  PPN[0]  |   page offset   |
+|       12        |    10    |       12        |
+------------------------------------------------
+*/
+#define MY_PN 0xfffff000
+#define MY_VPN_1 0xffc00000
+#define MY_PAGE_NUMBER 0xfffff000
 void map(AddrSpace *as, void *va, void *pa, int prot) {
+  PTE *pte = as->ptr + (((uintptr_t)va & MY_VPN_1) >> 22) * 4;
+  if((*pte & PTE_V) == 0){
+    printf("www=%d\n", PTE_V);
+  }
+
+  // uintptr_t va_vpn = ((uintptr_t)va & MY_PN);
+  // uintptr_t pa_ppn = ((uintptr_t)pa & MY_PN);
+  // va_vpn = pa_ppn;
 }
 
 Context *ucontext(AddrSpace *as, Area kstack, void *entry) {
