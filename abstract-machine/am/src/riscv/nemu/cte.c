@@ -17,7 +17,7 @@ Context* __am_irq_handle(Context *c) {
 
     c = user_handler(ev, c);
     assert(c != NULL);
-    c->mepc += 4;
+    c->mepc += 4; // 时钟中断不用+4
   }
 
   return c;

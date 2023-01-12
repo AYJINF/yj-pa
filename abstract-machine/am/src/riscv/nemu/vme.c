@@ -91,15 +91,14 @@ void __am_switch(Context *c) {
 #define MY_PN 0xfffff000
 #define MY_VPN_1 0xffc00000
 #define MY_PAGE_NUMBER 0xfffff000
+#define MY_PTE_ATT 0x3ff
 void map(AddrSpace *as, void *va, void *pa, int prot) {
-  PTE *pte = as->ptr + (((uintptr_t)va & MY_VPN_1) >> 22) * 4;
-  if((*pte & PTE_V) == 0){
-    printf("www=%d\n", PTE_V);
+  PTE *pde = as->ptr + (((uintptr_t)va & MY_VPN_1) >> 22) * 4;
+  if((*pde & PTE_V) == 0){
+    void *new_p = pgalloc_usr(as->pgsize); // 阿巴阿巴，不确定要不要考虑存放位置字段null的情况
+    *pde = (*pde & MY_PTE_ATT) | ((~MY_PTE_ATT) & ((uintptr_t)new_p >> 2)); // 装入
+    *pde |= PTE_V;
   }
-
-  // uintptr_t va_vpn = ((uintptr_t)va & MY_PN);
-  // uintptr_t pa_ppn = ((uintptr_t)pa & MY_PN);
-  // va_vpn = pa_ppn;
 }
 
 Context *ucontext(AddrSpace *as, Area kstack, void *entry) {

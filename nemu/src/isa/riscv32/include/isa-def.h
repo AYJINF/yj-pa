@@ -20,7 +20,7 @@
 
 typedef struct {
   word_t gpr[32];
-  word_t mepc, mstatus, mcause, mtvec; // CSRs
+  word_t mepc, mstatus, mcause, mtvec, satp; // CSRs
   vaddr_t pc;
 } riscv32_CPU_state;
 
@@ -31,6 +31,16 @@ typedef struct {
   } inst;
 } riscv32_ISADecodeInfo;
 
-#define isa_mmu_check(vaddr, len, type) (MMU_DIRECT)
+/*
+cpu.stap(Supervisor Address Translation and Protection Register)
+---------------------------
+|  31  |30    22|21      0|
+| MODE |  ASID  |   PPN   |
+|  1   |   9    |   22    |
+---------------------------
+*/
+// 检查当前系统状态下对内存区间为[vaddr, vaddr + len), 类型为type的访问是否需要经过地址转换.
+// #define isa_mmu_check(vaddr, len, type) (MMU_DIRECT)
+#define isa_mmu_check(vaddr, len, type) (cpu.satp & (1 << 31) ? MMU_TRANSLATE : MMU_DIRECT) // PA无MMU_FAIL
 
 #endif
