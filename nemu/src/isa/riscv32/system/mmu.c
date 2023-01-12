@@ -83,7 +83,7 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
     paddr_write(pte_addr, 4, pte | PTE_D); // Dirty (阿巴阿巴不确定)
     break;
   default:
-    printf("内存访问type=%d\n", type);
+    Assert(0, "内存访问type=%d", type);
     break;
   }
 
