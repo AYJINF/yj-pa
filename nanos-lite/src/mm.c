@@ -26,6 +26,7 @@ void free_page(void *p) {
 int mm_brk(uintptr_t brk) {
   printf("brk=%x\n", brk);
   uintptr_t max_brk = current->max_brk;
+  printf("max_brk=%x\n", max_brk);
   if(brk <= max_brk) return 0;
 
   uintptr_t plus_brk = brk - max_brk;
