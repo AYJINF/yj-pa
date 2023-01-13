@@ -114,6 +114,6 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
   // printf("22 %lx\n",pte2);
   paddr_t pa = ((((paddr_t)pte2) & 0xfffffc00) >> 10) * 4096 + ((paddr_t)vaddr & 0x00000fff);
   // assert(pa == vaddr);
-  // printf("%x\n",pa);
+  printf("pa=%x\n",pa);
   return pa;
 }
