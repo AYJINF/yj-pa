@@ -17,11 +17,11 @@
 #include <memory/paddr.h>
 
 word_t vaddr_ifetch(vaddr_t addr, int len) {
-  printf("vaddr_ifetch, addr=%x\n", addr);
+  // printf("vaddr_ifetch, addr=%x\n", addr);
   if(isa_mmu_check(addr, len, 0) == MMU_TRANSLATE){
-    vaddr_t tmp = addr;
+    // vaddr_t tmp = addr;
     addr = isa_mmu_translate(addr, len, 0);
-    printf("vaddr_ifetch, tmp=%x, addr=%x\n", tmp, addr);
+    // printf("vaddr_ifetch, tmp=%x, addr=%x\n", tmp, addr);
     // Assert( tmp == addr, "不是恒等映射！");
   }
   return paddr_read(addr, len);
@@ -30,9 +30,9 @@ word_t vaddr_ifetch(vaddr_t addr, int len) {
 word_t vaddr_read(vaddr_t addr, int len) {
   // printf("vaddr_read, addr=%x\n", addr);
   if(isa_mmu_check(addr, len, 0) == MMU_TRANSLATE){
-    vaddr_t tmp = addr;
+    // vaddr_t tmp = addr;
     addr = isa_mmu_translate(addr, len, 0);
-    printf("vaddr_read, tmp=%d, addr=%d\n", tmp, addr);
+    // printf("vaddr_read, tmp=%d, addr=%d\n", tmp, addr);
     // Assert( tmp == addr, "不是恒等映射！");
   }
   return paddr_read(addr, len);
@@ -41,9 +41,9 @@ word_t vaddr_read(vaddr_t addr, int len) {
 void vaddr_write(vaddr_t addr, int len, word_t data) {
   // printf("vaddr_write, addr=%x\n", addr);
   if(isa_mmu_check(addr, len, 1) == MMU_TRANSLATE){
-    vaddr_t tmp = addr;
+    // vaddr_t tmp = addr;
     addr = isa_mmu_translate(addr, len, 0);
-    printf("vaddr_write, tmp=%d, addr=%d\n", tmp, addr);
+    // printf("vaddr_write, tmp=%d, addr=%d\n", tmp, addr);
     // Assert( tmp == addr, "不是恒等映射！");
   }
   paddr_write(addr, len, data);
