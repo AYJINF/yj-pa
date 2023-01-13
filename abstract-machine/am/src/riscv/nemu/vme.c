@@ -25,10 +25,7 @@ static inline uintptr_t get_satp() {
 
 bool vme_init(void* (*pgalloc_f)(int), void (*pgfree_f)(void*)) {
   printf("ffffffffffff=%u\n", pgalloc_f);
-  printf("gggggggggggggg=%u\n", pgfree_f);
   pgalloc_usr = pgalloc_f;
-  void *try = pgalloc_usr(4096);
-  printf("lllllllllllllllllllllllllllllllllllllllllllllltry=%p\n", try);
   pgfree_usr = pgfree_f;
 
   kas.ptr = pgalloc_f(PGSIZE);
@@ -48,6 +45,8 @@ bool vme_init(void* (*pgalloc_f)(int), void (*pgfree_f)(void*)) {
 }
 
 void protect(AddrSpace *as) {
+  void *try = pgalloc_usr(4096);
+  printf("lllllllllllllllllllllllllllllllllllllllllllllltry=%p\n", try);
   PTE *updir = (PTE*)(pgalloc_usr(PGSIZE));
   printf("hhhhhhhh\n");
   printf("updir=%u\n", updir);
