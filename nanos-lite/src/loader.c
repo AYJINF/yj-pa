@@ -76,9 +76,19 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   int pgsize = pcb->as.pgsize;
   char *string_area = (char *)new_page(8) + 8 * pgsize;
 
-  for(int i = 8; i >= 1; i--){
-    map(&pcb->as, (void *)(pcb->as.area.end - i * pgsize), (void *)(string_area - i * pgsize), 1);
-  }
+  // for(int i = 8; i >= 1; i--){
+  //   map(&pcb->as, (void *)(pcb->as.area.end - i * pgsize), (void *)(string_area - i * pgsize), 1);
+  // }
+
+
+  map(&pcb->as, (&pcb->as)->area.end - 8 * PGSIZE, (void *)string_area - 8 * PGSIZE, 1); 
+  map(&pcb->as, (&pcb->as)->area.end - 7 * PGSIZE, (void *)string_area - 7 * PGSIZE, 1);
+  map(&pcb->as, (&pcb->as)->area.end - 6 * PGSIZE, (void *)string_area - 6 * PGSIZE, 1); 
+  map(&pcb->as, (&pcb->as)->area.end - 5 * PGSIZE, (void *)string_area - 5 * PGSIZE, 1);
+  map(&pcb->as, (&pcb->as)->area.end - 4 * PGSIZE, (void *)string_area - 4 * PGSIZE, 1); 
+  map(&pcb->as, (&pcb->as)->area.end - 3 * PGSIZE, (void *)string_area - 3 * PGSIZE, 1);
+  map(&pcb->as, (&pcb->as)->area.end - 2 * PGSIZE, (void *)string_area - 2 * PGSIZE, 1); 
+  map(&pcb->as, (&pcb->as)->area.end - 1 * PGSIZE, (void *)string_area - 1 * PGSIZE, 1); 
 
   int argv_num = 0, envp_num = 0;
   if(argv) while(argv[argv_num]) argv_num++;
