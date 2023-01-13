@@ -1,4 +1,3 @@
-#include <am.h>
 #include <memory.h>
 #include<stdio.h>
 
@@ -37,6 +36,6 @@ void init_mm() {
 #ifdef HAS_VME
 printf("cccccccccccc=%p\n", pg_alloc);
 printf("ddddddddddddd=%p\n", free_page);
-  vme_init((void*)1, free_page);
+  vme_init(pg_alloc, free_page);
 #endif
 }
