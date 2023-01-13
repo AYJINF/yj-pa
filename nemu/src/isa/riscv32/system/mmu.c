@@ -62,60 +62,33 @@ cpu.stap(Supervisor Address Translation and Protection Register)
 ------------------------------------------------
 */
 // 对内存区间为[vaddr, vaddr + len), 类型为type的内存访问进行地址转换
-// paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
-//    // 处理pde
-//   paddr_t pde_addr = ((cpu.satp & MY_SATP_PPN) << 12) | (((vaddr & MY_VPN_1) >> 22) * 4);
-//   uintptr_t pde = paddr_read(pde_addr, 4);
-//   Assert((pde & PTE_V) != 0, "pde goes wrong in mmu.c!");
-  
-//   // 处理pte
-//   paddr_t pte_addr = (((pde & (~MY_PDE_ATT)) >> 10) << 12) | (((vaddr & MY_VPN_0) >> 12) * 4);
-//   uintptr_t pte = paddr_read(pte_addr, 4);
-//   Assert((pte & PTE_V) != 0, "pte goes wrong in mmu.c!");
-
-//   switch (type)
-//   {
-//   case 0: // 读取
-//     paddr_write(pte_addr, 4, pte | PTE_A); // Access
-//     break;
-//   case 1: // 写入
-//     paddr_write(pte_addr, 4, pte | PTE_A); // Access
-//     paddr_write(pte_addr, 4, pte | PTE_D); // Dirty (阿巴阿巴不确定)
-//     break;
-//   default:
-//     Assert(0, "内存访问type=%d", type);
-//     break;
-//   }
-
-//   // printf("vaddr=%x, pde=%lx, pte=%lx\n", vaddr, pde, pte);
-  
-//   paddr_t pg_paddr = (((pte & (~MY_PDE_ATT)) >> 10) << 12) | (vaddr & (~MY_PAGE_NUMBER));
-//   return pg_paddr | MEM_RET_OK;
-// }
 paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
-  paddr_t addr1 = (cpu.satp << 12) + (((paddr_t)vaddr & 0xffc00000) >> 22) * 4;
-  uintptr_t pte1 = paddr_read(addr1, 4);
-  if((pte1 & 0x01) == 0){
-    printf("pte1 error : %lx\n", pte1);
-    assert(0);
+   // 处理pde
+  paddr_t pde_addr = ((cpu.satp & MY_SATP_PPN) << 12) | (((vaddr & MY_VPN_1) >> 22) * 4);
+  uintptr_t pde = paddr_read(pde_addr, 4);
+  Assert((pde & PTE_V) != 0, "pde goes wrong in mmu.c!");
+  
+  // 处理pte
+  paddr_t pte_addr = (((pde & (~MY_PDE_ATT)) >> 10) << 12) | (((vaddr & MY_VPN_0) >> 12) * 4);
+  uintptr_t pte = paddr_read(pte_addr, 4);
+  Assert((pte & PTE_V) != 0, "pte goes wrong in mmu.c!");
+
+  switch (type)
+  {
+  case 0: // 读取
+    paddr_write(pte_addr, 4, pte | PTE_A); // Access
+    break;
+  case 1: // 写入
+    paddr_write(pte_addr, 4, pte | PTE_A); // Access
+    paddr_write(pte_addr, 4, pte | PTE_D); // Dirty (阿巴阿巴不确定)
+    break;
+  default:
+    Assert(0, "内存访问type=%d", type);
+    break;
   }
-  paddr_t addr2 = ((((paddr_t)pte1) & 0xfffffc00) >> 10) * 4096  + ((((paddr_t)vaddr) & 0x003ff000) >> 12) * 4;
-  uintptr_t pte2 = paddr_read(addr2, 4);
-  if((pte2 & 0x01) == 0){
-    printf("pte2 error : %lx\n", pte2);
-    assert(0);
-  }
-  if(type){
-    paddr_write(addr2, 4, pte2 | 0x80);
-  }
-  else{
-    paddr_write(addr2, 4, pte2 | 0x40);
-  }
-  // printf("%x\n", vaddr);
-  // printf("11 %x\n",addr2);
-  // printf("22 %lx\n",pte2);
-  paddr_t pa = ((((paddr_t)pte2) & 0xfffffc00) >> 10) * 4096 + ((paddr_t)vaddr & 0x00000fff);
-  // assert(pa == vaddr);
-  // printf("%x\n",pa);
-  return pa;
+
+  // printf("vaddr=%x, pde=%lx, pte=%lx\n", vaddr, pde, pte);
+  
+  paddr_t pg_paddr = (((pte & (~MY_PDE_ATT)) >> 10) << 12) | (vaddr & (~MY_PAGE_NUMBER));
+  return pg_paddr | MEM_RET_OK;
 }
