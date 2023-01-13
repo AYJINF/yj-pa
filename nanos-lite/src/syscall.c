@@ -18,6 +18,7 @@ char *files[] = {"stdin", "stdout", "stderr", "/dev/events", "/dev/fb", "/proc/d
 extern void naive_uload(PCB *pcb, const char *filename);
 // extern void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]);
 int execve(const char *filename, char *const argv[], char *const envp[]);
+int mm_brk(uintptr_t brk);
 
 void sys_exit(Context *c){
   // printf("wwwwwwwwwwwwwwwwww\n");
@@ -53,7 +54,7 @@ void sys_lseek(Context *c){
 }
 
 void sys_brk(Context *c){
-  c->GPRx = 0;
+  c->GPRx = mm_brk(c->GPR2);
 }
 
 void sys_execve(Context *c){
