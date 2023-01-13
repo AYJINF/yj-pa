@@ -100,8 +100,8 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
     *pde_addr = (*pde_addr & MY_PTE_ATT) | ((~MY_PTE_ATT) & ((uintptr_t)new_p >> 2)); // 装入
     *pde_addr |= PTE_V;
   }
-  PTE *pte_addr = (PTE *)((((*pde_addr & (~MY_PTE_ATT)) >> 10) << 12) | ((((uintptr_t)va & MY_VPN_0) >> 12) * 4));
-  *pte_addr |= ((((uintptr_t)pa >> 2) & (~MY_PTE_ATT)) | PTE_V); // 阿巴阿巴打个tag
+  // PTE *pte_addr = (PTE *)((((*pde_addr & (~MY_PTE_ATT)) >> 10) << 12) | ((((uintptr_t)va & MY_VPN_0) >> 12) * 4));
+  // *pte_addr |= ((((uintptr_t)pa >> 2) & (~MY_PTE_ATT)) | PTE_V); // 阿巴阿巴打个tag
 }
 
 Context *ucontext(AddrSpace *as, Area kstack, void *entry) {
