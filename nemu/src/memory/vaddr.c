@@ -21,7 +21,7 @@ word_t vaddr_ifetch(vaddr_t addr, int len) {
   if(isa_mmu_check(addr, len, 0) == MMU_TRANSLATE){
     vaddr_t tmp = addr;
     addr = isa_mmu_translate(addr, len, 0);
-    printf("vaddr_ifetch, tmp=%d, addr=%d\n", tmp, addr);
+    printf("vaddr_ifetch, tmp=%x, addr=%x\n", tmp, addr);
     // Assert( tmp == addr, "不是恒等映射！");
   }
   return paddr_read(addr, len);
