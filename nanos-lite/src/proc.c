@@ -25,9 +25,9 @@ void hello_fun(void *arg) {
 }
 
 void init_proc() {
-  context_kload(&pcb[0], hello_fun, (void *)"ab");
-  char *argv[] = {NULL};
-  context_uload(&pcb[1], "/bin/dummy", argv, NULL);
+  // context_kload(&pcb[0], hello_fun, (void *)"ab");
+  // char *argv[] = {NULL};
+  // context_uload(&pcb[1], "/bin/dummy", argv, NULL);
   // context_kload(&pcb[1], hello_fun, (void *)"cd");
   // printf("zyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy\n");
   // context_uload(&pcb[0], "/bin/hello");
@@ -43,7 +43,7 @@ void init_proc() {
   Log("Initializing processes...");
 
   // load program here
-  // naive_uload(NULL, "/bin/nterm");
+  context_uload(NULL, "/bin/dummy", NULL, NULL);
 
 }
 
