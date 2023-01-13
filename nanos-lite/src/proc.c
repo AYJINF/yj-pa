@@ -28,7 +28,6 @@ void init_proc() {
   context_kload(&pcb[0], hello_fun, (void *)"ab");
   char *argv[] = {NULL};
   context_uload(&pcb[1], "/bin/pal", argv, NULL);
-  printf("pcb[0].max_brk=%x, pcb[1].max_brk=%x\n", pcb[0].max_brk, pcb[1].max_brk);
   // context_kload(&pcb[1], hello_fun, (void *)"cd");
   // context_uload(&pcb[0], "/bin/hello");
 
@@ -52,6 +51,7 @@ current->cp = prev;
 
 // always select pcb[0] as the new process
 current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
+printf("pcb[0].max_brk=%x, pcb[1].max_brk=%x\n", pcb[0].max_brk, pcb[1].max_brk);
 // current = &pcb[1];
 // bool flag = (current == &pcb[0]);
 // if(flag) printf("pcb[0]\n");
