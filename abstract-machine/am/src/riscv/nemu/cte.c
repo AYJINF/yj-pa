@@ -9,6 +9,7 @@ void __am_switch(Context *c);
 Context* __am_irq_handle(Context *c) {
   printf("pdir=%p\n", c->pdir);
   __am_get_cur_as(c);
+  printf("pdir2=%p\n", c->pdir);
   if (user_handler) {
     Event ev = {0};
     switch (c->mcause) {
