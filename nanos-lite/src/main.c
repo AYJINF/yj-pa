@@ -30,7 +30,6 @@ int main() {
   Log("Finish initialization");
 
 #ifdef HAS_CTE
-printf("before yield\n");
   yield();
 #endif
 
