@@ -26,9 +26,9 @@ void hello_fun(void *arg) {
 
 void init_proc() {
   context_kload(&pcb[0], hello_fun, (void *)"ab");
-  char *argv[] = {NULL};
-  context_uload(&pcb[1], "/bin/dummy", argv, NULL);
-  // context_kload(&pcb[1], hello_fun, (void *)"cd");
+  // char *argv[] = {NULL};
+  // context_uload(&pcb[1], "/bin/dummy", argv, NULL);
+  context_kload(&pcb[1], hello_fun, (void *)"cd");
   // context_uload(&pcb[0], "/bin/hello");
 
   // context_uload(&pcb[0], "/bin/hello", NULL, NULL);
@@ -56,9 +56,9 @@ current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
 // if(flag) printf("pcb[0]\n");
 // else printf("pcb[1]\n");
 
-// then return the new context
-printf("prev pdir=%p\n", prev->pdir);
-printf("current pdir=%p\n", current->cp->pdir);
+// // then return the new context
+// printf("prev pdir=%p\n", prev->pdir);
+// printf("current pdir=%p\n", current->cp->pdir);
 return current->cp;
 }
 
