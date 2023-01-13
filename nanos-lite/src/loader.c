@@ -63,54 +63,6 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   return elf_ehdr.e_entry;
 }
 
-// static uintptr_t loader(PCB *pcb, const char *filename) {
-//   Elf_Ehdr elf_ehdr;
-//   int elf = fs_open(filename, 0, 0);
-//   fs_read(elf, &elf_ehdr, sizeof(elf_ehdr));
-//   assert(*(uint32_t *)elf_ehdr.e_ident == 0x464C457F);
-//   #if defined(__ISA_AM_NATIVE__)
-//   # define EXPECT_TYPE EM_X86_64
-//   #elif defined(__ISA_X86__)
-//   # define EXPECT_TYPE EM_X86_64
-//   #elif defined(__ISA_MIPS32__)
-//   # define EXPECT_TYPE EF_MIPS_ARCH_32
-//   #elif defined(__ISA_RISCV32__) || defined(__ISA_RISCV64__)
-//   # define EXPECT_TYPE EM_RISCV
-//   #elif
-//   # error unsupported ISA __ISA__
-//   #endif
-
-//   if(elf_ehdr.e_machine != EXPECT_TYPE){
-//     printf("ISA type error!\n");
-//     assert(0);
-//   }
-  
-//   size_t ph_offest = elf_ehdr.e_phoff;
-//   for(int i =  0; i < elf_ehdr.e_phnum; i++){
-//     Elf_Phdr elf_phdr;
-//     fs_lseek(elf, ph_offest + i * elf_ehdr.e_phentsize, SEEK_SET);
-//     fs_read(elf, &elf_phdr, sizeof(elf_phdr));
-//     if(elf_phdr.p_type == PT_LOAD){
-//       size_t nr_page = ((elf_phdr.p_vaddr + elf_phdr.p_memsz - 1) >> 12) - (elf_phdr.p_vaddr >> 12) + 1;
-//       void *tmp = new_page(nr_page);
-//       for (int j = 0; j < nr_page; j++)
-//         map(&pcb->as, (void *)((elf_phdr.p_vaddr & ~0xfff) + j * PGSIZE), (void *)(tmp + j * PGSIZE), 1);
-//       fs_lseek(elf, elf_phdr.p_offset, SEEK_SET);
-//       fs_read(elf, tmp + (elf_phdr.p_vaddr & 0xfff), elf_phdr.p_filesz);
-//       memset(tmp + (elf_phdr.p_vaddr & 0xfff) + elf_phdr.p_filesz, 0, elf_phdr.p_memsz - elf_phdr.p_filesz);
-
-//       if(elf_phdr.p_filesz < elf_phdr.p_memsz)
-//         pcb->max_brk = ROUNDUP(elf_phdr.p_vaddr + elf_phdr.p_memsz, PGSIZE);
-//       // printf("%x %d\n",tmp + (elf_phdr.p_vaddr & 0xfff),elf_phdr.p_filesz);
-
-//       // fs_lseek(elf, elf_phdr.p_offset, SEEK_SET);
-//       // fs_read(elf, (void *)elf_phdr.p_vaddr, elf_phdr.p_filesz);
-//       // memset((void *)elf_phdr.p_vaddr + elf_phdr.p_filesz, 0, elf_phdr.p_memsz - elf_phdr.p_filesz);
-//     }
-//   }
-//   return elf_ehdr.e_entry;
-// }
-
 void naive_uload(PCB *pcb, const char *filename) {
   uintptr_t entry = loader(pcb, filename);
   Log("Jump to entry = %p", entry);
