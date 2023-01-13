@@ -42,7 +42,6 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       // size_t nr_page = (elf_phdr.p_memsz - 1) * pgsize + 1;
       size_t nr_page = ((elf_phdr.p_vaddr + elf_phdr.p_memsz - 1) >> 12) - (elf_phdr.p_vaddr >> 12) + 1;
       void *p_pages = new_page(nr_page);
-      printf("p_pages=%p\n", p_pages);
       for(int j = 0; j < nr_page; j++){
         map(&pcb->as, (void *)((elf_phdr.p_vaddr & (~(pgsize - 1))) + j * pgsize), (void *)(p_pages + j * pgsize), 1);
         printf("loader pcb as=%p\n", pcb->as.ptr);
