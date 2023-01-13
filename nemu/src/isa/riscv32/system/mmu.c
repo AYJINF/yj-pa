@@ -87,7 +87,7 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
     break;
   }
 
-  printf("vaddr=%x, pde=%lx, pte=%lu\n", vaddr, pde, pte);
+  printf("vaddr=%x, pde=%lx, pte=%lx\n", vaddr, pde, pte);
   
   paddr_t pg_paddr = (((pte & (~MY_PDE_ATT)) >> 10) << 12) | (vaddr & (~MY_PAGE_NUMBER));
   return pg_paddr | MEM_RET_OK;
