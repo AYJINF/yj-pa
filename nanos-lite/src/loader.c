@@ -132,10 +132,10 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   // }
   // string_a--;
   // string_a--;
-  printf("tttttttttttttt\n");
   Area kstack;
   kstack.start = &pcb->cp;
   kstack.end = kstack.start + STACK_SIZE;
+  printf("tttttttttttttt\n");
   pcb->cp = ucontext(NULL, kstack, (void *)loader(pcb, filename));
   pcb->cp->GPRx = (uintptr_t)string_a;
 }
