@@ -93,6 +93,7 @@ void __am_switch(Context *c) {
 #define MY_PAGE_NUMBER 0xfffff000
 #define MY_PTE_ATT 0x3ff
 void map(AddrSpace *as, void *va, void *pa, int prot) {
+  printf("mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmap va=%p, pa=%p\n", va, pa);
   PTE *pde_addr = as->ptr + (((uintptr_t)va & MY_VPN_1) >> 22) * 4;
   if((*pde_addr & PTE_V) == 0){
     void *new_p = pgalloc_usr(as->pgsize); // 阿巴阿巴，不确定要不要考虑存放位置字段null的情况
