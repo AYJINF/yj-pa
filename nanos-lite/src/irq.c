@@ -6,7 +6,7 @@ Context* schedule(Context *prev);
 static Context* do_event(Event e, Context* c) {
   switch (e.event) {
     case 1: 
-    printf("pdir=%ld\n", c->pdir);
+    printf("pdir=%d\n", c->pdir);
       // printf("There is a YIELD event!\n"); 
       return schedule(c);
       // printf("There is a YIELD event!\n"); break; // 自陷指令
