@@ -45,12 +45,10 @@ bool vme_init(void* (*pgalloc_f)(int), void (*pgfree_f)(void*)) {
 }
 
 void protect(AddrSpace *as) {
-  void *try = pgalloc_usr(4096);
-  printf("lllllllllllllllllllllllllllllllllllllllllllllltry=%p\n", try);
   PTE *updir = (PTE*)(pgalloc_usr(PGSIZE));
   printf("hhhhhhhh\n");
-  printf("updir=%p\n", updir);
   as->ptr = updir;
+  printf("updir=%p\n", as->ptr);
   as->area = USER_SPACE;
   as->pgsize = PGSIZE;
   // map kernel space
