@@ -51,8 +51,8 @@ current->cp = prev;
 
 // always select pcb[0] as the new process
 current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
-// printf("pcb[0].max_brk=%x, pcb[1].max_brk=%x\n", pcb[0].max_brk, pcb[1].max_brk);
-// printf("schedule &pcb[0].cp=%x, &pcb[1].cp=%x\n", &pcb[0].cp, &pcb[1].cp);
+printf("pcb[0].max_brk=%x, pcb[1].max_brk=%x\n", pcb[0].max_brk, pcb[1].max_brk);
+printf("schedule &pcb[0].cp=%x, &pcb[1].cp=%x\n", &pcb[0].cp, &pcb[1].cp);
 // current = &pcb[1];
 // bool flag = (current == &pcb[0]);
 // if(flag) printf("pcb[0]\n");
