@@ -44,6 +44,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       void *p_pages = new_page(nr_page);
       for(int j = 0; j < nr_page; j++){
         map(&pcb->as, (void *)((elf_phdr.p_vaddr & (~(pgsize - 1))) + j * pgsize), (void *)(p_pages + j * pgsize), 1);
+        printf("loader pcb as=%p\n", pcb->as.ptr);
       }
       fs_lseek(elf_file, elf_phdr.p_offset, SEEK_SET);
       fs_read(elf_file, (elf_phdr.p_vaddr & (pgsize - 1)) + p_pages, elf_phdr.p_filesz);
