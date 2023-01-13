@@ -49,7 +49,7 @@ void protect(AddrSpace *as) {
   printf("lllllllllllllllllllllllllllllllllllllllllllllltry=%p\n", try);
   PTE *updir = (PTE*)(pgalloc_usr(PGSIZE));
   printf("hhhhhhhh\n");
-  printf("updir=%u\n", updir);
+  printf("updir=%p\n", updir);
   as->ptr = updir;
   as->area = USER_SPACE;
   as->pgsize = PGSIZE;
