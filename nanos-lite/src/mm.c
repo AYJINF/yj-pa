@@ -39,7 +39,7 @@ int mm_brk(uintptr_t brk) {
   }
 
   // current->max_brk = ROUNDUP(brk, PGSIZE);
-  current->max_brk = ((brk >> 12) + 1) << 12;
+  current->max_brk = ((brk / PGSIZE) + 1) * PGSIZE;
   assert(brk <= current->max_brk);
   return 0;
 }
