@@ -41,17 +41,6 @@ int mm_brk(uintptr_t brk) {
   assert(brk <= current->max_brk);
   return 0;
 }
-// int mm_brk(uintptr_t brk) {
-//   if(brk >= current->max_brk){
-//     size_t nr_page = (brk >> 12) - (current->max_brk >> 12) + 1;
-//     void *tmp =  new_page(nr_page);
-//     for (int i = 0; i < nr_page; i++){
-//       map(&current->as, (void *)(current->max_brk + i * PGSIZE), (void *)(tmp + i * PGSIZE), 1); 
-//     }   
-//     current->max_brk = ((brk >> 12) + 1) << 12;
-//   }
-//   return 0;
-// }
 
 void init_mm() {
   pf = (void *)ROUNDUP(heap.start, PGSIZE);
