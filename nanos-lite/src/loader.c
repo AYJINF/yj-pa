@@ -115,18 +115,18 @@ void naive_uload(PCB *pcb, const char *filename) {
   ((void(*)())entry) ();
 }
 
-// void context_kload(PCB *pcb, void (*entry)(void *), void *arg){
-//   Area kstack;
-//   kstack.start = &pcb->cp;
-//   kstack.end = kstack.start + STACK_SIZE;
-//   pcb->cp = kcontext(kstack, entry, arg);
-// }
-void context_kload(PCB *pcb, void (*entry)(void *), void *arg) {
+void context_kload(PCB *pcb, void (*entry)(void *), void *arg){
   Area kstack;
   kstack.start = &pcb->cp;
   kstack.end = &pcb->cp + STACK_SIZE;
   pcb->cp = kcontext(kstack, entry, arg);
 }
+// void context_kload(PCB *pcb, void (*entry)(void *), void *arg) {
+//   Area kstack;
+//   kstack.start = &pcb->cp;
+//   kstack.end = &pcb->cp + STACK_SIZE;
+//   pcb->cp = kcontext(kstack, entry, arg);
+// }
 
 // void context_uload(PCB *pcb, const char *filename){
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]){
