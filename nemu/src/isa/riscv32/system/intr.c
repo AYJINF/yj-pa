@@ -21,7 +21,6 @@ word_t isa_raise_intr(word_t NO, vaddr_t epc) {
   #ifdef CONFIG_ETRACE
     printf("\033[1;33mThere is a NO.0x%08x exception at pc = 0x%08x !\033[m\n", NO, epc);
   #endif
-  printf("NO=%d, mtvec=%u\n", NO, cpu.mtvec);
   return cpu.mtvec;
 }
 
