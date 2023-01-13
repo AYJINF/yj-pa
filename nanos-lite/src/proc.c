@@ -28,6 +28,7 @@ void init_proc() {
   context_kload(&pcb[0], hello_fun, (void *)"ab");
   char *argv[] = {NULL};
   context_uload(&pcb[1], "/bin/pal", argv, NULL);
+  printf("pcb[0].max_brk=%x, pcb[1].max_brk=%x\n", pcb[0].max_brk, pcb[1].max_brk);
   // context_kload(&pcb[1], hello_fun, (void *)"cd");
   // context_uload(&pcb[0], "/bin/hello");
 
