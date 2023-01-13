@@ -121,7 +121,6 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
     string_a--;
     *string_a = (uintptr_t)argv_c[i];
   }
-  printf("tttttttttttttt\n");
 
   string_a--;
   *string_a = (uintptr_t)argv_num;
@@ -133,6 +132,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   // }
   // string_a--;
   // string_a--;
+  printf("tttttttttttttt\n");
   Area kstack;
   kstack.start = &pcb->cp;
   kstack.end = kstack.start + STACK_SIZE;
