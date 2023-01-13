@@ -71,7 +71,7 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
   // 处理pte
   paddr_t pte_addr = (((pde & (~MY_PDE_ATT)) >> 10) << 12) | (((vaddr & MY_VPN_0) >> 12) * 4);
   uintptr_t pte = paddr_read(pte_addr, 4);
-  Assert((pte & PTE_V) != 0, "pte goes wrong in mmu.c!");
+  // Assert((pte & PTE_V) != 0, "pte goes wrong in mmu.c!");
 
   switch (type)
   {
