@@ -38,7 +38,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     fs_read(elf_file, &elf_phdr, sizeof(elf_phdr));
 
     if(elf_phdr.p_type == PT_LOAD){
-      int pgsize = pcb->as.pgsize;
+      int pgsize = PGSIZE;
       // size_t nr_page = (elf_phdr.p_memsz - 1) * pgsize + 1;
       size_t nr_page = ((elf_phdr.p_vaddr + elf_phdr.p_memsz - 1) >> 12) - (elf_phdr.p_vaddr >> 12) + 1;
       void *p_pages = new_page(nr_page);
@@ -75,7 +75,7 @@ void context_kload(PCB *pcb, void (*entry)(void *), void *arg){
 // void context_uload(PCB *pcb, const char *filename){
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]){
   protect(&pcb->as);
-  int pgsize = pcb->as.pgsize;
+  int pgsize = PGSIZE;
   printf("uload pgsize=%d\n", pgsize);
   char *string_area = (char *)new_page(8) + 8 * pgsize;
 
