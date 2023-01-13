@@ -92,18 +92,32 @@ void __am_switch(Context *c) {
 #define MY_VPN_0 0x003ff000
 #define MY_PAGE_NUMBER 0xfffff000
 #define MY_PTE_ATT 0x3ff
-void map(AddrSpace *as, void *va, void *pa, int prot) {
-  PTE *pde_addr = as->ptr + (((uintptr_t)va & MY_VPN_1) >> 22) * 4;
+// void map(AddrSpace *as, void *va, void *pa, int prot) {
+//   PTE *pde_addr = as->ptr + (((uintptr_t)va & MY_VPN_1) >> 22) * 4;
 
-  if((*pde_addr & PTE_V) == 0){
-    void *new_p = pgalloc_usr(PGSIZE); // 阿巴阿巴，不确定要不要考虑存放位置字段null的情况
-    *pde_addr = (*pde_addr & MY_PTE_ATT) | ((~MY_PTE_ATT) & ((uintptr_t)new_p >> 2)); // 装入
-    *pde_addr |= PTE_V;
+//   if((*pde_addr & PTE_V) == 0){
+//     void *new_p = pgalloc_usr(PGSIZE); // 阿巴阿巴，不确定要不要考虑存放位置字段null的情况
+//     *pde_addr = (*pde_addr & MY_PTE_ATT) | ((~MY_PTE_ATT) & ((uintptr_t)new_p >> 2)); // 装入
+//     *pde_addr |= PTE_V;
+//   }
+//   pa = (void *)((uintptr_t)pa & MY_PN);
+//   va = (void *)((uintptr_t)va & MY_PN);
+//   PTE *pte_addr = (PTE *)((((*pde_addr & (~MY_PTE_ATT)) >> 10) << 12) | ((((uintptr_t)va & MY_VPN_0) >> 12) * 4));
+//   *pte_addr |= ((((uintptr_t)pa >> 2) & (~MY_PTE_ATT)) | PTE_V); // 阿巴阿巴打个tag
+// }
+void map(AddrSpace *as, void *va, void *pa, int prot) {
+  va = (void *)(((uintptr_t)va) & 0xfffff000);
+  pa = (void *)(((uintptr_t)pa) & 0xfffff000);
+  PTE *pte1 = as->ptr + (((uintptr_t)va & 0xffc00000) >> 22) * 4;
+  
+  if((*pte1 & PTE_V) == 0){
+    void *tmp = pgalloc_usr(PGSIZE);
+    *pte1 = (*pte1 & ~0xfffffc00) | (0xfffffc00 & ((uintptr_t)tmp >> 2));
+    *pte1 = (*pte1 | PTE_V);
   }
-  pa = (void *)((uintptr_t)pa & MY_PN);
-  va = (void *)((uintptr_t)va & MY_PN);
-  PTE *pte_addr = (PTE *)((((*pde_addr & (~MY_PTE_ATT)) >> 10) << 12) | ((((uintptr_t)va & MY_VPN_0) >> 12) * 4));
-  *pte_addr |= ((((uintptr_t)pa >> 2) & (~MY_PTE_ATT)) | PTE_V); // 阿巴阿巴打个tag
+  
+  PTE *pte2 = (PTE *)(((((uintptr_t)*pte1) & 0xfffffc00) >> 10) * PGSIZE  + ((((uintptr_t)va) & 0x003ff000) >> 12) * 4);
+  *pte2 = (0xfffffc00 & ((uintptr_t)pa >> 2)) | PTE_V;
 }
 
 Context *ucontext(AddrSpace *as, Area kstack, void *entry) {
