@@ -19,10 +19,10 @@ Context* __am_irq_handle(Context *c) {
     }
 
     c = user_handler(ev, c);
+    printf("user pdir2=%p\n", c->pdir);
     assert(c != NULL);
     c->mepc += 4; // 时钟中断不用+4
   }
-  printf("pdir2=%p\n", c->pdir);
   __am_switch(c);
   return c;
 }

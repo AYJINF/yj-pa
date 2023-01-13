@@ -57,7 +57,6 @@ current = &pcb[1];
 // else printf("pcb[1]\n");
 
 // then return the new context
-printf("event pdir=%p\n", prev->pdir);
 return current->cp;
 }
 
