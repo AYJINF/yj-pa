@@ -76,7 +76,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   int pgsize = pcb->as.pgsize;
   char *string_area = (char *)new_page(8) + 8 * pgsize;
 
-  for(int i = 1; i <= 8; i++){
+  for(int i = 8; i >= 1; i--){
     map(&pcb->as, (void *)(pcb->as.area.end - i * pgsize), (void *)(string_area - i * pgsize), 1);
   }
 
