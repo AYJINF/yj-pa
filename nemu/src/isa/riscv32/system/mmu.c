@@ -64,12 +64,12 @@ cpu.stap(Supervisor Address Translation and Protection Register)
 // 对内存区间为[vaddr, vaddr + len), 类型为type的内存访问进行地址转换
 paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
    // 处理pde
-  paddr_t pde_addr = ((cpu.satp & MY_SATP_PPN) << 12) | ((vaddr & MY_VPN_1) >> 22) * 4;
+  paddr_t pde_addr = ((cpu.satp & MY_SATP_PPN) << 12) | (((vaddr & MY_VPN_1) >> 22) * 4);
   uintptr_t pde = paddr_read(pde_addr, 4);
   Assert((pde & PTE_V) != 0, "pde goes wrong in mmu.c!");
   
   // 处理pte
-  paddr_t pte_addr = (((pde & ~MY_PDE_ATT) >> 10) << 12) | ((vaddr & MY_VPN_0) >> 12) * 4;
+  paddr_t pte_addr = (((pde & (~MY_PDE_ATT)) >> 10) << 12) | (((vaddr & MY_VPN_0) >> 12) * 4);
   uintptr_t pte = paddr_read(pte_addr, 4);
   Assert((pte & PTE_V) != 0, "pte goes wrong in mmu.c!");
 
@@ -87,6 +87,6 @@ paddr_t isa_mmu_translate(vaddr_t vaddr, int len, int type) {
     break;
   }
 
-  paddr_t pg_paddr = (((pte & ~MY_PDE_ATT) >> 10) << 12) | (vaddr & ~MY_PAGE_NUMBER);
+  paddr_t pg_paddr = (((pte & (~MY_PDE_ATT)) >> 10) << 12) | (vaddr & (~MY_PAGE_NUMBER));
   return pg_paddr | MEM_RET_OK;
 }

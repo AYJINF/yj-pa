@@ -67,7 +67,7 @@ void __am_switch(Context *c) {
 }
 
 /*
-              Riscv32 Sv32 Page-Table Entry(PTE)
+              Riscv32 Sv32 Page-Table Entry(PTE) likely PDE
 ---------------------------------------------------------------
 |31      20|19      10|9     8| 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
 |  PPN[1]  |  PPN[0]  |  RSW  | D | A | G | U | X | W | R | V |
@@ -90,15 +90,18 @@ void __am_switch(Context *c) {
 */
 #define MY_PN 0xfffff000
 #define MY_VPN_1 0xffc00000
+#define MY_VPN_0 0x003ff000
 #define MY_PAGE_NUMBER 0xfffff000
 #define MY_PTE_ATT 0x3ff
 void map(AddrSpace *as, void *va, void *pa, int prot) {
-  PTE *pde = as->ptr + (((uintptr_t)va & MY_VPN_1) >> 22) * 4;
-  if((*pde & PTE_V) == 0){
+  PTE *pde_addr = as->ptr + (((uintptr_t)va & MY_VPN_1) >> 22) * 4;
+  if((*pde_addr & PTE_V) == 0){
     void *new_p = pgalloc_usr(as->pgsize); // 阿巴阿巴，不确定要不要考虑存放位置字段null的情况
-    *pde = (*pde & MY_PTE_ATT) | ((~MY_PTE_ATT) & ((uintptr_t)new_p >> 2)); // 装入
-    *pde |= PTE_V;
+    *pde_addr = (*pde_addr & MY_PTE_ATT) | ((~MY_PTE_ATT) & ((uintptr_t)new_p >> 2)); // 装入
+    *pde_addr |= PTE_V;
   }
+  PTE *pte_addr = (PTE *)((((*pde_addr & (~MY_PTE_ATT)) >> 10) << 12) | ((((uintptr_t)va & MY_VPN_0) >> 12) * 4));
+  *pte_addr |= ((((uintptr_t)pa >> 2) & (~MY_PTE_ATT)) | PTE_V); // 阿巴阿巴打个tag
 }
 
 Context *ucontext(AddrSpace *as, Area kstack, void *entry) {
