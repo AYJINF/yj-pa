@@ -77,128 +77,128 @@ void context_kload(PCB *pcb, void (*entry)(void *), void *arg){
 }
 
 // void context_uload(PCB *pcb, const char *filename){
-// void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]){
-//   protect(&pcb->as);
-//   int pgsize = PGSIZE;
-//   // printf("uload pgsize=%d\n", pgsize);
-//   char *string_area = (char *)new_page(8) + 8 * pgsize;
-
-//   for(int i = 1; i <= 8; i++){
-//     map(&pcb->as, (void *)(pcb->as.area.end - i * pgsize), (void *)(string_area - i * pgsize), 1);
-//   }
-
-//   int argv_num = 0;
-//   int envp_num = 0;
-//   if(argv) while(argv[argv_num]) argv_num++;
-//   if(envp) while(envp[envp_num]) envp_num++;
-//   // printf("argv_num=%d, envp_num=%d\n", argv_num, envp_num);
-//   // if(argv_num == 2)  printf("argv[0]=%s, argv[1]=%s\n", argv[0], argv[1]);
-//   char *argv_c[argv_num];
-//   for(int i = 0; i < argv_num; i++){
-//     string_area -= ROUNDUP(strlen(argv[i]) + 1, 4); // +1 for the '\0'
-//     strcpy(string_area, argv[i]);
-//     argv_c[i] = string_area;
-//   }
-//   char *envp_c[envp_num];
-//   for(int i = 0; i < envp_num; i++){
-//     string_area -= ROUNDUP(strlen(envp[i]) + 1, 4); // +1 for the '\0'
-//     char *t = string_area; // test
-//     strcpy(string_area, envp[i]);
-//     envp_c[i] = string_area;
-//     // printf("envp[%d]=%s\n", i, envp[i]);
-//     assert(t == envp_c[i]); // test
-//   }
-
-//   // int t = 0;
-//   // if(envp_num){
-//   //   while(envp_c[t]) t++;
-//   //   printf("envp_c_num=%d, envp_c[1]=%s\n", t, envp_c[1]);
-//   // }
-
-//   uintptr_t *string_a = (uintptr_t *)string_area;
-//   string_a--; *string_a = (uintptr_t)NULL;
-
-//   for(int i = envp_num - 1; i >= 0; i--){
-//     string_a--;
-//     *string_a = (uintptr_t)envp_c[i];
-//   }  
-//   string_a--; *string_a = (uintptr_t)NULL;
-
-//   for(int i = argv_num - 1; i >= 0; i--){
-//     string_a--;
-//     *string_a = (uintptr_t)argv_c[i];
-//   }
-
-//   string_a--;
-//   *string_a = (uintptr_t)argv_num;
-//   // string_a++;
-//   // string_a++;
-//   // if(*string_a) {
-//   //   // printf("wwwwwwwwwwwwwww\n");
-//   //   printf("abb=%s\n", *string_a);
-//   // }
-//   // string_a--;
-//   // string_a--;
-//   Area kstack;
-//   kstack.start = &pcb->cp;
-//   kstack.end = kstack.start + STACK_SIZE;
-//   pcb->cp = ucontext(&pcb->as, kstack, (void *)loader(pcb, filename));
-//   pcb->cp->GPRx = (uintptr_t)string_a; // 可能会错
-// }
-void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]) {
+void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]){
   protect(&pcb->as);
-  void *phy = new_page(8) + 8 * PGSIZE;
+  int pgsize = PGSIZE;
+  // printf("uload pgsize=%d\n", pgsize);
+  char *string_area = (char *)new_page(8) + 8 * pgsize;
 
-  for(int i = 8; i > 0; i--)
-    map(&pcb->as, (&pcb->as)->area.end - i * PGSIZE, phy - i * PGSIZE, 1); 
+  for(int i = 1; i <= 8; i++){
+    map(&pcb->as, (void *)(pcb->as.area.end - i * pgsize), (void *)(string_area - i * pgsize), 1);
+  }
 
-  char *string_area = (char *)phy;
-  int argv_num = 0, envp_num = 0;
-  
-  for(; envp && envp[envp_num]; envp_num++);
-  for(; argv && argv[argv_num]; argv_num++);
-  
-  char *argv_string[argv_num], *envp_string[envp_num];
+  int argv_num = 0;
+  int envp_num = 0;
+  if(argv) while(argv[argv_num]) argv_num++;
+  if(envp) while(envp[envp_num]) envp_num++;
+  // printf("argv_num=%d, envp_num=%d\n", argv_num, envp_num);
+  // if(argv_num == 2)  printf("argv[0]=%s, argv[1]=%s\n", argv[0], argv[1]);
+  char *argv_c[argv_num];
+  for(int i = 0; i < argv_num; i++){
+    string_area -= ROUNDUP(strlen(argv[i]) + 1, 4); // +1 for the '\0'
+    strcpy(string_area, argv[i]);
+    argv_c[i] = string_area;
+  }
+  char *envp_c[envp_num];
+  for(int i = 0; i < envp_num; i++){
+    string_area -= ROUNDUP(strlen(envp[i]) + 1, 4); // +1 for the '\0'
+    char *t = string_area; // test
+    strcpy(string_area, envp[i]);
+    envp_c[i] = string_area;
+    // printf("envp[%d]=%s\n", i, envp[i]);
+    assert(t == envp_c[i]); // test
+  }
 
+  // int t = 0;
+  // if(envp_num){
+  //   while(envp_c[t]) t++;
+  //   printf("envp_c_num=%d, envp_c[1]=%s\n", t, envp_c[1]);
+  // }
+
+  uintptr_t *string_a = (uintptr_t *)string_area;
+  string_a--; *string_a = (uintptr_t)NULL;
 
   for(int i = envp_num - 1; i >= 0; i--){
-    string_area -= ROUNDUP(strlen(envp[i]) + 1, 4);
-    envp_string[i] = string_area;
-    strcpy(envp_string[i], envp[i]);
-  }
-  // printf("%d %d",envp_num,argv_num);
-  for(int i = argv_num - 1; i >= 0; i--){
-    // int len = strlen(argv[i]) + 1;
-    // if(len % 4)
-    //   len = len - (len % 4) + 4;
-    // printf("%d aa %d\n",len,ROUNDUP(strlen(argv[i]) + 1, 4));
-    string_area -= ROUNDUP(strlen(argv[i]) + 1, 4);
-    argv_string[i] = string_area;
-    strcpy(argv_string[i], argv[i]);
-  }
-
-  uintptr_t *tmp = (uintptr_t *)string_area;
-  tmp--;
-  *tmp = (uintptr_t)NULL;
-  tmp--;
-  
-  for(int i = envp_num - 1; i >= 0; i--){
-    *tmp = (uintptr_t)envp_string[i];
-    tmp--;
-  }
-
-  *tmp = (uintptr_t)NULL;
-  tmp--;
+    string_a--;
+    *string_a = (uintptr_t)envp_c[i];
+  }  
+  string_a--; *string_a = (uintptr_t)NULL;
 
   for(int i = argv_num - 1; i >= 0; i--){
-    *tmp = (uintptr_t)argv_string[i];
-    tmp--;
+    string_a--;
+    *string_a = (uintptr_t)argv_c[i];
   }
-  *tmp = (uintptr_t)argv_num;
+
+  string_a--;
+  *string_a = (uintptr_t)argv_num;
+  // string_a++;
+  // string_a++;
+  // if(*string_a) {
+  //   // printf("wwwwwwwwwwwwwww\n");
+  //   printf("abb=%s\n", *string_a);
+  // }
+  // string_a--;
+  // string_a--;
   Area kstack;
   kstack.start = &pcb->cp;
-  kstack.end = &pcb->cp + STACK_SIZE;
+  kstack.end = kstack.start + STACK_SIZE;
   pcb->cp = ucontext(&pcb->as, kstack, (void *)loader(pcb, filename));
-  pcb->cp->GPRx = (uintptr_t)tmp - (uintptr_t)phy + (uintptr_t)pcb->as.area.end;
+  pcb->cp->GPRx = (uintptr_t)string_a; // 可能会错
 }
+// void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]) {
+//   protect(&pcb->as);
+//   void *phy = new_page(8) + 8 * PGSIZE;
+
+//   for(int i = 8; i > 0; i--)
+//     map(&pcb->as, (&pcb->as)->area.end - i * PGSIZE, phy - i * PGSIZE, 1); 
+
+//   char *string_area = (char *)phy;
+//   int argv_num = 0, envp_num = 0;
+  
+//   for(; envp && envp[envp_num]; envp_num++);
+//   for(; argv && argv[argv_num]; argv_num++);
+  
+//   char *argv_string[argv_num], *envp_string[envp_num];
+
+
+//   for(int i = envp_num - 1; i >= 0; i--){
+//     string_area -= ROUNDUP(strlen(envp[i]) + 1, 4);
+//     envp_string[i] = string_area;
+//     strcpy(envp_string[i], envp[i]);
+//   }
+//   // printf("%d %d",envp_num,argv_num);
+//   for(int i = argv_num - 1; i >= 0; i--){
+//     // int len = strlen(argv[i]) + 1;
+//     // if(len % 4)
+//     //   len = len - (len % 4) + 4;
+//     // printf("%d aa %d\n",len,ROUNDUP(strlen(argv[i]) + 1, 4));
+//     string_area -= ROUNDUP(strlen(argv[i]) + 1, 4);
+//     argv_string[i] = string_area;
+//     strcpy(argv_string[i], argv[i]);
+//   }
+
+//   uintptr_t *tmp = (uintptr_t *)string_area;
+//   tmp--;
+//   *tmp = (uintptr_t)NULL;
+//   tmp--;
+  
+//   for(int i = envp_num - 1; i >= 0; i--){
+//     *tmp = (uintptr_t)envp_string[i];
+//     tmp--;
+//   }
+
+//   *tmp = (uintptr_t)NULL;
+//   tmp--;
+
+//   for(int i = argv_num - 1; i >= 0; i--){
+//     *tmp = (uintptr_t)argv_string[i];
+//     tmp--;
+//   }
+//   *tmp = (uintptr_t)argv_num;
+//   Area kstack;
+//   kstack.start = &pcb->cp;
+//   kstack.end = &pcb->cp + STACK_SIZE;
+//   pcb->cp = ucontext(&pcb->as, kstack, (void *)loader(pcb, filename));
+//   pcb->cp->GPRx = (uintptr_t)tmp - (uintptr_t)phy + (uintptr_t)pcb->as.area.end;
+// }
 
