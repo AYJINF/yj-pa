@@ -52,7 +52,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       memset((elf_phdr.p_vaddr & (pgsize - 1)) + p_pages + elf_phdr.p_filesz, 0, elf_phdr.p_memsz - elf_phdr.p_filesz);
       
       printf("loader max_brk=%x\n", pcb->max_brk);
-      if(elf_phdr.p_filesz < elf_phdr.p_memsz)
+      // if(elf_phdr.p_filesz < elf_phdr.p_memsz)
         pcb->max_brk = ROUNDUP(elf_phdr.p_vaddr + elf_phdr.p_memsz, pgsize); //阿巴阿巴
 
       // fs_read(elf_file, (void *)elf_phdr.p_vaddr, elf_phdr.p_filesz);
@@ -145,60 +145,4 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   pcb->cp = ucontext(&pcb->as, kstack, (void *)loader(pcb, filename));
   pcb->cp->GPRx = (uintptr_t)string_a; // 可能会错
 }
-// void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]) {
-//   protect(&pcb->as);
-//   void *phy = new_page(8) + 8 * PGSIZE;
-
-//   for(int i = 8; i > 0; i--)
-//     map(&pcb->as, (&pcb->as)->area.end - i * PGSIZE, phy - i * PGSIZE, 1); 
-
-//   char *string_area = (char *)phy;
-//   int argv_num = 0, envp_num = 0;
-  
-//   for(; envp && envp[envp_num]; envp_num++);
-//   for(; argv && argv[argv_num]; argv_num++);
-  
-//   char *argv_string[argv_num], *envp_string[envp_num];
-
-
-//   for(int i = envp_num - 1; i >= 0; i--){
-//     string_area -= ROUNDUP(strlen(envp[i]) + 1, 4);
-//     envp_string[i] = string_area;
-//     strcpy(envp_string[i], envp[i]);
-//   }
-//   // printf("%d %d",envp_num,argv_num);
-//   for(int i = argv_num - 1; i >= 0; i--){
-//     // int len = strlen(argv[i]) + 1;
-//     // if(len % 4)
-//     //   len = len - (len % 4) + 4;
-//     // printf("%d aa %d\n",len,ROUNDUP(strlen(argv[i]) + 1, 4));
-//     string_area -= ROUNDUP(strlen(argv[i]) + 1, 4);
-//     argv_string[i] = string_area;
-//     strcpy(argv_string[i], argv[i]);
-//   }
-
-//   uintptr_t *tmp = (uintptr_t *)string_area;
-//   tmp--;
-//   *tmp = (uintptr_t)NULL;
-//   tmp--;
-  
-//   for(int i = envp_num - 1; i >= 0; i--){
-//     *tmp = (uintptr_t)envp_string[i];
-//     tmp--;
-//   }
-
-//   *tmp = (uintptr_t)NULL;
-//   tmp--;
-
-//   for(int i = argv_num - 1; i >= 0; i--){
-//     *tmp = (uintptr_t)argv_string[i];
-//     tmp--;
-//   }
-//   *tmp = (uintptr_t)argv_num;
-//   Area kstack;
-//   kstack.start = &pcb->cp;
-//   kstack.end = &pcb->cp + STACK_SIZE;
-//   pcb->cp = ucontext(&pcb->as, kstack, (void *)loader(pcb, filename));
-//   pcb->cp->GPRx = (uintptr_t)tmp - (uintptr_t)phy + (uintptr_t)pcb->as.area.end;
-// }
 
