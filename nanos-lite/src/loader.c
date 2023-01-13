@@ -39,7 +39,8 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 
     if(elf_phdr.p_type == PT_LOAD){
       int pgsize = PGSIZE;
-      size_t nr_page = elf_phdr.p_memsz / pgsize + 1; // 阿巴阿巴
+      // size_t nr_page = elf_phdr.p_memsz / pgsize + 1; // 阿巴阿巴
+      size_t nr_page = ((elf_phdr.p_vaddr + elf_phdr.p_memsz - 1) >> 12) - (elf_phdr.p_vaddr >> 12) + 1;
       void *p_pages = new_page(nr_page);
       for(int j = 0; j < nr_page; j++){
         // printf("lllllllllllllllllllllloader va=%p, pa=%p\n", (void *)((elf_phdr.p_vaddr & (~(pgsize - 1))) + j * pgsize), (void *)(p_pages + j * pgsize));
@@ -58,7 +59,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       // memset((void *)elf_phdr.p_vaddr + elf_phdr.p_filesz, 0, elf_phdr.p_memsz - elf_phdr.p_filesz);
     }
   }
-  // fs_close(elf_file);
+  fs_close(elf_file);
   return elf_ehdr.e_entry;
 }
 
