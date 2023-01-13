@@ -31,7 +31,7 @@ int mm_brk(uintptr_t brk) {
 
   uintptr_t plus_brk = brk - max_brk;
   size_t nr_page = plus_brk / PGSIZE + 1;
-  printf("nr_page=%d\n", nr_page);
+  // printf("nr_page=%d\n", nr_page);
   void *pages = new_page(nr_page);
   for(int i = 0; i < nr_page; i++){
     map(&current->as, (void *)(max_brk + i * PGSIZE), (void *)(pages + i * PGSIZE), 1);
