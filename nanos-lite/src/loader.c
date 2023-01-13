@@ -51,7 +51,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       fs_read(elf_file, (elf_phdr.p_vaddr & (pgsize - 1)) + p_pages, elf_phdr.p_filesz);
       memset((elf_phdr.p_vaddr & (pgsize - 1)) + p_pages + elf_phdr.p_filesz, 0, elf_phdr.p_memsz - elf_phdr.p_filesz);
       
-      printf("loader max_brk=%x\n", pcb->max_brk);
+      // printf("loader max_brk=%x\n", pcb->max_brk);
       if(elf_phdr.p_filesz < elf_phdr.p_memsz){
         pcb->max_brk = ROUNDUP(elf_phdr.p_vaddr + elf_phdr.p_memsz, pgsize); //阿巴阿巴
       }
