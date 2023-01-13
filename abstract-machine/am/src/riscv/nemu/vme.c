@@ -93,14 +93,14 @@ void __am_switch(Context *c) {
 #define MY_PAGE_NUMBER 0xfffff000
 #define MY_PTE_ATT 0x3ff
 void map(AddrSpace *as, void *va, void *pa, int prot) {
+  pa = (void *)((uintptr_t)pa & MY_PN);
+  va = (void *)((uintptr_t)va & MY_PN);
   PTE *pde_addr = as->ptr + (((uintptr_t)va & MY_VPN_1) >> 22) * 4;
   if((*pde_addr & PTE_V) == 0){
     void *new_p = pgalloc_usr(as->pgsize); // 阿巴阿巴，不确定要不要考虑存放位置字段null的情况
     *pde_addr = (*pde_addr & MY_PTE_ATT) | ((~MY_PTE_ATT) & ((uintptr_t)new_p >> 2)); // 装入
     *pde_addr |= PTE_V;
   }
-  pa = (void *)((uintptr_t)pa & MY_PN);
-  va = (void *)((uintptr_t)va & MY_PN);
   PTE *pte_addr = (PTE *)((((*pde_addr & (~MY_PTE_ATT)) >> 10) << 12) | ((((uintptr_t)va & MY_VPN_0) >> 12) * 4));
   *pte_addr |= ((((uintptr_t)pa >> 2) & (~MY_PTE_ATT)) | PTE_V); // 阿巴阿巴打个tag
 }
