@@ -10,57 +10,104 @@
 # define Elf_Phdr Elf32_Phdr
 #endif
 
+// static uintptr_t loader(PCB *pcb, const char *filename) {
+//   Elf_Ehdr elf_ehdr;
+//   int elf_file = fs_open(filename, 0, 0);
+//   fs_read(elf_file, &elf_ehdr, sizeof(elf_ehdr));
+
+//   assert(*(uint32_t *)elf_ehdr.e_ident == 0x464c457f);
+
+//   #if defined(__ISA_AM_NATIVE__)
+//   # define EXPECT_TYPE EM_X86_64
+//   #elif defined(__ISA_X86__)
+//   # define EXPECT_TYPE EM_X86_64
+//   #elif defined(__ISA_MIPS32__)
+//   # define EXPECT_TYPE EM_MIPS
+//   #elif defined(__ISA_RISCV32__) || defined(__ISA_RISCV64__)
+//   # define EXPECT_TYPE EM_RISCV
+//   #else
+//   # error Unsupported ISA
+//   #endif
+
+//   assert(EXPECT_TYPE == elf_ehdr.e_machine);
+
+
+//   for(int i = 0; i < elf_ehdr.e_phnum; i++){
+//     Elf_Phdr elf_phdr;
+//     fs_lseek(elf_file, elf_ehdr.e_phoff + elf_ehdr.e_phentsize * i, SEEK_SET);
+//     fs_read(elf_file, &elf_phdr, sizeof(elf_phdr));
+
+//     if(elf_phdr.p_type == PT_LOAD){
+//       int pgsize = PGSIZE;
+//       // size_t nr_page = elf_phdr.p_memsz / pgsize + 1; // 阿巴阿巴
+//       size_t nr_page = ((elf_phdr.p_vaddr + elf_phdr.p_memsz - 1) / pgsize) - (elf_phdr.p_vaddr / pgsize) + 1;
+//       void *p_pages = new_page(nr_page);
+//       for(int j = 0; j < nr_page; j++){
+//         // printf("lllllllllllllllllllllloader va=%p, pa=%p\n", (void *)((elf_phdr.p_vaddr & (~(pgsize - 1))) + j * pgsize), (void *)(p_pages + j * pgsize));
+//         map(&pcb->as, (void *)((elf_phdr.p_vaddr & (~(pgsize - 1))) + j * pgsize), (void *)(p_pages + j * pgsize), 1);
+//         // printf("loader pcb as=%p\n", pcb->as.ptr);
+//       }
+//       fs_lseek(elf_file, elf_phdr.p_offset, SEEK_SET);
+//       fs_read(elf_file, (elf_phdr.p_vaddr & (pgsize - 1)) + p_pages, elf_phdr.p_filesz);
+//       memset((elf_phdr.p_vaddr & (pgsize - 1)) + p_pages + elf_phdr.p_filesz, 0, elf_phdr.p_memsz - elf_phdr.p_filesz);
+      
+//       // printf("loader max_brk=%x\n", pcb->max_brk);
+//       if(elf_phdr.p_filesz < elf_phdr.p_memsz){
+//         pcb->max_brk = ROUNDUP(elf_phdr.p_vaddr + elf_phdr.p_memsz, pgsize); //阿巴阿巴
+//       }
+
+//       // fs_read(elf_file, (void *)elf_phdr.p_vaddr, elf_phdr.p_filesz);
+//       // memset((void *)elf_phdr.p_vaddr + elf_phdr.p_filesz, 0, elf_phdr.p_memsz - elf_phdr.p_filesz);
+//     }
+//   }
+//   fs_close(elf_file);
+//   return elf_ehdr.e_entry;
+// }
 static uintptr_t loader(PCB *pcb, const char *filename) {
   Elf_Ehdr elf_ehdr;
-  int elf_file = fs_open(filename, 0, 0);
-  fs_read(elf_file, &elf_ehdr, sizeof(elf_ehdr));
-
-  assert(*(uint32_t *)elf_ehdr.e_ident == 0x464c457f);
-
+  int elf = fs_open(filename, 0, 0);
+  fs_read(elf, &elf_ehdr, sizeof(elf_ehdr));
+  assert(*(uint32_t *)elf_ehdr.e_ident == 0x464C457F);
   #if defined(__ISA_AM_NATIVE__)
   # define EXPECT_TYPE EM_X86_64
   #elif defined(__ISA_X86__)
   # define EXPECT_TYPE EM_X86_64
   #elif defined(__ISA_MIPS32__)
-  # define EXPECT_TYPE EM_MIPS
+  # define EXPECT_TYPE EF_MIPS_ARCH_32
   #elif defined(__ISA_RISCV32__) || defined(__ISA_RISCV64__)
   # define EXPECT_TYPE EM_RISCV
-  #else
-  # error Unsupported ISA
+  #elif
+  # error unsupported ISA __ISA__
   #endif
 
-  assert(EXPECT_TYPE == elf_ehdr.e_machine);
-
-
-  for(int i = 0; i < elf_ehdr.e_phnum; i++){
+  if(elf_ehdr.e_machine != EXPECT_TYPE){
+    printf("ISA type error!\n");
+    assert(0);
+  }
+  
+  size_t ph_offest = elf_ehdr.e_phoff;
+  for(int i =  0; i < elf_ehdr.e_phnum; i++){
     Elf_Phdr elf_phdr;
-    fs_lseek(elf_file, elf_ehdr.e_phoff + elf_ehdr.e_phentsize * i, SEEK_SET);
-    fs_read(elf_file, &elf_phdr, sizeof(elf_phdr));
-
+    fs_lseek(elf, ph_offest + i * elf_ehdr.e_phentsize, SEEK_SET);
+    fs_read(elf, &elf_phdr, sizeof(elf_phdr));
     if(elf_phdr.p_type == PT_LOAD){
-      int pgsize = PGSIZE;
-      // size_t nr_page = elf_phdr.p_memsz / pgsize + 1; // 阿巴阿巴
-      size_t nr_page = ((elf_phdr.p_vaddr + elf_phdr.p_memsz - 1) / pgsize) - (elf_phdr.p_vaddr / pgsize) + 1;
-      void *p_pages = new_page(nr_page);
-      for(int j = 0; j < nr_page; j++){
-        // printf("lllllllllllllllllllllloader va=%p, pa=%p\n", (void *)((elf_phdr.p_vaddr & (~(pgsize - 1))) + j * pgsize), (void *)(p_pages + j * pgsize));
-        map(&pcb->as, (void *)((elf_phdr.p_vaddr & (~(pgsize - 1))) + j * pgsize), (void *)(p_pages + j * pgsize), 1);
-        // printf("loader pcb as=%p\n", pcb->as.ptr);
-      }
-      fs_lseek(elf_file, elf_phdr.p_offset, SEEK_SET);
-      fs_read(elf_file, (elf_phdr.p_vaddr & (pgsize - 1)) + p_pages, elf_phdr.p_filesz);
-      memset((elf_phdr.p_vaddr & (pgsize - 1)) + p_pages + elf_phdr.p_filesz, 0, elf_phdr.p_memsz - elf_phdr.p_filesz);
-      
-      // printf("loader max_brk=%x\n", pcb->max_brk);
-      if(elf_phdr.p_filesz < elf_phdr.p_memsz){
-        pcb->max_brk = ROUNDUP(elf_phdr.p_vaddr + elf_phdr.p_memsz, pgsize); //阿巴阿巴
-      }
+      size_t nr_page = ((elf_phdr.p_vaddr + elf_phdr.p_memsz - 1) >> 12) - (elf_phdr.p_vaddr >> 12) + 1;
+      void *tmp = new_page(nr_page);
+      for (int j = 0; j < nr_page; j++)
+        map(&pcb->as, (void *)((elf_phdr.p_vaddr & ~0xfff) + j * PGSIZE), (void *)(tmp + j * PGSIZE), 1);
+      fs_lseek(elf, elf_phdr.p_offset, SEEK_SET);
+      fs_read(elf, tmp + (elf_phdr.p_vaddr & 0xfff), elf_phdr.p_filesz);
+      memset(tmp + (elf_phdr.p_vaddr & 0xfff) + elf_phdr.p_filesz, 0, elf_phdr.p_memsz - elf_phdr.p_filesz);
 
-      // fs_read(elf_file, (void *)elf_phdr.p_vaddr, elf_phdr.p_filesz);
+      if(elf_phdr.p_filesz < elf_phdr.p_memsz)
+        pcb->max_brk = ROUNDUP(elf_phdr.p_vaddr + elf_phdr.p_memsz, PGSIZE);
+      // printf("%x %d\n",tmp + (elf_phdr.p_vaddr & 0xfff),elf_phdr.p_filesz);
+
+      // fs_lseek(elf, elf_phdr.p_offset, SEEK_SET);
+      // fs_read(elf, (void *)elf_phdr.p_vaddr, elf_phdr.p_filesz);
       // memset((void *)elf_phdr.p_vaddr + elf_phdr.p_filesz, 0, elf_phdr.p_memsz - elf_phdr.p_filesz);
     }
   }
-  fs_close(elf_file);
   return elf_ehdr.e_entry;
 }
 
