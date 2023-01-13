@@ -23,24 +23,26 @@ void free_page(void *p) {
 }
 
 /* The brk() system call handler. */
-// int mm_brk(uintptr_t brk) {
-//   // printf("brk=%x\n", brk);
-//   uintptr_t max_brk = current->max_brk;
-//   // printf("max_brk=%x\n", max_brk);
-//   if(brk < max_brk) return 0;
+int mm_brk(uintptr_t brk) {
+  // printf("brk=%x\n", brk);
+  uintptr_t max_brk = current->max_brk;
+  // printf("max_brk=%x\n", max_brk);
+  if(brk < max_brk) return 0;
 
-  
-//   size_t nr_page = (brk >> 12) - (max_brk >> 12) + 1;
-//   // printf("nr_page=%d\n", nr_page);
-//   void *pages = new_page(nr_page);
-//   for(int i = 0; i < nr_page; i++){
-//     map(&current->as, (void *)(max_brk + i * PGSIZE), (void *)(pages + i * PGSIZE), 1);
-//   }
+  // uintptr_t plus_brk = brk - max_brk;
+  // size_t nr_page = plus_brk / PGSIZE + 1;
+  // printf("nr_page=%d\n", nr_page);
+  size_t nr_page = (brk >> 12) - (current->max_brk >> 12) + 1;
+  void *pages = new_page(nr_page);
+  for(int i = 0; i < nr_page; i++){
+    map(&current->as, (void *)(max_brk + i * PGSIZE), (void *)(pages + i * PGSIZE), 1);
+  }
 
-//   current->max_brk = ROUNDUP(brk, PGSIZE);
-//   assert(brk <= current->max_brk);
-//   return 0;
-// }
+  // current->max_brk = ROUNDUP(brk, PGSIZE);
+  current->max_brk = ((brk >> 12) + 1) << 12;
+  assert(brk <= current->max_brk);
+  return 0;
+}
 // int mm_brk(uintptr_t brk) {
 //   if(brk >= current->max_brk){
 //     size_t nr_page = (brk >> 12) - (current->max_brk >> 12) + 1;
@@ -52,21 +54,6 @@ void free_page(void *p) {
 //   }
 //   return 0;
 // }
-int mm_brk(uintptr_t brk) {
-  if(brk <= current->max_brk) return 0;
-  //printf("===============\n");
-  uint32_t max_nr_page = (current->max_brk - 1) / PGSIZE;
-  uint32_t now_nr_page = (brk - 1) / PGSIZE;
-  int nr_page = now_nr_page - max_nr_page;
-  void *page = new_page(nr_page);
-  //printf("begin malloc: max_brk = %08p, brk = %08p, pages = %d\n", current->max_brk, brk, nr_page);
-  void *vaddr = (void *)current->max_brk;
-  for(int i = 0; i < nr_page; i++) map(&current->as, vaddr + i * PGSIZE, page + i * PGSIZE, MMAP_READ | MMAP_WRITE);
-  current->max_brk = ROUNDUP(brk, PGSIZE);
-  //printf("end   malloc: max_brk = %08p\n", current->max_brk);
-  //printf("===============\n");
-  return 0;
-}
 
 void init_mm() {
   pf = (void *)ROUNDUP(heap.start, PGSIZE);
