@@ -1,4 +1,3 @@
-#include <am.h>
 #include <nemu.h>
 #include <klib.h>
 
