@@ -103,7 +103,7 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
   // va = (void *)((uintptr_t)va & MY_PN);
   // PTE *pte_addr = (PTE *)((((*pde_addr & (~MY_PTE_ATT)) >> 10) << 12) | ((((uintptr_t)va & MY_VPN_0) >> 12) * 4));
   // *pte_addr |= ((((uintptr_t)pa >> 2) & (~MY_PTE_ATT)) | PTE_V); // 阿巴阿巴打个tag
-  va = (void *)(((uintptr_t)va) & 0xfffff000);
+    va = (void *)(((uintptr_t)va) & 0xfffff000);
   pa = (void *)(((uintptr_t)pa) & 0xfffff000);
   PTE *pte1 = as->ptr + (((uintptr_t)va & 0xffc00000) >> 22) * 4;
   
