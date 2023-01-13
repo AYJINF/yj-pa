@@ -29,7 +29,7 @@ void init_proc() {
   char *argv[] = {NULL};
   context_uload(&pcb[1], "/bin/dummy", argv, NULL);
   // context_kload(&pcb[1], hello_fun, (void *)"cd");
-  // printf("zyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy\n");
+  printf("zyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy\n");
   // context_uload(&pcb[0], "/bin/hello");
 
   // context_uload(&pcb[0], "/bin/hello", NULL, NULL);
@@ -37,7 +37,6 @@ void init_proc() {
 
   // char *argv[] = {"--skip", NULL};
   // context_uload(&pcb[1], "/bin/pal", argv, NULL);
-
   switch_boot_pcb();
 
   Log("Initializing processes...");
