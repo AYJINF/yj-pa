@@ -26,9 +26,9 @@ static inline uintptr_t get_satp() {
 bool vme_init(void* (*pgalloc_f)(int), void (*pgfree_f)(void*)) {
   printf("ffffffffffff=%u\n", pgalloc_f);
   printf("gggggggggggggg=%u\n", pgfree_f);
-  void *try = pgalloc_f(4096);
-  printf("try=%p\n", try);
   pgalloc_usr = pgalloc_f;
+  void *try = pgalloc_usr(4096);
+  printf("lllllllllllllllllllllllllllllllllllllllllllllltry=%p\n", try);
   pgfree_usr = pgfree_f;
 
   kas.ptr = pgalloc_f(PGSIZE);
