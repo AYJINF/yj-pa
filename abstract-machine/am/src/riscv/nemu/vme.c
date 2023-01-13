@@ -95,8 +95,10 @@ void __am_switch(Context *c) {
 void map(AddrSpace *as, void *va, void *pa, int prot) {
   PTE *pde_addr = as->ptr + (((uintptr_t)va & MY_VPN_1) >> 22) * 4;
   if((*pde_addr & PTE_V) == 0){
-    void *tmp = pgalloc_usr(PGSIZE);
-    *pde_addr = (*pde_addr & ~0xfffffc00) | (0xfffffc00 & ((uintptr_t)tmp >> 2));
+    void *new_p = pgalloc_usr(as->pgsize); // 阿巴阿巴，不确定要不要考虑存放位置字段null的情况
+    *pde_addr = (*pde_addr & MY_PTE_ATT) | ((~MY_PTE_ATT) & ((uintptr_t)new_p >> 2)); // 装入
+    // *pde_addr |= PTE_V;
+
     *pde_addr = (*pde_addr | PTE_V);
   }
   pa = (void *)((uintptr_t)pa & MY_PN);
