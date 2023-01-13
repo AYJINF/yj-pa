@@ -133,13 +133,11 @@ static int decode_exec(Decode *s) {
                                                            else if(imm==0x305){R(dest)=csr_mtve; csr_mtve=src1;}
                                                            else if(imm==0x341){R(dest)=csr_mepc; csr_mepc=src1;}
                                                            else if(imm==0x342){R(dest)=csr_mcau; csr_mcau=src1;}
-                                                           else if(imm==0x180){R(dest)=csr_satp; csr_satp=src1;}
                                                                                                                 ); 
   INSTPAT("??????? ????? ????? 010 ????? 11100 11", csrrs  , I, if(imm==0x300){R(dest)=csr_msta; csr_msta=csr_msta|src1;}
                                                            else if(imm==0x305){R(dest)=csr_mtve; csr_mtve=csr_mtve|src1;}
                                                            else if(imm==0x341){R(dest)=csr_mepc; csr_mepc=csr_mepc|src1;}
                                                            else if(imm==0x342){R(dest)=csr_mcau; csr_mcau=csr_mcau|src1;}
-                                                           else if(imm==0x180){R(dest)=csr_satp; csr_satp=csr_satp|src1;}
                                                                                                                 ); 
   INSTPAT("0011000 00010 00000 000 00000 11100 11", mret   , R, s->dnpc = csr_mepc);
   INSTPAT("0000000 00000 00000 000 00000 11100 11", ecall  , I, s->dnpc = isa_raise_intr(1, s->pc));
