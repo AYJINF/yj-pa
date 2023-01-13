@@ -52,6 +52,7 @@ current->cp = prev;
 // always select pcb[0] as the new process
 // current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
 current = &pcb[1];
+printf("pppppppppppppp\n");
 // bool flag = (current == &pcb[0]);
 // if(flag) printf("pcb[0]\n");
 // else printf("pcb[1]\n");
