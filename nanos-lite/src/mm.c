@@ -23,35 +23,35 @@ void free_page(void *p) {
 }
 
 /* The brk() system call handler. */
-// int mm_brk(uintptr_t brk) {
-//   // printf("brk=%x\n", brk);
-//   uintptr_t max_brk = current->max_brk;
-//   // printf("max_brk=%x\n", max_brk);
-//   if(brk < max_brk) return 0;
-
-//   uintptr_t plus_brk = brk - max_brk;
-//   size_t nr_page = plus_brk / PGSIZE + 1;
-//   // printf("nr_page=%d\n", nr_page);
-//   void *pages = new_page(nr_page);
-//   for(int i = 0; i < nr_page; i++){
-//     map(&current->as, (void *)(max_brk + i * PGSIZE), (void *)(pages + i * PGSIZE), 1);
-//   }
-
-//   current->max_brk = ROUNDUP(brk, PGSIZE);
-//   assert(brk <= current->max_brk);
-//   return 0;
-// }
 int mm_brk(uintptr_t brk) {
-  if(brk >= current->max_brk){
-    size_t nr_page = (brk >> 12) - (current->max_brk >> 12) + 1;
-    void *tmp =  new_page(nr_page);
-    for (int i = 0; i < nr_page; i++){
-      map(&current->as, (void *)(current->max_brk + i * PGSIZE), (void *)(tmp + i * PGSIZE), 1); 
-    }   
-    current->max_brk = ((brk >> 12) + 1) << 12;
+  // printf("brk=%x\n", brk);
+  uintptr_t max_brk = current->max_brk;
+  // printf("max_brk=%x\n", max_brk);
+  if(brk < max_brk) return 0;
+
+  
+  size_t nr_page = (brk >> 12) - (max_brk >> 12) + 1;
+  // printf("nr_page=%d\n", nr_page);
+  void *pages = new_page(nr_page);
+  for(int i = 0; i < nr_page; i++){
+    map(&current->as, (void *)(max_brk + i * PGSIZE), (void *)(pages + i * PGSIZE), 1);
   }
+
+  current->max_brk = ROUNDUP(brk, PGSIZE);
+  assert(brk <= current->max_brk);
   return 0;
 }
+// int mm_brk(uintptr_t brk) {
+//   if(brk >= current->max_brk){
+//     size_t nr_page = (brk >> 12) - (current->max_brk >> 12) + 1;
+//     void *tmp =  new_page(nr_page);
+//     for (int i = 0; i < nr_page; i++){
+//       map(&current->as, (void *)(current->max_brk + i * PGSIZE), (void *)(tmp + i * PGSIZE), 1); 
+//     }   
+//     current->max_brk = ((brk >> 12) + 1) << 12;
+//   }
+//   return 0;
+// }
 
 void init_mm() {
   pf = (void *)ROUNDUP(heap.start, PGSIZE);
