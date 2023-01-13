@@ -73,7 +73,6 @@ void context_kload(PCB *pcb, void (*entry)(void *), void *arg){
 // void context_uload(PCB *pcb, const char *filename){
 void context_uload(PCB *pcb, const char *filename, char *const argv[], char *const envp[]){
   protect(&pcb->as);
-  printf("protext pdir=%u\n", pcb->as.ptr);
   int pgsize = pcb->as.pgsize;
   char *string_area = (char *)new_page(8) + 8 * pgsize;
 

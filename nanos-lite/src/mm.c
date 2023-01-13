@@ -1,8 +1,8 @@
+#include <am.h>
 #include <memory.h>
 #include<stdio.h>
 
 static void *pf = NULL;
-bool vme_init(void* (*pgalloc_f)(int), void (*pgfree_f)(void*));
 
 void* new_page(size_t nr_page) {
   void *ret = pf;
