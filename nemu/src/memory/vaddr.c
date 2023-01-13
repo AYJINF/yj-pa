@@ -17,7 +17,7 @@
 #include <memory/paddr.h>
 
 word_t vaddr_ifetch(vaddr_t addr, int len) {
-  // printf("vaddr_ifetch, addr=%x\n", addr);
+  printf("vaddr_ifetch, addr=%x\n", addr);
   if(isa_mmu_check(addr, len, 0) == MMU_TRANSLATE){
     vaddr_t tmp = addr;
     addr = isa_mmu_translate(addr, len, 0);
