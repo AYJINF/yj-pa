@@ -1,6 +1,10 @@
 #include <nemu.h>
 #include <klib.h>
 
+#define MIE 0x008 // 第3位
+#define MPIE 0x080 // 第7位
+#define IRQ_TIMER 0x80000007  // for riscv32
+
 static AddrSpace kas = {};
 static void* (*pgalloc_usr)(int) = NULL;
 static void (*pgfree_usr)(void*) = NULL;
@@ -108,7 +112,7 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
 
 Context *ucontext(AddrSpace *as, Area kstack, void *entry) {
   Context *ret = kstack.end - sizeof(Context);
-  ret->mstatus = 0x18000;
+  ret->mstatus = 0x18000 | MPIE;
   ret->mepc = (uintptr_t)entry;
   ret->pdir = as->ptr;
   return ret;
