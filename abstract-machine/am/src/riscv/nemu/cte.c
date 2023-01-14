@@ -2,6 +2,8 @@
 #include <riscv/riscv.h>
 #include <klib.h>
 
+#define MIE 0x008 // 第3位
+#define MPIE 0x080 // 第7位
 #define IRQ_TIMER 0x80000007  // for riscv32
 
 static Context* (*user_handler)(Event, Context*) = NULL;
@@ -46,7 +48,7 @@ bool cte_init(Context*(*handler)(Event, Context*)) {
 
 Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
   Context *ret = kstack.end - sizeof(Context);
-  ret->mstatus = 0x18000;
+  ret->mstatus = 0x18000 | MPIE;
   ret->mepc = (uintptr_t)entry;
   ret->GPRx = (uintptr_t)arg;
   ret->pdir = NULL;
