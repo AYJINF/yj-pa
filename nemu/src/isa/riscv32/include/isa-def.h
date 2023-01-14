@@ -22,6 +22,7 @@ typedef struct {
   word_t gpr[32];
   word_t mepc, mstatus, mcause, mtvec, satp; // CSRs
   vaddr_t pc;
+  bool INTR; // 阿巴阿巴
 } riscv32_CPU_state;
 
 // decode
