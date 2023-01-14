@@ -5,6 +5,8 @@
 #define MIE 0x008 // 第3位
 #define MPIE 0x080 // 第7位
 #define IRQ_TIMER 0x80000007  // for riscv32
+#define MY_KERNEL    0
+#define MY_USER      1
 
 static Context* (*user_handler)(Event, Context*) = NULL;
 void __am_get_cur_as(Context *c);
@@ -52,6 +54,7 @@ Context *kcontext(Area kstack, void (*entry)(void *), void *arg) {
   ret->mepc = (uintptr_t)entry;
   ret->GPRx = (uintptr_t)arg;
   ret->pdir = NULL;
+  ret->np = MY_KERNEL;
   return ret;
 }
 

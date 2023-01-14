@@ -12,7 +12,7 @@ static Context* do_event(Event e, Context* c) {
     case EVENT_SYSCALL:  // 系统调用指令
       do_syscall(c); break;
     case EVENT_IRQ_TIMER:  // 时钟中断指令
-      Log("Do_event accepts EVENT_IRQ_TIMER");
+      Log("do_event accepts EVENT_IRQ_TIMER");
       return schedule(c);
     default: panic("Unhandled event ID = %d", e.event);
   }

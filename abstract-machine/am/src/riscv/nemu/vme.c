@@ -4,6 +4,8 @@
 #define MIE 0x008 // 第3位
 #define MPIE 0x080 // 第7位
 #define IRQ_TIMER 0x80000007  // for riscv32
+#define MY_KERNEL    0
+#define MY_USER      1
 
 static AddrSpace kas = {};
 static void* (*pgalloc_usr)(int) = NULL;
@@ -115,5 +117,6 @@ Context *ucontext(AddrSpace *as, Area kstack, void *entry) {
   ret->mstatus = 0x18000 | MPIE;
   ret->mepc = (uintptr_t)entry;
   ret->pdir = as->ptr;
+  ret->np = MY_USER;
   return ret;
 }
