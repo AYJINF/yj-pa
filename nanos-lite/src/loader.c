@@ -83,7 +83,7 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   int pgsize = PGSIZE;
   // printf("uload pgsize=%d\n", pgsize);
   char *string_area = (char *)new_page(8) + 8 * pgsize;
-  // char *new_pages = string_area;
+  char *new_pages = string_area;
 
   for(int i = 1; i <= 8; i++){
     map(&pcb->as, (void *)(pcb->as.area.end - i * pgsize), (void *)(string_area - i * pgsize), 1);
@@ -145,8 +145,8 @@ void context_uload(PCB *pcb, const char *filename, char *const argv[], char *con
   kstack.start = &pcb->cp;
   kstack.end = kstack.start + STACK_SIZE;
   pcb->cp = ucontext(&pcb->as, kstack, (void *)loader(pcb, filename));
-  // uintptr_t user_heap = (uintptr_t)(pcb->as.area.end); // 用户栈虚拟地址 
-  // pcb->cp->GPRx = user_heap + (uintptr_t)string_a - (uintptr_t)new_pages; // 可能会错，阿巴阿巴打个tag
-  pcb->cp->GPRx = (uintptr_t)string_a;
+  uintptr_t user_heap = (uintptr_t)(pcb->as.area.end); // 用户栈虚拟地址 
+  pcb->cp->GPRx = user_heap + (uintptr_t)string_a - (uintptr_t)new_pages; // 可能会错，阿巴阿巴打个tag
+  // pcb->cp->GPRx = (uintptr_t)string_a;
 }
 
