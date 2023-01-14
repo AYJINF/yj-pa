@@ -2,6 +2,8 @@
 #include <riscv/riscv.h>
 #include <klib.h>
 
+#define IRQ_TIMER 0x80000007  // for riscv32
+
 static Context* (*user_handler)(Event, Context*) = NULL;
 void __am_get_cur_as(Context *c);
 void __am_switch(Context *c);
@@ -14,6 +16,10 @@ Context* __am_irq_handle(Context *c) {
       case 1: 
         if(c->GPR1 == -1) ev.event = EVENT_YIELD; // 自陷指令
         else ev.event = EVENT_SYSCALL; // 系统调用
+        c->mepc += 4; // 时钟中断不用+4
+        break;
+      case IRQ_TIMER:
+        ev.event = EVENT_IRQ_TIMER;
         break;
       default: ev.event = EVENT_ERROR; break;
     }
@@ -21,7 +27,6 @@ Context* __am_irq_handle(Context *c) {
     c = user_handler(ev, c);
     // printf("user pdir2=%p\n", c->pdir);
     assert(c != NULL);
-    c->mepc += 4; // 时钟中断不用+4
   }
   __am_switch(c);
   return c;

@@ -18,6 +18,9 @@
 
 #include <common.h>
 
+#define MIE 0x008 // 第3位
+#define MPIE 0x080 // 第7位
+
 typedef struct {
   word_t gpr[32];
   word_t mepc, mstatus, mcause, mtvec, satp; // CSRs
