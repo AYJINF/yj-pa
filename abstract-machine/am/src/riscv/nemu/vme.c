@@ -112,7 +112,7 @@ void map(AddrSpace *as, void *va, void *pa, int prot) {
 
 Context *ucontext(AddrSpace *as, Area kstack, void *entry) {
   Context *ret = kstack.end - sizeof(Context);
-  ret->mstatus = 0x18000;
+  ret->mstatus = 0x18000 | MPIE;
   ret->mepc = (uintptr_t)entry;
   ret->pdir = as->ptr;
   return ret;
