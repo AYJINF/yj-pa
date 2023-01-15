@@ -51,7 +51,7 @@ current->cp = prev;
 
 // always select pcb[0] as the new process
 current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
-printf("pcb[0].cp.np=%x, pcb[1].cp.np=%x\n", pcb[0].cp->np, pcb[1].cp->np);
+// printf("pcb[0].cp.np=%x, pcb[1].cp.np=%x\n", pcb[0].cp->np, pcb[1].cp->np);
 // printf("schedule &pcb[0].cp=%x, &pcb[1].cp=%x\n", &pcb[0].cp, &pcb[1].cp);
 // current = &pcb[1];
 // bool flag = (current == &pcb[0]);
