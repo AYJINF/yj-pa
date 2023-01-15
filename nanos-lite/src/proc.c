@@ -30,8 +30,8 @@ void init_proc() {
   char *argv[] = {NULL};
   context_uload(&pcb[0], "/bin/hello", NULL, NULL);
   context_uload(&pcb[1], "/bin/pal", argv, NULL);
-  context_uload(&pcb[1], "/bin/bird", argv, NULL);
-  context_uload(&pcb[1], "/bin/nslider", argv, NULL);
+  context_uload(&pcb[2], "/bin/bird", argv, NULL);
+  context_uload(&pcb[3], "/bin/nslider", argv, NULL);
   // context_kload(&pcb[1], hello_fun, (void *)"cd");
 
   // context_uload(&pcb[0], "/bin/hello", NULL, NULL);
