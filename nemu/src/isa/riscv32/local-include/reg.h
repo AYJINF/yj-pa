@@ -29,6 +29,7 @@ static inline int check_reg_idx(int idx) {
 #define csr_mcau cpu.mcause
 #define csr_mtve cpu.mtvec
 #define csr_satp cpu.satp
+#define csr_mscratch cpu.mscratch
 
 
 static inline const char* reg_name(int idx, int width) {
