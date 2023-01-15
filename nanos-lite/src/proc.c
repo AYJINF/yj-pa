@@ -5,6 +5,7 @@
 static PCB pcb[MAX_NR_PROC] __attribute__((used)) = {};
 static PCB pcb_boot = {};
 PCB *current = NULL;
+int fg_pcb = 1;
 
 extern void naive_uload(PCB *pcb, const char *filename);
 void context_kload(PCB *pcb, void (*entry)(void *), void *arg);
@@ -50,7 +51,7 @@ Context* schedule(Context *prev) {
 current->cp = prev;
 
 // always select pcb[0] as the new process
-current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
+current = (current == &pcb[0] ? &pcb[fg_pcb] : &pcb[0]);
 // printf("pcb[0].cp.np=%x, pcb[1].cp.np=%x\n", pcb[0].cp->np, pcb[1].cp->np);
 // printf("schedule &pcb[0].cp=%x, &pcb[1].cp=%x\n", &pcb[0].cp, &pcb[1].cp);
 // current = &pcb[1];

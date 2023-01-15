@@ -24,13 +24,29 @@ size_t serial_write(const void *buf, size_t offset, size_t len) {
   return ret;
 }
 
+extern int fg_pcb;
 size_t events_read(void *buf, size_t offset, size_t len) {
   // yield();
   AM_INPUT_KEYBRD_T in_key = io_read(AM_INPUT_KEYBRD);
   size_t ret = 0;
   if(in_key.keycode == AM_KEY_NONE) return 0;
-  if(in_key.keydown)
+  if(in_key.keydown){
     ret = sprintf((char *)buf, "kd %s\n", keyname[in_key.keycode]);
+    switch (in_key.keycode)
+    {
+    case AM_KEY_F1:
+      fg_pcb = 1;
+      break;
+    case AM_KEY_F2:
+      fg_pcb = 2;
+      break;
+    case AM_KEY_F3:
+      fg_pcb = 3;
+      break;
+    default:
+      break;
+    }
+  }
   else 
     ret = sprintf((char *)buf, "ku %s\n", keyname[in_key.keycode]);
   if(ret > len) assert(0);
