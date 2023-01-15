@@ -37,27 +37,30 @@ f(30) f(31)
 .align 3
 .globl __am_asm_trap
 __am_asm_trap:
-  csrrw sp, mscratch, sp   // (1) atomically exchange sp and mscratch
-  bnez sp, user1           // (2) take the branch if we trapped from user
-  csrr sp, mscratch        // (3) if we trapped from kernel, restore the original sp
-  addi sp, sp, -CONTEXT_SIZE
-  MAP(REGS, PUSH)
-  STORE sp, OFFSET_SP(sp)
-  li t4, 1
-  STORE t4, OFFSET_NP(sp)
-  jal kernel1
+  csrrw sp, mscratch, sp   # (1) atomically exchange sp and mscratch
+  bnez sp, ksp_is_user    # (2) sp != 0时跳转 take the branch if we trapped from user
+  csrr sp, mscratch        # (3) if we trapped from kernel, restore the original sp
 
-user1:
+# 从kernel进入时
   addi sp, sp, -CONTEXT_SIZE
-  MAP(REGS, PUSH)
-  csrr t4, mscratch
-  STORE t4, OFFSET_SP(sp)
-  li t4, 0
-  STORE t4, OFFSET_NP(sp)
-  
-kernel1:
-  csrw mscratch, x0
+  MAP(REGS, PUSH)              # 压栈
+  li t3, MY_KERNEL
+  STORE t3, OFFSET_NP(sp)      # c->np = KERNEL(=0)
+  csrw mscratch, x0            # ksp = 0
+  jal save_context
 
+# 从user进入时
+ksp_is_user:
+  addi sp, sp, -CONTEXT_SIZE
+  MAP(REGS, PUSH)              # 压栈
+  csrr t3, mscratch
+  STORE t3, OFFSET_SP(sp)      # $sp = ksp
+  li t3, MY_USER
+  STORE t3, OFFSET_NP(sp)      # c->np = USER(=1)
+  csrw mscratch, x0            # ksp = 0
+
+# 保存上下文
+save_context:
   csrr t0, mcause
   csrr t1, mstatus
   csrr t2, mepc
@@ -66,7 +69,7 @@ kernel1:
   STORE t1, OFFSET_STATUS(sp)
   STORE t2, OFFSET_EPC(sp)
 
-  # set mstatus.MPRV to pass difftest
+# set mstatus.MPRV to pass difftest
   li a0, (1 << 17)
   or t1, t1, a0
   csrw mstatus, t1
@@ -75,20 +78,27 @@ kernel1:
   jal __am_irq_handle
   mv sp, a0
 
+# 恢复上下文
   LOAD t1, OFFSET_STATUS(sp)
   LOAD t2, OFFSET_EPC(sp)
   csrw mstatus, t1
   csrw mepc, t2
 
-  LOAD t4, OFFSET_NP(sp)
-  bnez t4, kernel2
-  addi t4, sp, CONTEXT_SIZE
-  csrw mscratch, t4
-  MAP(REGS, POP)
-  LOAD sp, OFFSET_SP(sp)
+  LOAD t3, OFFSET_NP(sp)
+  bnez t3, switch_sp_for_user            # np != 0即np为USER时跳转
+
+  MAP(REGS, POP)                         # 出栈
+
+# 恢复为kernel
+  addi sp, sp, CONTEXT_SIZE              # $sp = c->sp
   mret
 
-kernel2:
-  MAP(REGS, POP)
-  addi sp, sp, CONTEXT_SIZE
+# 恢复为user
+switch_sp_for_user:
+  addi t3, sp, CONTEXT_SIZE
+  csrw mscratch, t3                      # ksp = $sp;
+
+  MAP(REGS, POP)                         # 出栈
+
+  LOAD sp, OFFSET_SP(sp)                 # $sp = c->sp
   mret
