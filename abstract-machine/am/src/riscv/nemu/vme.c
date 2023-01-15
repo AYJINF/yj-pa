@@ -117,6 +117,6 @@ Context *ucontext(AddrSpace *as, Area kstack, void *entry) {
   ret->mstatus = 0x18000 | MPIE;
   ret->mepc = (uintptr_t)entry;
   ret->pdir = as->ptr;
-  ret->np = 0;
+  ret->np = MY_USER;
   return ret;
 }
