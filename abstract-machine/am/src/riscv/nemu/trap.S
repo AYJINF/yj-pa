@@ -37,26 +37,9 @@ f(30) f(31)
 .align 3
 .globl __am_asm_trap
 __am_asm_trap:
-  csrrw sp, mscratch, sp   // (1) atomically exchange sp and mscratch
-  bnez sp, user1           // (2) take the branch if we trapped from user
-  csrr sp, mscratch        // (3) if we trapped from kernel, restore the original sp
   addi sp, sp, -CONTEXT_SIZE
-  MAP(REGS, PUSH)
-  STORE sp, OFFSET_SP(sp)
-  li t4, 1
-  STORE t4, OFFSET_NP(sp)
-  jal kernel1
 
-user1:
-  addi sp, sp, -CONTEXT_SIZE
   MAP(REGS, PUSH)
-  csrr t4, mscratch
-  STORE t4, OFFSET_SP(sp)
-  li t4, 0
-  STORE t4, OFFSET_NP(sp)
-  
-kernel1:
-  csrw mscratch, x0
 
   csrr t0, mcause
   csrr t1, mstatus
@@ -80,15 +63,7 @@ kernel1:
   csrw mstatus, t1
   csrw mepc, t2
 
-  LOAD t4, OFFSET_NP(sp)
-  bnez t4, kernel2
-  addi t4, sp, CONTEXT_SIZE
-  csrw mscratch, t4
   MAP(REGS, POP)
-  LOAD sp, OFFSET_SP(sp)
-  mret
 
-kernel2:
-  MAP(REGS, POP)
   addi sp, sp, CONTEXT_SIZE
   mret
