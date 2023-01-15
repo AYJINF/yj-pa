@@ -30,6 +30,8 @@ void init_proc() {
   char *argv[] = {NULL};
   context_uload(&pcb[0], "/bin/hello", NULL, NULL);
   context_uload(&pcb[1], "/bin/nterm", argv, NULL);
+  context_uload(&pcb[1], "/bin/nterm", argv, NULL);
+  context_uload(&pcb[1], "/bin/nterm", argv, NULL);
   // context_kload(&pcb[1], hello_fun, (void *)"cd");
 
   // context_uload(&pcb[0], "/bin/hello", NULL, NULL);
